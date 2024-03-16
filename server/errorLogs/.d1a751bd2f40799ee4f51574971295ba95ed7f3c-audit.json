@@ -1,0 +1,80 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 90
+    },
+    "auditLog": "/home/sunil-des/Music/stayable/server/errorLogs/.d1a751bd2f40799ee4f51574971295ba95ed7f3c-audit.json",
+    "files": [
+        {
+            "date": 1707195527934,
+            "name": "/home/sunil-des/Music/stayable/server/errorLogs/error-2024-02-06.log",
+            "hash": "bea875661a392ff2438bc0476f2cff0c9b3d0188a34632b1b51c894b9f55e3b2"
+        },
+        {
+            "date": 1707276920871,
+            "name": "/home/sunil-des/Music/stayable/server/errorLogs/error-2024-02-07.log",
+            "hash": "246616c81a514e316fedb25dd5aa716e05028a71502221b7255670b67f2f26ee"
+        },
+        {
+            "date": 1707363729251,
+            "name": "/home/sunil-des/Music/stayable/server/errorLogs/error-2024-02-08.log",
+            "hash": "feefd7b0b56dd3ee5720b95e9d3d4aa46a8194e96416cc687bfc5b745d74cb5f"
+        },
+        {
+            "date": 1707467695536,
+            "name": "/home/sunil-des/Music/stayable/server/errorLogs/error-2024-02-09.log",
+            "hash": "76799ae6ef177529b9286c48e7f9a94ab9dbfac42e8f59c7dfdacd15006d70aa"
+        },
+        {
+            "date": 1707542169579,
+            "name": "/home/sunil-des/Music/stayable/server/errorLogs/error-2024-02-10.log",
+            "hash": "1b6a4d21856f96e7d1ecffea1d6e7cfd8564ed986091b177660cc1a26139225c"
+        },
+        {
+            "date": 1707708413050,
+            "name": "/home/sunil-des/Music/stayable/server/errorLogs/error-2024-02-12.log",
+            "hash": "3ed90d8da44e3f2320b819ef90c5084ac12b8634fbd353df339b4a8b2f178c17"
+        },
+        {
+            "date": 1707795028766,
+            "name": "/home/sunil-des/Music/stayable/server/errorLogs/error-2024-02-13.log",
+            "hash": "89ed83ebd8fb8b5c0d120732f458a525bdf40005375bd907b54ee5d093b10464"
+        },
+        {
+            "date": 1707881777835,
+            "name": "/home/sunil-des/Music/stayable/server/errorLogs/error-2024-02-14.log",
+            "hash": "2c9840e111296ff4fd18287daf06ecacd5617166806f1578154f122e80058cbc"
+        },
+        {
+            "date": 1707968217879,
+            "name": "/home/sunil-des/Music/stayable/server/errorLogs/error-2024-02-15.log",
+            "hash": "08c8a119aaae5c6cfa803286d9334d211e523fb2e3d876172d75ecac6a114041"
+        },
+        {
+            "date": 1708054138813,
+            "name": "/home/sunil-des/Music/stayable/server/errorLogs/error-2024-02-16.log",
+            "hash": "f1cc822be0939baf37ef9fe0461ba9d8068eefdfc417d97dc90f7f1925d43f19"
+        },
+        {
+            "date": 1708314481087,
+            "name": "/home/sunil-des/Music/stayable/server/errorLogs/error-2024-02-19.log",
+            "hash": "4dd108f8ff3062a8057cdc6bc37e4ed2167452292f7637cd4952cf433e37ed9b"
+        },
+        {
+            "date": 1708402061739,
+            "name": "/home/sunil-des/Music/stayable/server/errorLogs/error-2024-02-20.log",
+            "hash": "ae744c76b25d69c8fc9e28030f74dc0d23fd4831540f7885efcbacbff19b6187"
+        },
+        {
+            "date": 1708486106465,
+            "name": "/home/sunil-des/Music/stayable/server/errorLogs/error-2024-02-21.log",
+            "hash": "2a1d375b34d78356d146d5de545482ef71df946b1c8dc62eceb8107ca11facb0"
+        },
+        {
+            "date": 1708575785861,
+            "name": "/home/sunil-des/Music/stayable/server/errorLogs/error-2024-02-22.log",
+            "hash": "09a94bf5b710a98afe8cd74e971fbdaa246d53dda99855b339b7e29ab886a3b3"
+        }
+    ],
+    "hashType": "sha256"
+}

@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 90
+    },
+    "auditLog": "/home/sunil-des/Pictures/stayable/server/errorLogs/.f6eb136ca642a962166a510efa4c5ff2c8b11c4d-audit.json",
+    "files": [
+        {
+            "date": 1710148839025,
+            "name": "/home/sunil-des/Pictures/stayable/server/errorLogs/error-2024-03-11.log",
+            "hash": "46b7c2987bc5373f7289cb7e2dc52210c42bafc8d96a9c7078597f46a044d20e"
+        }
+    ],
+    "hashType": "sha256"
+}

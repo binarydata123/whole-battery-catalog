@@ -1,0 +1,110 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 90
+    },
+    "auditLog": "/opt/lampp/htdocs/node js/stayable/server/errorLogs/.ab55fe45202f042246e131f0be3e42a0a95c6fe3-audit.json",
+    "files": [
+        {
+            "date": 1707742747614,
+            "name": "/opt/lampp/htdocs/node js/stayable/server/errorLogs/error-2024-02-12.log",
+            "hash": "f9f78b4f03d73efa2079f86471e6fad1462c3537d7a26a08d9ec7369fe335647"
+        },
+        {
+            "date": 1707796183928,
+            "name": "/opt/lampp/htdocs/node js/stayable/server/errorLogs/error-2024-02-13.log",
+            "hash": "9dd4aedeef91d59270b20b6b21f0e80809241aec6723523d1cb81f8006b1a273"
+        },
+        {
+            "date": 1707968993457,
+            "name": "/opt/lampp/htdocs/node js/stayable/server/errorLogs/error-2024-02-15.log",
+            "hash": "862dee236c756a509ef303a4bdd0d2ebb6d61f8169d909c47ea39568fc48ba93"
+        },
+        {
+            "date": 1708055053736,
+            "name": "/opt/lampp/htdocs/node js/stayable/server/errorLogs/error-2024-02-16.log",
+            "hash": "692c0555d0ebde5398c8fa319d1770ef435410ad0bf703a23c3f7d612e9f45ab"
+        },
+        {
+            "date": 1708145593672,
+            "name": "/opt/lampp/htdocs/node js/stayable/server/errorLogs/error-2024-02-17.log",
+            "hash": "b97eb5cef01d4d8a21351b7d0be0f498e5b0695ec4a55f095bcc6afa6fbddd87"
+        },
+        {
+            "date": 1708400531764,
+            "name": "/opt/lampp/htdocs/node js/stayable/server/errorLogs/error-2024-02-20.log",
+            "hash": "121f79340ec9d0287cdf47ba786f803c017ab26ea53efc717052267787ec1df2"
+        },
+        {
+            "date": 1708486591657,
+            "name": "/opt/lampp/htdocs/node js/stayable/server/errorLogs/error-2024-02-21.log",
+            "hash": "e09378b18416d04b0a329c6f9854c552fabc292bbb175e4b5e968a2ddfd34a1a"
+        },
+        {
+            "date": 1708574186228,
+            "name": "/opt/lampp/htdocs/node js/stayable/server/errorLogs/error-2024-02-22.log",
+            "hash": "e010d1556d72a8a46b888bcfd5d188153f70f2a9269b7c2f78e0fca296227e85"
+        },
+        {
+            "date": 1708659361719,
+            "name": "/opt/lampp/htdocs/node js/stayable/server/errorLogs/error-2024-02-23.log",
+            "hash": "7d8f2010f415c153b4f345bb2ac99d21ec33ecdfe53933ab3931066bf994ad5b"
+        },
+        {
+            "date": 1708919455811,
+            "name": "/opt/lampp/htdocs/node js/stayable/server/errorLogs/error-2024-02-26.log",
+            "hash": "448f0479b5c0e5249242d9d58d40191b70c9f1bba8c305155c98a8dd13c4c05f"
+        },
+        {
+            "date": 1709005007918,
+            "name": "/opt/lampp/htdocs/node js/stayable/server/errorLogs/error-2024-02-27.log",
+            "hash": "da9a34f16593223dc3221ec2ba37cf868867ddb4de978af8db41e2829a39876f"
+        },
+        {
+            "date": 1709093077851,
+            "name": "/opt/lampp/htdocs/node js/stayable/server/errorLogs/error-2024-02-28.log",
+            "hash": "ddd1b67dbf30b3543c04f562d79a251dcd16c22a5695042b275da780d9fbd2db"
+        },
+        {
+            "date": 1709178174888,
+            "name": "/opt/lampp/htdocs/node js/stayable/server/errorLogs/error-2024-02-29.log",
+            "hash": "c2c3495d517c55f0ef6e22a41abc0a442137f68453acba8cefeed3565592d878"
+        },
+        {
+            "date": 1709264666113,
+            "name": "/opt/lampp/htdocs/node js/stayable/server/errorLogs/error-2024-03-01.log",
+            "hash": "79af5543e3d8caa2153727cdff40cf9ecae4ac020ae09879a60c3e45fea2aabf"
+        },
+        {
+            "date": 1709350549307,
+            "name": "/opt/lampp/htdocs/node js/stayable/server/errorLogs/error-2024-03-02.log",
+            "hash": "32ed77dfc4a28dae861b08916c2c43e196a3b92c515c1466dac5ea39f1ba90c7"
+        },
+        {
+            "date": 1709523616619,
+            "name": "/opt/lampp/htdocs/node js/stayable/server/errorLogs/error-2024-03-04.log",
+            "hash": "41665d93d513e94bc3c9b1fc7af53025fd6b315a393fe874cb033ff93d077343"
+        },
+        {
+            "date": 1709609744090,
+            "name": "/opt/lampp/htdocs/node js/stayable/server/errorLogs/error-2024-03-05.log",
+            "hash": "7d6351564e561f00f82bf127eb8287dc405dd8c38401272d2b7e614527727f3f"
+        },
+        {
+            "date": 1709697229156,
+            "name": "/opt/lampp/htdocs/node js/stayable/server/errorLogs/error-2024-03-06.log",
+            "hash": "c7c80d0928699dac49609183e9481aae2f0bdcb1b047812f8f9d2cd09f402ff2"
+        },
+        {
+            "date": 1709783079354,
+            "name": "/opt/lampp/htdocs/node js/stayable/server/errorLogs/error-2024-03-07.log",
+            "hash": "bac45229895d32a030390591c6f81c072fc6cbd0cfd4c9d9886e4dd6601f765d"
+        },
+        {
+            "date": 1709868899993,
+            "name": "/opt/lampp/htdocs/node js/stayable/server/errorLogs/error-2024-03-08.log",
+            "hash": "af02252e244bba236846e520155c532f970220690d5f657d7e4ecb1c3e51be9b"
+        }
+    ],
+    "hashType": "sha256"
+}

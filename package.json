@@ -1,0 +1,75 @@
+{
+	"name": "nodenext",
+	"version": "1.0.0",
+	"description": "",
+	"scripts": {
+		"start": "npm run lint && concurrently \"npm run start:server\" \"npm run start:client\"",
+		"production": "npm run lint && concurrently \"npm run start:server\" \"npm run start:clientProd\"",
+		"start:client": "cd client && npm run dev",
+		"start:server": "cd server && npm run dev",
+		"install:server": "cd server && npm install",
+		"install:client": "cd client && npm install",
+		"build": "cd client && npm run build",
+		"start:clientProd": "cd client && npm start",
+		"setup": "npm install && npm run install:server && npm run install:client",
+		"format": "prettier --write . --ignore-path .prettierignore",
+		"commit": "cz",
+		"lint": "concurrently \"npm run lint:client\" \"npm run lint:server\"",
+		"lint:client": "cd client && npm run lint",
+		"lint:server": "cd server && npm run lint"
+	},
+	"keywords": [],
+	"author": "Binary Data <binarydata.sale@gmail.com>",
+	"license": "ISC",
+	"devDependencies": {
+		"commitizen": "^4.3.0",
+		"concurrently": "^8.2.2",
+		"cz-conventional-changelog": "^3.3.0",
+		"eslint": "^8.54.0",
+		"eslint-config-prettier": "^9.0.0",
+		"eslint-plugin-prettier": "^5.0.1",
+		"husky": "^8.0.3",
+		"lint-staged": "^15.2.2",
+		"prettier": "^3.2.4"
+	},
+	"config": {
+		"commitizen": {
+			"path": "cz-conventional-changelog"
+		}
+	},
+	"repository": "https://github.com/binarydata123/stayable.git",
+	"dependencies": {
+		"@ant-design/nextjs-registry": "^1.0.0",
+		"@ntegral/react-owl-carousel": "^1.0.1",
+		"antd": "^5.13.1",
+		"antd-img-crop": "^4.21.0",
+		"dotenv": "^16.3.1",
+		"jquery": "^3.7.1",
+		"js-cookie": "^3.0.5",
+		"knex": "^3.1.0",
+		"next": "^14.0.4",
+		"owl.carousel": "^2.3.4",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-flags-select": "^2.2.3",
+		"react-icons": "^5.0.1",
+		"react-owl-carousel": "^2.3.3",
+		"react-responsive": "^9.0.2",
+		"react-select": "^5.8.0",
+		"react-slick": "^0.29.0",
+		"slick-carousel": "^1.8.1",
+		"swiper": "^11.0.5"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
+	},
+	"lint-staged": {
+		"*.{js,jsx,ts,tsx,html}": [
+			"prettier --write",
+			"eslint",
+			"git add"
+		]
+	}
+}

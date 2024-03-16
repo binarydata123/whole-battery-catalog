@@ -1,0 +1,1 @@
+{"level":"error","message":"TypeError: Cannot read properties of null (reading 'roomTypes')","stack":"at /opt/lampp/htdocs/node js/stayable/server/src/middleware/catchErrors.js:6:3","timestamp":"2024-02-28T12:43:22.026Z"}

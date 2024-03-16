@@ -1,0 +1,79 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
+
+* {
+  font-family: 'Lato', sans-serif;
+}
+
+/* body {
+  font-family: var(--font-Lato) !important;
+} */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0px !important;
+  padding: 0px !important;
+}
+
+p {
+  margin: 0px !important;
+}
+
+ul {
+  padding: 0px !important;
+  margin: 0px;
+}
+
+li {
+  list-style: none;
+}
+
+:root {
+  /*  font-family */
+  --font-dm-sans: "DM Sans", sans-serif;
+  --font-Lato: "Lato", sans-serif;
+  /*color and bg-color define  */
+  --primary-color: #2ea3f2;
+  --color-dark: #333333;
+  --color-black: #000000;
+  --color-white: #fff;
+  /* Define your primary color */
+  /* Font-Size in define */
+  --fontSizeExtraLarge: 80px;
+  --fontSizeLarge: 50px;
+  --fontSizeMedium: 40px;
+  --fontSizeSmall: 35px;
+  --fontSizeExtraSmall: 30px;
+  --fontSizeMinSmall: 24px;
+  --fontSizeLightSmall: 18px;
+  /* font-size and font-weight */
+  --fontWeightThin: 100;
+  --fontWeightLighter: 200;
+  --fontWeightLight: 300;
+  --fontWeightNormal: 400;
+  --fontWeightMedium: 500;
+  --fontWeightBolder: 600;
+  --fontWeightBold: 700;
+  --fontWeightExtraBold: 800;
+  --fontWeightUltraBold: 900;
+}
+
+.spanBlack {
+  color: #000000 !important;
+}
+
+.spanPrimary {
+  color: #2ea3f2;
+}
+
+.fontWeightEight {
+  font-weight: 800 !important;
+}
+
+.fontWeightThree {
+  font-weight: 300 !important;
+}

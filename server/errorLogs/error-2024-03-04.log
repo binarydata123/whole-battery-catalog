@@ -1,0 +1,2 @@
+{"level":"error","message":"Error fetching notification:","stack":"at notification (/opt/lampp/htdocs/node js/stayable/server/src/controllers/common/notificationController.js:18:4)","timestamp":"2024-03-04T13:12:34.255Z"}
+{"level":"error","message":"Error fetching notification:","stack":"at notification (/opt/lampp/htdocs/node js/stayable/server/src/controllers/common/notificationController.js:18:4)","timestamp":"2024-03-04T13:12:34.679Z"}

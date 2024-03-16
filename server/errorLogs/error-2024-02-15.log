@@ -1,0 +1,6 @@
+{"level":"error","message":"TypeError: Invalid sort value: { roomName: ASC }","stack":"at /opt/lampp/htdocs/stayable/server/src/middleware/catchErrors.js:6:3","timestamp":"2024-02-15T10:09:57.438Z"}
+{"level":"error","message":"TypeError: Invalid sort value: { roomName: ASC }","stack":"at /opt/lampp/htdocs/stayable/server/src/middleware/catchErrors.js:6:3","timestamp":"2024-02-15T10:09:57.547Z"}
+{"level":"error","message":"TypeError: Invalid sort value: { roomName: ASC }","stack":"at /opt/lampp/htdocs/stayable/server/src/middleware/catchErrors.js:6:3","timestamp":"2024-02-15T10:10:36.404Z"}
+{"level":"error","message":"TypeError: Invalid sort value: { roomName: ASC }","stack":"at /opt/lampp/htdocs/stayable/server/src/middleware/catchErrors.js:6:3","timestamp":"2024-02-15T10:10:36.485Z"}
+{"level":"error","message":"TypeError: Invalid sort value: { roomName: acs }","stack":"at /opt/lampp/htdocs/stayable/server/src/middleware/catchErrors.js:6:3","timestamp":"2024-02-15T10:11:35.021Z"}
+{"level":"error","message":"TypeError: Invalid sort value: { roomName: acs }","stack":"at /opt/lampp/htdocs/stayable/server/src/middleware/catchErrors.js:6:3","timestamp":"2024-02-15T10:11:35.118Z"}

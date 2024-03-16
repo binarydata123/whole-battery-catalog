@@ -1,0 +1,5 @@
+{"level":"error","message":"Error adding/updating Ticket:","stack":"at /home/sunil-des/Music/stayable/server/src/controllers/common/ticketController.js:239:6","timestamp":"2024-02-19T04:41:18.649Z"}
+{"level":"error","message":"Error adding/updating Ticket:","stack":"at /home/sunil-des/Music/stayable/server/src/controllers/common/ticketController.js:239:6","timestamp":"2024-02-19T04:41:36.635Z"}
+{"level":"error","message":"Error adding/updating Ticket:","stack":"at /home/sunil-des/Music/stayable/server/src/controllers/common/ticketController.js:239:6","timestamp":"2024-02-19T04:41:49.653Z"}
+{"level":"error","message":"Error adding/updating Ticket:","stack":"at /home/sunil-des/Music/stayable/server/src/controllers/common/ticketController.js:239:6","timestamp":"2024-02-19T04:44:04.524Z"}
+{"level":"error","message":"Error adding/updating Ticket:","stack":"at /home/sunil-des/Music/stayable/server/src/controllers/common/ticketController.js:239:6","timestamp":"2024-02-19T09:45:32.852Z"}

@@ -1,0 +1,24 @@
+name: Deploy to the server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: SSH to VPS and deploy
+        uses: appleboy/ssh-action@master
+        with:
+          # host: 31.220.57.211
+          # username: root
+          # password: ${{ secrets.SSH_PASSWORD }}
+          # script: |
+          #   cd /var/www
+          #   bash stayableDeploy.sh

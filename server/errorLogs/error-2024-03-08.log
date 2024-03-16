@@ -1,0 +1,2 @@
+{"level":"error","message":"CastError: Cast to ObjectId failed for value \"\" (type string) at path \"hotelId\" for model \"rooms\"","stack":"at /opt/lampp/htdocs/node js/stayable/server/src/middleware/catchErrors.js:6:3","timestamp":"2024-03-08T14:07:05.511Z"}
+{"level":"error","message":"CastError: Cast to ObjectId failed for value \"\" (type string) at path \"hotelId\" for model \"rooms\"","stack":"at /opt/lampp/htdocs/node js/stayable/server/src/middleware/catchErrors.js:6:3","timestamp":"2024-03-08T14:07:05.520Z"}
