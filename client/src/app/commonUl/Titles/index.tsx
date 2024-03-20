@@ -68,20 +68,21 @@ const Titles = ({ level = 1, content, children, className = '', color = 'default
 				style={{
 					fontSize,
 					fontWeight,
-					color: `${color == 'defaultColor'
-						? '#4F4F4F'
-						: color == 'white'
-							? '#fff'
-							: color == 'SecondaryColor'
-								? '#0091F7'
-								: color == 'PrimaryColor'
-									? '#012A59'
-									: color == 'black'
-										? '#000'
-										: color == 'yellowText'
-											? '#FFE70F'
-											: color
-						}`
+					color: `${
+						color == 'defaultColor'
+							? '#4F4F4F'
+							: color == 'white'
+								? '#fff'
+								: color == 'SecondaryColor'
+									? '#0091F7'
+									: color == 'PrimaryColor'
+										? '#012A59'
+										: color == 'black'
+											? '#000'
+											: color == 'yellowText'
+												? '#FFE70F'
+												: color
+					}`
 				}}
 			>
 				{content || children}

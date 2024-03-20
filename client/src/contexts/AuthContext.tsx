@@ -34,42 +34,42 @@ const AuthContextProvider = ({ children }: AuthContextProp) => {
 	const [user, setUser] = useState<User | undefined>();
 	const [initialized, setInitialized] = useState<boolean>(false);
 
-	useEffect(() => {
-		const token = Cookies.get('session_token');
+	// useEffect(() => {
+	// 	const token = Cookies.get('session_token');
 
-		const checkSession = async () => {
-			if (token) {
-				try {
-					const response = await api.get('/auth/check-session', {
-						headers: {
-							Authorization: `${token}`
-						}
-					});
+	// 	const checkSession = async () => {
+	// 		if (token) {
+	// 			try {
+	// 				const response = await api.get('/auth/check-session', {
+	// 					headers: {
+	// 						Authorization: `${token}`
+	// 					}
+	// 				});
 
-					if (response && response.data && response.data.user) {
-						setInitialized(true);
-						setUser(response.data.user);
-						Cookies.set('session_token', response.data.refreshedToken);
-					} else {
-						setInitialized(true);
-						Cookies.remove('session_token');
-						setUser(undefined);
-						router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
-					}
-				} catch (error) {
-					setInitialized(true);
-					ErrorHandler.showNotification(error);
-					Cookies.remove('session_token');
-					setUser(undefined);
-					router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
-				}
-			} else {
-				router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
-			}
-		};
+	// 				if (response && response.data && response.data.user) {
+	// 					setInitialized(true);
+	// 					setUser(response.data.user);
+	// 					Cookies.set('session_token', response.data.refreshedToken);
+	// 				} else {
+	// 					setInitialized(true);
+	// 					Cookies.remove('session_token');
+	// 					setUser(undefined);
+	// 					router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
+	// 				}
+	// 			} catch (error) {
+	// 				setInitialized(true);
+	// 				ErrorHandler.showNotification(error);
+	// 				Cookies.remove('session_token');
+	// 				setUser(undefined);
+	// 				router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
+	// 			}
+	// 		} else {
+	// 			router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
+	// 		}
+	// 	};
 
-		checkSession();
-	}, []);
+	// 	checkSession();
+	// }, []);
 
 	// useEffect(() => {
 	// 	if (initialized && user) {

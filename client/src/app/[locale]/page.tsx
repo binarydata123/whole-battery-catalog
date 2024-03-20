@@ -1,12 +1,25 @@
+// Filename: pages/index.js
+// 'use client';
+// import { Button } from 'antd';
+// import { useState } from 'react';
 
-type Props = {
-	params: { locale: string };
-};
+import Home from '@/components/Home';
 
-export default function IndexPage({ params: { locale } }: Props) {
+// import { CiDark } from 'react-icons/ci';
+export default function page() {
+	// eslint-disable-next-line react-hooks/rules-of-hooks
+	// const [darkMode, setDarkMode] = useState(false);
+
+	// const toggleDarkMode = () => {
+	// 	setDarkMode(!darkMode);
+	// };
 	return (
+		// <div className={darkMode ? 'dark-mode' : 'light-mode'}>
+		// 	<div className="custocon"></div>
+		// 	<Button onClick={toggleDarkMode} icon={<CiDark />}></Button>
+		// </div>
 		<>
-			<h1>Home</h1>
+			<Home />
 		</>
 	);
 }

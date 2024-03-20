@@ -1,4 +1,5 @@
 // Import necessary libraries/components
+'use client';
 import React, { useState } from 'react';
 import { Rate } from 'antd';
 import styles from './rateStar.module.css';

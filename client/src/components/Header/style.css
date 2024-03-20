@@ -5,8 +5,7 @@
   display: inline-block;
   padding: 0px 20px;
 }
-.logoMain h2 {
-  font-size: var(--fontSizeExtraSmall);
-  font-weight: var(--fontWeightBold);
-  color: var(--primary-color);
+#customContainer ul li a {
+  color: #6b7280;
+  font-size: 18px;
 }

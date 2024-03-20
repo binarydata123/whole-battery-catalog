@@ -1,0 +1,9 @@
+.defaultButton {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100%;
+}
+#loginForm .ant-form-item {
+  margin-bottom: 12px;
+}

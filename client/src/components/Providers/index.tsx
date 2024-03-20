@@ -48,7 +48,7 @@ const Providers = (props: Props) => {
 
 	return (
 		<SessionProvider>
-			{/* {excludedPaths.some((path) => pathname.includes(path)) ? null : <Header />} */}
+			{excludedPaths.some((path) => pathname.includes(path)) ? null : <Header />}
 			{props.children}
 			{/* {excludedPaths.some((path) => pathname.includes(path)) || isMobile ? '' : <Footer />} */}
 		</SessionProvider>

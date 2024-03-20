@@ -53,42 +53,44 @@ export default function SecondaryButton({
 					width: width === '100%' ? width : `${width}px`, // Adjust width for desktop view
 					height: `${height}px`,
 					padding: '0px 20px',
-					color: `${color
-						? color
-						: type === 'primary'
-							? '#FFFFFF'
-							: type === 'secondary'
-								? '#0055BA'
-								: type === 'gray'
-									? '#fff'
-									: type === 'default'
-										? '#0F43E6'
-										: type === 'yellow'
-											? '#012A59'
-											: type === 'danger'
-												? '#fff'
-												: type === 'transparent'
-													? '#484848'
-													: ''
-						}`,
-					background: `${background
-						? background
-						: type === 'primary'
-							? '#0091F7'
-							: type === 'secondary'
-								? '#0055BA14'
-								: type === 'gray'
-									? '#407BFF'
-									: type === 'default'
-										? '#FFFFFF'
-										: type === 'yellow'
-											? '#FFE70F'
-											: type === 'danger'
-												? '#D73131'
-												: type === 'transparent'
-													? '#fff0'
-													: ''
-						}`,
+					color: `${
+						color
+							? color
+							: type === 'primary'
+								? '#FFFFFF'
+								: type === 'secondary'
+									? '#0055BA'
+									: type === 'gray'
+										? '#fff'
+										: type === 'default'
+											? '#0F43E6'
+											: type === 'yellow'
+												? '#012A59'
+												: type === 'danger'
+													? '#fff'
+													: type === 'transparent'
+														? '#484848'
+														: ''
+					}`,
+					background: `${
+						background
+							? background
+							: type === 'primary'
+								? '#0091F7'
+								: type === 'secondary'
+									? '#0055BA14'
+									: type === 'gray'
+										? '#407BFF'
+										: type === 'default'
+											? '#FFFFFF'
+											: type === 'yellow'
+												? '#FFE70F'
+												: type === 'danger'
+													? '#D73131'
+													: type === 'transparent'
+														? '#fff0'
+														: ''
+					}`,
 					borderRadius: `${borderRadius}px`
 				}}
 			>

@@ -4,6 +4,8 @@ import './style.css';
 import { Button, Col, Image, Row } from 'antd';
 import { CloseOutlined, MenuOutlined } from '@ant-design/icons';
 import Link from 'next/link';
+import PrimaryButton from '@/app/commonUl/PrimaryButton';
+import SecondaryButton from '@/app/commonUl/SecondaryButton';
 
 export default function Header() {
 	return (
@@ -18,24 +20,24 @@ export default function Header() {
 					<Col xl={14} md={20} xs={24} className="textEnd">
 						<ul className="listItems">
 							<li>
-								<Link href="/">About us</Link>
+								<Link href="/">Home</Link>
+							</li>
+							<li>
+								<Link href="/">About Us</Link>
 							</li>
 							<li>
 								<Link href="/">Services</Link>
 							</li>
 							<li>
-								<Link href="/">Testimonials</Link>
-							</li>
-							<li>
-								<Link href="/">Blog</Link>
-							</li>
-							<li>
 								<Link href="/">Contact Us</Link>
+							</li>
+							<li>
+								<Link href="/">Refund Policy</Link>
 							</li>
 						</ul>
 					</Col>
 					<Col xl={4} md={24} xs={24} className="textEnd">
-
+						<SecondaryButton label="Add New" />
 					</Col>
 				</Row>
 			</div>

@@ -1,0 +1,30 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 90
+    },
+    "auditLog": "/opt/lampp/htdocs/whole-battery-catalog/server/errorLogs/.2cdba98d00234cbdb38947914e1ff1583ef09bce-audit.json",
+    "files": [
+        {
+            "date": 1710592975581,
+            "name": "/opt/lampp/htdocs/whole-battery-catalog/server/errorLogs/error-2024-03-16.log",
+            "hash": "eb8c18b0510615325524f82e88b1823a0b90b0919ca41081f6d734b336a27ff6"
+        },
+        {
+            "date": 1710731971510,
+            "name": "/opt/lampp/htdocs/whole-battery-catalog/server/errorLogs/error-2024-03-18.log",
+            "hash": "c6e4622462999cec57f0fe85edace94bdfce4e6b800111178fbc2dac47745dc3"
+        },
+        {
+            "date": 1710819001511,
+            "name": "/opt/lampp/htdocs/whole-battery-catalog/server/errorLogs/error-2024-03-19.log",
+            "hash": "57e8f8a6a0d54dfeb36bfc0dc0e1e5bf1bdd60670a29605a6f6defba2efda4ee"
+        },
+        {
+            "date": 1710905728961,
+            "name": "/opt/lampp/htdocs/whole-battery-catalog/server/errorLogs/error-2024-03-20.log",
+            "hash": "592e48631aac542be50b5147454815a13eb2f2f6565a81ed781841aea0d2b72e"
+        }
+    ],
+    "hashType": "sha256"
+}

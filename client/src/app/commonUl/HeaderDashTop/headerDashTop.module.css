@@ -1,0 +1,28 @@
+.flexTwo {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  float: right;
+}
+
+.flexTwo svg {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  border-radius: 30px;
+  background: #f4f7fe;
+  padding: 5px;
+  color: #111827;
+}
+
+.headerDashboard {
+  padding: 30px 24px;
+  background-image: linear-gradient(to right, #243949 0%, #517fa4 100%);
+  box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+}
+
+@media (max-width: 991px) {
+  .headerDashboard {
+    padding: 30px 15px;
+  }
+}

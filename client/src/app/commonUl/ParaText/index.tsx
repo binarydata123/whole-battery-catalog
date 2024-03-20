@@ -85,20 +85,21 @@ const ParaText = ({
 				style={{
 					fontSize,
 					fontWeight,
-					color: `${color == 'defaultColor'
-						? '#4F4F4F'
-						: color == 'PrimaryColor'
-							? '#012A59'
-							: color == 'blueLight'
-								? '#0091F7'
-								: color == 'SecondaryColor'
-									? '#1877F2'
-									: color == 'white'
-										? '#fff'
-										: color == 'black'
-											? '#000'
-											: color
-						}`
+					color: `${
+						color == 'defaultColor'
+							? '#6b7280'
+							: color == 'PrimaryColor'
+								? '#0A8FDC'
+								: color == 'blueLight'
+									? '#111827'
+									: color == 'SecondaryColor'
+										? '#1877F2'
+										: color == 'white'
+											? '#fff'
+											: color == 'black'
+												? '#000'
+												: color
+					}`
 				}}
 			>
 				{children}

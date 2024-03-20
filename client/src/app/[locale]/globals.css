@@ -1,10 +1,27 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
 * {
-  font-family: 'Lato', sans-serif;
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+.dark-mode {
+  background-color: black;
+  color: white;
 }
 
+.light-mode {
+  background-color: white;
+  color: black;
+}
+body {
+  overflow-x: hidden;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 0px;
+}
 /* body {
   font-family: var(--font-Lato) !important;
 } */
@@ -15,12 +32,12 @@ h3,
 h4,
 h5,
 h6 {
-  margin: 0px !important;
-  padding: 0px !important;
+  margin: 0px;
+  padding: 0px;
 }
 
 p {
-  margin: 0px !important;
+  margin: 0px;
 }
 
 ul {
@@ -34,8 +51,8 @@ li {
 
 :root {
   /*  font-family */
-  --font-dm-sans: "DM Sans", sans-serif;
-  --font-Lato: "Lato", sans-serif;
+  --font-dm-sans: 'DM Sans', sans-serif;
+  --font-Lato: 'Lato', sans-serif;
   /*color and bg-color define  */
   --primary-color: #2ea3f2;
   --color-dark: #333333;
@@ -76,4 +93,27 @@ li {
 
 .fontWeightThree {
   font-weight: 300 !important;
+}
+.ant-input:-internal-autofill-selected,
+.ant-input:hover:-internal-autofill-selected,
+.ant-input:focus:-internal-autofill-selected,
+.ant-input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+  color: fieldtext !important;
+}
+.ant-btn-primary {
+  color: #fff !important;
+  background: #0a8fdc !important;
+  box-shadow: 0 2px 0 rgba(8, 108, 168, 0.15);
+  list-style: 32px;
+  font-size: 16px;
+  font-weight: 700 !important;
+}
+.ant-btn-default {
+  color: #111827 !important;
+  background: #fff !important;
+  box-shadow: 0 2px 0 rgba(8, 108, 168, 0.15);
+  list-style: 32px;
+  font-size: 16px;
+  font-weight: 700 !important;
 }
