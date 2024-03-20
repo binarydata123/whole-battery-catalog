@@ -34,70 +34,64 @@ const AuthContextProvider = ({ children }: AuthContextProp) => {
 	const [user, setUser] = useState<User | undefined>();
 	const [initialized, setInitialized] = useState<boolean>(false);
 
-	// useEffect(() => {
-	// 	const token = Cookies.get('session_token');
+	useEffect(() => {
+		const token = Cookies.get('session_token');
 
-	// 	const checkSession = async () => {
-	// 		if (token) {
-	// 			try {
-	// 				const response = await api.get('/auth/check-session', {
-	// 					headers: {
-	// 						Authorization: `${token}`
-	// 					}
-	// 				});
+		const checkSession = async () => {
+			if (token) {
+				try {
+					const response = await api.get('/auth/check-session', {
+						headers: {
+							Authorization: `${token}`
+						}
+					});
 
-	// 				if (response && response.data && response.data.user) {
-	// 					setInitialized(true);
-	// 					setUser(response.data.user);
-	// 					Cookies.set('session_token', response.data.refreshedToken);
-	// 				} else {
-	// 					setInitialized(true);
-	// 					Cookies.remove('session_token');
-	// 					setUser(undefined);
-	// 					router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
-	// 				}
-	// 			} catch (error) {
-	// 				setInitialized(true);
-	// 				ErrorHandler.showNotification(error);
-	// 				Cookies.remove('session_token');
-	// 				setUser(undefined);
-	// 				router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
-	// 			}
-	// 		} else {
-	// 			router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
-	// 		}
-	// 	};
+					if (response && response.data && response.data.user) {
+						setInitialized(true);
+						setUser(response.data.user);
+						Cookies.set('session_token', response.data.refreshedToken);
+					} else {
+						setInitialized(true);
+						Cookies.remove('session_token');
+						setUser(undefined);
+						router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
+					}
+				} catch (error) {
+					setInitialized(true);
+					ErrorHandler.showNotification(error);
+					Cookies.remove('session_token');
+					setUser(undefined);
+					router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
+				}
+			} else {
+				// router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
+			}
+		};
 
-	// 	checkSession();
-	// }, []);
+		checkSession();
+	}, []);
 
 	// useEffect(() => {
 	// 	if (initialized && user) {
 	// 		const currentPath = window.location.pathname;
 	// 		if (
 	// 			(currentPath.startsWith('/admin') && user?.role !== 'admin') ||
-	// 			(currentPath.startsWith('/user') && user?.role !== 'user') ||
-	// 			(currentPath.startsWith('/staff') && user?.role !== 'staff')
+	// 			(currentPath.startsWith('/user') && user?.role !== 'user')
 	// 		) {
 	// 			console.error('[AUTH] Unauthorized');
 	// 			switch (user?.role) {
 	// 				case 'admin':
-	// 					alert(user?.role)
 	// 					router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/admin/dashboard`);
 	// 					break;
 	// 				case 'user':
-	// 					router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/user/dashboard`);
-	// 					break;
-	// 				case 'staff':
-	// 					router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/staff/settings`);
+	// 					router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
 	// 					break;
 	// 				default:
-	// 					router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/login`);
+	// 					router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
 	// 					break;
 	// 			}
 	// 			return;
-	// 		}
-	// 		else {
+	// 		} else {
 	// 			return;
 	// 		}
 	// 	}
@@ -111,10 +105,11 @@ const AuthContextProvider = ({ children }: AuthContextProp) => {
 		const requestConfig: AxiosRequestConfig = {
 			url: process.env['NEXT_PUBLIC_API_URL'] + '/auth/login',
 			method: 'post',
-			params: {
+			data: {
 				...data
 			}
 		};
+
 		try {
 			const response = await axios(requestConfig);
 			if (response && response.data && response.data.token && response.data.user) {
@@ -122,39 +117,27 @@ const AuthContextProvider = ({ children }: AuthContextProp) => {
 				axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 				Cookies.set('session_token', token);
 				setUser(loggedInUser);
-
-				if (loggedInUser.twoFactorAuth === 'enabled') {
-					// Redirect to OTP page
-					message.success('OTP has been send successfully');
-
-					router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/otp`);
+				message.success('You are logged In!');
+				if (url) {
+					router.push(url);
 				} else {
-					// Redirect based on user role
-
-					if (url) {
-						router.push(url);
-					} else {
-						switch (loggedInUser.role) {
-							case 'admin':
-								router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/admin/dashboard`);
-								break;
-							case 'user':
-								router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/user/dashboard`);
-								break;
-							case 'staff':
-								router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/staff/settings`);
-								break;
-							default:
-								router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/login`);
-								break;
-						}
+					switch (loggedInUser.role) {
+						case 'admin':
+							router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/admin/dashboard`);
+							break;
+						case 'user':
+							router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
+							break;
+						default:
+							router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
+							break;
 					}
 				}
 
 				return token;
 			}
 		} catch (error: any) {
-			console.log('Login error', error);
+			// console.log('Login error', error);
 			ErrorHandler.showNotification(error);
 		}
 	};

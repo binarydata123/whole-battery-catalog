@@ -9,6 +9,16 @@
             "date": 1710586555475,
             "name": "/opt/lampp/htdocs/boiler-plate-mern-stack/server/errorLogs/error-2024-03-16.log",
             "hash": "c06e23f5af6b9a600d1bc24d1ee45870fb272a9e3a6a0ba055337d98fbc61f9b"
+        },
+        {
+            "date": 1710735094709,
+            "name": "/opt/lampp/htdocs/boiler-plate-mern-stack/server/errorLogs/error-2024-03-18.log",
+            "hash": "2e24180523c5db9a8b8c0c566a9b6b37692749a4211b7a9b1552c14b615dbc51"
+        },
+        {
+            "date": 1710819700672,
+            "name": "/opt/lampp/htdocs/boiler-plate-mern-stack/server/errorLogs/error-2024-03-19.log",
+            "hash": "0a838eb80919900b59fcebaa527e114a153674f5089a2d300666eccba7524b20"
         }
     ],
     "hashType": "sha256"
