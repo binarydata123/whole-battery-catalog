@@ -1,9 +1,9 @@
 .singleBlog {
-  background-image: url(https://www.laserax.com/sites/default/files/public/prismatic-vs-cylindrical-cells_0.jpg);
+  /* background-image: url(https://www.laserax.com/sites/default/files/public/prismatic-vs-cylindrical-cells_0.jpg); */
   padding: 100px 0px;
-  background-position: top;
+  /* background-position: top;
   background-size: cover;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -14,7 +14,7 @@
   justify-content: center !important;
 }
 .singleBlog ol a {
-  color: #fff;
+  color: #000;
   font-weight: 400;
 }
 .userDetails {
@@ -22,4 +22,17 @@
   border-radius: 16px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   padding: 16px;
+}
+#useChoice ul {
+  padding-left: 20px;
+}
+#useChoice ul li {
+  list-style: disc;
+  color: #4f4f4f;
+  padding: 8px 10px;
+  font-size: 16px;
+}
+#useChoice ul li::marker {
+  content: '👋';
+  left: 10px;
 }

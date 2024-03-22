@@ -4,6 +4,7 @@ import { Breadcrumb, Col, Image, Row } from 'antd';
 import Titles from '@/app/commonUl/Titles';
 import ParaText from '@/app/commonUl/ParaText';
 import Link from 'next/link';
+import Blog from '../Blog';
 export default function SingleBlog() {
 	return (
 		<div>
@@ -11,10 +12,10 @@ export default function SingleBlog() {
 				<div className="gapMarginFourTeenTop"></div>
 				<div className="singleBlog">
 					<div>
-						<Titles level={3} color="white">
+						<Titles level={3} color="PrimaryColor">
 							Five Smart Ways to Improve <br /> EV Battery Production
 						</Titles>
-						<ParaText size="medium" color="white">
+						<ParaText size="medium" color="PrimaryColor">
 							Batteries and battery management systems are the heart of todays electric vehicles
 						</ParaText>
 						<div className="gapMarginFourTeenTop"></div>
@@ -25,9 +26,6 @@ export default function SingleBlog() {
 								},
 								{
 									title: <Link href="/">Blog</Link>
-								},
-								{
-									title: <Link href="">Single Blog</Link>
 								}
 							]}
 						/>
@@ -39,8 +37,8 @@ export default function SingleBlog() {
 				<Image
 					src="https://cdn.ttweb.net/News/images/279991.jpg?preset=w800_q70"
 					alt="Ev Battery"
-					width={900}
-					height={500}
+					width={1520}
+					height={700}
 					preview={false}
 					style={{ borderRadius: '24px' }}
 				/>
@@ -146,7 +144,41 @@ export default function SingleBlog() {
 					accelerate the electrification of transportation on a global scale.
 				</ParaText>
 				<div className="gapMarginFourTeenTop"></div>
+				<Row gutter={[16, 16]} id="useChoice">
+					<Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+						<Titles level={5} color="PrimaryColor">
+							Our Products
+						</Titles>
+						<ParaText size="medium" color="defaultColor">
+							Explore our extensive range of batteries for all your devices, including:
+						</ParaText>
+						<ul>
+							<li>AA, AAA, C, D, and 9V batteries</li>
+							<li>Laptop and smartphone batteries</li>
+							<li>Car and motorcycle batteries</li>
+							<li>Rechargeable batteries</li>
+							<li>And much more!</li>
+						</ul>
+					</Col>
+					<Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+						<Titles level={5} color="PrimaryColor">
+							Why Choose Us?
+						</Titles>
+						<ParaText size="medium" color="defaultColor">
+							With the Whole Battery Catalog, you get:
+						</ParaText>
+						<ul>
+							<li>High-quality products from trusted brands</li>
+							<li>Competitive prices</li>
+							<li>Fast and reliable shipping</li>
+							<li>Excellent customer service</li>
+						</ul>
+					</Col>
+				</Row>
+
+				<div className="gapMarginFourTeenTop"></div>
 			</div>
+			<Blog />
 		</div>
 	);
 }
