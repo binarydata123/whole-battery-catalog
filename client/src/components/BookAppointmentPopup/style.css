@@ -1,0 +1,59 @@
+/* styles.module.css */
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+#appointment form {
+  margin: 40px auto;
+  border-radius: 10px;
+  border-top: 10px solid rgba(46, 163, 242, 1);
+  padding: 30px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+#appointment label {
+  display: block;
+  margin-bottom: 5px;
+  color: #000;
+}
+
+#appointment .ant-select-selector {
+  height: 45px;
+  background-color: rgba(246, 249, 255, 1);
+  margin-top: 8px;
+}
+
+#appointment .ant-select .ant-select-arrow {
+  color: #000 !important;
+  top: 90% !important;
+}
+
+#appointment input[type='text'],
+#appointment input[type='email'],
+#appointment select {
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #eef4ff;
+  border-radius: 4px;
+  height: 45px;
+  background-color: rgba(246, 249, 255, 1);
+  width: 100% !important;
+  margin: 0px;
+}
+
+#appointment textarea {
+  height: 150px;
+  width: 100%;
+  border: 1px solid #eef4ff;
+  border-radius: 4px;
+  background-color: rgba(246, 249, 255, 1);
+}
+
+.ant-picker.ant-picker-filled {
+  width: 100%;
+  border: 1px solid #eef4ff;
+  border-radius: 4px;
+  height: 45px;
+  background-color: rgba(246, 249, 255, 1);
+}

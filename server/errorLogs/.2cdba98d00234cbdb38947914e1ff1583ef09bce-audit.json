@@ -9,6 +9,16 @@
             "date": 1710915480263,
             "name": "/opt/lampp/htdocs/whole-battery-catalog/server/errorLogs/error-2024-03-20.log",
             "hash": "7969299c69ab54a8a49f7d709576d37aab6e4126ad08cc1f21785505c2b5821e"
+        },
+        {
+            "date": 1710991491117,
+            "name": "/opt/lampp/htdocs/whole-battery-catalog/server/errorLogs/error-2024-03-21.log",
+            "hash": "7f3b608ba38d7591b32dd617f89b4658c291bdeb8bc5f968521fc7a674d68e51"
+        },
+        {
+            "date": 1711077989955,
+            "name": "/opt/lampp/htdocs/whole-battery-catalog/server/errorLogs/error-2024-03-22.log",
+            "hash": "8c112eabaf917cfab18c6af326912186edf354fb272c8936e0d7711d0c692657"
         }
     ],
     "hashType": "sha256"

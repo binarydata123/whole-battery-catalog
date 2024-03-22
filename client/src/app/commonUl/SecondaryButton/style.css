@@ -1,9 +1,9 @@
 .primaryWrapper button {
   border-radius: 10px;
-  background: #ffe70f !important;
+  background: #ffe70f;
   height: 45px !important;
   border: none !important;
-  color: #012a59 !important;
+  color: #012a59;
   font-weight: 600 !important;
   font-size: 14px !important;
   cursor: pointer;

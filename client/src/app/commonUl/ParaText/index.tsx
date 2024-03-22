@@ -89,7 +89,7 @@ const ParaText = ({
 						color == 'defaultColor'
 							? '#6b7280'
 							: color == 'PrimaryColor'
-								? '#0A8FDC'
+								? '#012A59'
 								: color == 'blueLight'
 									? '#111827'
 									: color == 'SecondaryColor'

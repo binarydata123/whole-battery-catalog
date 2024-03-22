@@ -1,0 +1,53 @@
+#blog {
+  padding: 100px 0px;
+} /* Existing styles */
+
+.menu {
+  position: relative;
+  overflow: hidden;
+}
+.dropdown-content {
+  /* Existing styles */
+  min-width: 300px; /* Increase the minimum width for better readability */
+}
+
+.dropdown-item {
+  /* Existing styles */
+  position: relative;
+}
+
+.dropdown-item:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content .dropdown-content {
+  /* Position the sub-menu */
+  position: absolute;
+  top: 0;
+  left: 12%;
+  display: none;
+  width: 100%;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 20px;
+}
+
+/* Style for the arrow */
+.dropdown-item::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 150px; /* Adjust the position as needed */
+  width: 0;
+  height: 0;
+  border: 5px solid transparent;
+  border-left-color: black;
+  transform: translateY(-50%);
+  transition: transform 0.3s;
+}
+
+/* Rotate the arrow on hover */
+.dropdown-item:hover::after {
+  transform: translateY(-50%) rotate(-90deg);
+}

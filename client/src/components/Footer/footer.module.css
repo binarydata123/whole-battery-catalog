@@ -1,0 +1,89 @@
+.footerPart {
+  background-image: linear-gradient(to right, #243949 0%, #517fa4 100%);
+}
+
+.followUs {
+  padding: 40px 0;
+}
+
+ul.footerSocialMediaLiks li {
+  list-style: none;
+  display: inline;
+  margin: 0 25px 0 0;
+}
+
+ul.footerSocialMediaLiks li a {
+  color: #fff;
+  font-size: 30px;
+}
+
+.footerLinks {
+  padding: 0;
+  margin: 25px 0 0 0;
+}
+
+.footerLinks a {
+  color: #d9d9d9;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 36px;
+}
+
+.footerLinks svg {
+  margin-right: 9px;
+  position: relative;
+  top: 2px;
+  font-size: 16px;
+  color: #000;
+}
+
+.borderFooter {
+  border-right: solid 1px #103b6b;
+}
+
+.flexContainer {
+  display: flex;
+}
+
+.footerSocialMediaLiks {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.footerSocialMediaLiks svg {
+  color: #fff;
+  font-size: 20px;
+}
+
+.formFooter {
+  position: relative;
+}
+
+.arrowForm {
+  position: absolute;
+  right: 13px;
+  top: 12px;
+  cursor: pointer;
+}
+
+.arrowForm svg {
+  font-size: 18px;
+  color: #2ea3f2;
+}
+
+@media (max-width: 991px) {
+  .columGap {
+    padding: 30px 0 30px 0;
+  }
+
+  .footerPart {
+    display: block;
+  }
+}
+
+@media (max-width: 767px) {
+  .borderFooter {
+    border-right: solid 0px #103b6b;
+  }
+}

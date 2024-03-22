@@ -20,7 +20,15 @@ export default function BannerSection() {
 							transportation and paving the way for a sustainable future.
 						</ParaText>
 						<div className="gapMarginTopTwo"></div>
-						<Button style={{ height: '45px', padding: '10px' }}>Book Appoinment</Button>
+						<Button
+							style={{
+								backgroundImage: '#fff !important',
+								height: '60px',
+								color: '#000 !important'
+							}}
+						>
+							Book Appoinment
+						</Button>
 					</div>
 				</div>
 			</div>

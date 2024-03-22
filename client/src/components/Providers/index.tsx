@@ -8,6 +8,7 @@ import AntdConfig from '@/lib/AntdConfig';
 import { usePathname } from 'next/navigation';
 import { SessionProvider } from 'next-auth/react';
 import Header from '../Header';
+import Footer from '../Footer';
 interface Props {
 	children: ReactNode;
 }
@@ -20,7 +21,6 @@ const Providers = (props: Props) => {
 	const excludedPaths = [
 		'/admin',
 		'/staff',
-
 		'/login',
 		'/otp',
 		'/register',
@@ -50,7 +50,7 @@ const Providers = (props: Props) => {
 		<SessionProvider>
 			{excludedPaths.some((path) => pathname.includes(path)) ? null : <Header />}
 			{props.children}
-			{/* {excludedPaths.some((path) => pathname.includes(path)) || isMobile ? '' : <Footer />} */}
+			{excludedPaths.some((path) => pathname.includes(path)) || isMobile ? '' : <Footer />}
 		</SessionProvider>
 	);
 };

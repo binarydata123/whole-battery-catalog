@@ -1,0 +1,29 @@
+/* aboutSection section start */
+.aboutSection {
+  padding: 80px 0px;
+}
+
+/* fromFill contact form */
+.fromFill {
+  padding: 100px 100px;
+  border-radius: 16px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+  margin: 30px 0px;
+}
+.socialIcon {
+  margin-top: 15px !important;
+}
+.socialIcon li {
+  display: inline-block;
+  padding: 0px 20px 0px 0px !important;
+  margin: 0px !important;
+}
+.socialIcon li a {
+  color: #4b5563;
+}
+
+@media (max-width: 991px) {
+  .fromFill {
+    padding: 10px 20px;
+  }
+}

@@ -1,0 +1,58 @@
+:root {
+  --main-color: #3f51b5;
+}
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+.container h2 {
+  text-align: center;
+  padding-top: 6%;
+  margin-bottom: 60px;
+  font-size: 1.8rem;
+  font-weight: 600;
+  position: relative;
+}
+.container h2::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 5px;
+  background-color: var(--main-color);
+  border-radius: 20px;
+}
+.row .service {
+  padding: 50px 15px;
+  background: transparent;
+  font-size: 15px;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.5s;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  overflow: hidden;
+}
+.row .service:hover {
+  color: #fff;
+  background-image: linear-gradient(-20deg, #2b5876 0%, #4e4376 100%);
+  transform: scale(1.05);
+}
+.row .service svg {
+  color: var(--main-color);
+  margin-bottom: 20px;
+  font-size: 40px;
+  transition: 0.5s;
+}
+.row .service:hover svg {
+  color: #fff;
+}
+.row .service h2 {
+  font-weight: 600;
+  margin-bottom: 20px;
+}

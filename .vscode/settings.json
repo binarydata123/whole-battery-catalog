@@ -14,7 +14,7 @@
 		}
 	},
 	"deepscan.ignoreConfirmWarning": true,
-	"cSpell.words": ["Frofile", "Opene"],
+	"cSpell.words": ["Frofile", "industrys", "jlqa", "Opene"],
 	"[json]": {
 		"editor.defaultFormatter": "esbenp.prettier-vscode"
 	}

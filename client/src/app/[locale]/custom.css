@@ -228,7 +228,13 @@ body {
   .gapMarginTop {
     margin-top: 10px !important;
   }
-
+  .ant-image.css-dev-only-do-not-override-t8jlqa {
+    width: 100% !important;
+    height: auto !important;
+  }
+  .ant-image.css-dev-only-do-not-override-t8jlqa img {
+    object-fit: cover;
+  }
   .myRow {
     row-gap: 0 !important;
   }
