@@ -108,6 +108,25 @@ export default function RegisterForm() {
 						<Input.Password style={{ width: '100%', height: '45px' }} />
 					</Form.Item>
 
+					<Form.Item
+						label="Confirm Password"
+						name="confirmPassword"
+						dependencies={['password']}
+						rules={[
+							{ required: true, message: 'Please confirm your Password!' },
+							({ getFieldValue }) => ({
+								validator(_, value) {
+									if (!value || getFieldValue('password') === value) {
+										return Promise.resolve();
+									}
+									return Promise.reject(new Error('The two passwords do not match!'));
+								}
+							})
+						]}
+					>
+						<Input.Password style={{ width: '100%', height: '45px' }} />
+					</Form.Item>
+
 					<Row align="middle">
 						<Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
 							<Form.Item name="remember" valuePropName="checked">
@@ -117,7 +136,7 @@ export default function RegisterForm() {
 						<Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12} className="textEnd">
 							<ParaText size="extraSmall" color="defaultColor">
 								<Link
-									href="/en/auth/login"
+									href="/en/login"
 									className="fontWeightEight"
 									style={{ color: '#0A8FDC', marginBottom: '12px', display: 'block' }}
 								>
@@ -147,7 +166,7 @@ export default function RegisterForm() {
 					<div className="textCenter">
 						<ParaText size="extraSmall" color="defaultColor">
 							Don’t have an account?{' '}
-							<Link href="/en/auth/login" className="fontWeightEight" style={{ color: '#0A8FDC' }}>
+							<Link href="/en//login" className="fontWeightEight" style={{ color: '#0A8FDC' }}>
 								Login
 							</Link>
 						</ParaText>

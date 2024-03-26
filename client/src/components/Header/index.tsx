@@ -10,8 +10,7 @@ import PrimaryButton from '@/app/commonUl/PrimaryButton';
 
 export default function Header() {
 	const [isOpen, setIsOpen] = useState(false);
-	const [showAppointmentPopup, setShowAppointmentPopup] = useState(false); // Add state for the appointment popup
-
+	const [showAppointmentPopup, setShowAppointmentPopup] = useState(false);
 	const toggleMenu = () => {
 		setIsOpen(!isOpen);
 	};
@@ -86,9 +85,6 @@ export default function Header() {
 								<Link href="/en/refund-policy">Refund Policy</Link>
 							</li>
 
-							<li>
-								<Link href="/en/reset-password">reset</Link>
-							</li>
 							<li>
 								<Link href="/en/login">Login</Link>
 							</li>

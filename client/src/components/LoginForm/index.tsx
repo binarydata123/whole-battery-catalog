@@ -1,5 +1,5 @@
 'use client';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -19,19 +19,17 @@ type FieldType = {
 export default function LoginForm() {
 	const router = useRouter();
 	const { user, login } = useContext(AuthContext);
+	const [loginError, setLoginError] = useState(false);
+	const [loading, setLoading] = useState(false);
 
-	const onFinish = async (values: FieldType) => {
-		const { username, password } = values;
-
-		if (username && password) {
-			try {
-				await login(username, password, '');
-				router.push('/en/about-us');
-			} catch (error) {
-				console.error('Login failed:', error);
-			}
-		} else {
-			console.error('Username or password is undefined');
+	const onFinish = async (values: any) => {
+		setLoading(true);
+		try {
+			await login(values.email, values.password, '');
+		} catch (error) {
+			setLoading(false);
+		} finally {
+			setLoading(false);
 		}
 	};
 
@@ -58,7 +56,7 @@ export default function LoginForm() {
 				<Form name="basic" onFinish={onFinish} autoComplete="off" layout="vertical">
 					<Form.Item
 						label="Username"
-						name="username"
+						name="email"
 						rules={[{ required: true, message: 'Please input your username!' }]}
 					>
 						<Input style={{ width: '100%', height: '45px' }} />
@@ -111,6 +109,7 @@ export default function LoginForm() {
 						</ParaText>
 					</div>
 				</Form>
+				{loginError && <div style={{ color: 'red' }}>Invalid username or password. Please try again.</div>}
 			</div>
 		</>
 	);

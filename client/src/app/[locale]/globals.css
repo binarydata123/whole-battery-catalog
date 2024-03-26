@@ -17,6 +17,9 @@
 body {
   overflow-x: hidden;
 }
+html {
+  overflow-x: hidden;
+}
 
 /* width */
 ::-webkit-scrollbar {
@@ -102,7 +105,7 @@ img {
 .ant-input:focus:-internal-autofill-selected,
 .ant-input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px white inset !important;
-  color: fieldtext !important;
+  color: #0000 !important;
 }
 .ant-btn-primary {
   color: #fff !important;
