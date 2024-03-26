@@ -62,7 +62,7 @@ export default function LoginForm() {
 						<Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12} className="textEnd">
 							<ParaText size="extraSmall" color="defaultColor">
 								<Link
-									href="/en/auth/forgot-password"
+									href="/en/forgot-password"
 									className="fontWeightEight"
 									style={{ color: '#0A8FDC', marginBottom: '12px', display: 'block' }}
 								>
@@ -73,14 +73,14 @@ export default function LoginForm() {
 					</Row>
 
 					<Form.Item>
-						<Link href="/en/auth/login">
+						<Link href="/en/login">
 							<Button type="primary" htmlType="submit" style={{ width: '100%', height: '45px' }}>
 								Log in
 							</Button>
 						</Link>
 					</Form.Item>
 					<Form.Item>
-						<Link href="/en/auth/sign-google">
+						<Link href="/en/sign-google">
 							<Button
 								icon={<FcGoogle style={{ fontSize: '20px' }} />}
 								htmlType="submit"
@@ -95,7 +95,7 @@ export default function LoginForm() {
 					<div className="textCenter">
 						<ParaText size="extraSmall" color="defaultColor">
 							Don’t have an account?{' '}
-							<Link href="/en/auth/register" className="fontWeightEight" style={{ color: '#0A8FDC' }}>
+							<Link href="/en/register" className="fontWeightEight" style={{ color: '#0A8FDC' }}>
 								Sign up
 							</Link>
 						</ParaText>
