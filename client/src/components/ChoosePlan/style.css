@@ -35,7 +35,7 @@
 .pricing-card:hover {
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   transform: translateY(-16px) scale(1.02);
-  transition: all 0.5s ease;
+  transition: all 0.9s;
 }
 
 .pricing-card > *:not(:last-child) {

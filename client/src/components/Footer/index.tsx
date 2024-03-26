@@ -69,7 +69,7 @@ export default function Footer() {
 									<li>
 										<Link href={`${process.env['NEXT_PUBLIC_SITE_URL']}/property/gainesville`}>
 											<ParaText size="textGraf" color="white">
-												Weight Management
+												EV Battery Health
 											</ParaText>
 										</Link>
 									</li>
