@@ -1,23 +1,48 @@
 'use client';
-import React from 'react';
-import './style.css';
-import { Button, Checkbox, Form, type FormProps, Input, Row, Col } from 'antd';
+import React, { useContext } from 'react';
+import { Button, Checkbox, Form, Input } from 'antd';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import AuthContext from '@/contexts/AuthContext';
+import { signIn } from 'next-auth/react';
+import Titles from '@/app/commonUl/Titles';
 import ParaText from '@/app/commonUl/ParaText';
 import { FcGoogle } from 'react-icons/fc';
-import Link from 'next/link';
-import Titles from '@/app/commonUl/Titles';
+import { Row, Col } from 'antd';
+
 type FieldType = {
 	username?: string;
 	password?: string;
 	remember?: string;
 };
+
 export default function LoginForm() {
-	const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-		console.log('Success:', values);
+	const router = useRouter();
+	const { user, login } = useContext(AuthContext);
+
+	const onFinish = async (values: FieldType) => {
+		const { username, password } = values;
+
+		if (username && password) {
+			try {
+				await login(username, password, '');
+				router.push('/en/about-us');
+			} catch (error) {
+				console.error('Login failed:', error);
+			}
+		} else {
+			console.error('Username or password is undefined');
+		}
 	};
-	const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
-		console.log('Failed:', errorInfo);
+
+	const handleGoogleLogin = async () => {
+		try {
+			await signIn('google');
+		} catch (error) {
+			console.error('Google login failed:', error);
+		}
 	};
+
 	return (
 		<>
 			<div className="" id="loginForm">
@@ -30,14 +55,8 @@ export default function LoginForm() {
 					</ParaText>
 				</div>
 				<div className="gapMarginFourTeenTop"></div>
-				<Form
-					name="basic"
-					onFinish={onFinish}
-					onFinishFailed={onFinishFailed}
-					autoComplete="off"
-					layout="vertical"
-				>
-					<Form.Item<FieldType>
+				<Form name="basic" onFinish={onFinish} autoComplete="off" layout="vertical">
+					<Form.Item
 						label="Username"
 						name="username"
 						rules={[{ required: true, message: 'Please input your username!' }]}
@@ -45,7 +64,7 @@ export default function LoginForm() {
 						<Input style={{ width: '100%', height: '45px' }} />
 					</Form.Item>
 
-					<Form.Item<FieldType>
+					<Form.Item
 						label="Password"
 						name="password"
 						rules={[{ required: true, message: 'Please input your password!' }]}
@@ -55,14 +74,14 @@ export default function LoginForm() {
 
 					<Row align="middle">
 						<Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
-							<Form.Item<FieldType> name="remember" valuePropName="checked">
+							<Form.Item name="remember" valuePropName="checked">
 								<Checkbox>Remember me</Checkbox>
 							</Form.Item>
 						</Col>
 						<Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12} className="textEnd">
 							<ParaText size="extraSmall" color="defaultColor">
 								<Link
-									href="/en/auth/forgot-password"
+									href="/en/forgot-password"
 									className="fontWeightEight"
 									style={{ color: '#0A8FDC', marginBottom: '12px', display: 'block' }}
 								>
@@ -73,29 +92,20 @@ export default function LoginForm() {
 					</Row>
 
 					<Form.Item>
-						<Link href="/en/auth/login">
-							<Button type="primary" htmlType="submit" style={{ width: '100%', height: '45px' }}>
-								Log in
-							</Button>
-						</Link>
+						<Button type="primary" htmlType="submit" style={{ width: '100%', height: '45px' }}>
+							Log in
+						</Button>
 					</Form.Item>
 					<Form.Item>
-						<Link href="/en/auth/sign-google">
-							<Button
-								icon={<FcGoogle style={{ fontSize: '20px' }} />}
-								htmlType="submit"
-								className="defaultButton"
-								style={{ width: '100%', height: '45px' }}
-							>
-								Sign in with Google
-							</Button>
-						</Link>
+						<Button type="primary" onClick={handleGoogleLogin} style={{ width: '100%', height: '45px' }}>
+							Sign in with Google
+						</Button>
 					</Form.Item>
 					<div className="gapMarginFourTeenTop"></div>
 					<div className="textCenter">
 						<ParaText size="extraSmall" color="defaultColor">
 							Don’t have an account?{' '}
-							<Link href="/en/auth/register" className="fontWeightEight" style={{ color: '#0A8FDC' }}>
+							<Link href="/en/register" className="fontWeightEight" style={{ color: '#0A8FDC' }}>
 								Sign up
 							</Link>
 						</ParaText>

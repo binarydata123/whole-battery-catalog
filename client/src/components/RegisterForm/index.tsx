@@ -1,23 +1,65 @@
 'use client';
-import React from 'react';
-import './style.css';
-import { Button, Checkbox, Form, type FormProps, Input, Row, Col } from 'antd';
-import ParaText from '@/app/commonUl/ParaText';
+
+import React, { useContext, useEffect, useState } from 'react';
+import { Form, Input, Button, Checkbox, Row, Col, message } from 'antd';
 import { FcGoogle } from 'react-icons/fc';
 import Link from 'next/link';
 import Titles from '@/app/commonUl/Titles';
-type FieldType = {
-	username?: string;
-	password?: string;
-	remember?: string;
-};
+import ParaText from '@/app/commonUl/ParaText';
+import { signIn, signOut, useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { register } from '@/lib/ApiAdapter';
+import Cookies from 'js-cookie';
+import './style.css';
+import ErrorHandler from '@/lib/ErrorHandler';
+
 export default function RegisterForm() {
-	const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-		console.log('Success:', values);
+	const [form] = Form.useForm();
+	const router = useRouter();
+	const [loading, setLoading] = useState(false);
+	const { data: session } = useSession();
+
+	const onFinish = async (values: any) => {
+		setLoading(true);
+		try {
+			const response = await register(values);
+			console.log('Registration response:', response);
+
+			message.success('Registration successful');
+			router.push('/en/login');
+		} catch (error) {
+			console.error('Registration failed:', error);
+			message.error('Registration failed. Please try again later.');
+		} finally {
+			setLoading(false);
+		}
 	};
-	const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
+
+	const onFinishFailed = (errorInfo: any) => {
 		console.log('Failed:', errorInfo);
 	};
+
+	useEffect(() => {
+		if (session) {
+		}
+	}, [session]);
+
+	const handleGoogleLogin = async () => {
+		try {
+			await signIn('google');
+		} catch (error) {
+			console.error('Google login failed:', error);
+		}
+	};
+
+	const handleFacebookLogin = async () => {
+		try {
+			await signIn('facebook');
+		} catch (error) {
+			console.error('Facebook login failed:', error);
+		}
+	};
+
 	return (
 		<>
 			<div className="" id="loginForm">
@@ -37,28 +79,28 @@ export default function RegisterForm() {
 					autoComplete="off"
 					layout="vertical"
 				>
-					<Form.Item<FieldType>
-						label="Fast Name"
-						name="username"
-						rules={[{ required: true, message: 'Please input your username!' }]}
+					<Form.Item
+						label="First Name"
+						name="name"
+						rules={[{ required: true, message: 'Please input your first name!' }]}
 					>
 						<Input style={{ width: '100%', height: '45px' }} />
 					</Form.Item>
-					<Form.Item<FieldType>
+					<Form.Item
 						label="Last Name"
-						name="username"
-						rules={[{ required: true, message: 'Please input your username!' }]}
+						name="lastName"
+						rules={[{ required: true, message: 'Please input your last name!' }]}
 					>
 						<Input style={{ width: '100%', height: '45px' }} />
 					</Form.Item>
-					<Form.Item<FieldType>
+					<Form.Item
 						label="Email"
-						name="username"
-						rules={[{ required: true, message: 'Please input your username!' }]}
+						name="email"
+						rules={[{ required: true, message: 'Please input your email!' }]}
 					>
 						<Input style={{ width: '100%', height: '45px' }} />
 					</Form.Item>
-					<Form.Item<FieldType>
+					<Form.Item
 						label="Password"
 						name="password"
 						rules={[{ required: true, message: 'Please input your password!' }]}
@@ -68,7 +110,7 @@ export default function RegisterForm() {
 
 					<Row align="middle">
 						<Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
-							<Form.Item<FieldType> name="remember" valuePropName="checked">
+							<Form.Item name="remember" valuePropName="checked">
 								<Checkbox>Remember me</Checkbox>
 							</Form.Item>
 						</Col>
@@ -86,23 +128,20 @@ export default function RegisterForm() {
 					</Row>
 
 					<Form.Item>
-						<Link href="/en/auth/register">
-							<Button type="primary" htmlType="submit" style={{ width: '100%', height: '45px' }}>
-								Sign in
-							</Button>
-						</Link>
+						<Button type="primary" style={{ width: '100%', height: '45px' }} htmlType="submit">
+							Sign in
+						</Button>
 					</Form.Item>
 					<Form.Item>
-						<Link href="/en/auth/sign-google">
-							<Button
-								icon={<FcGoogle style={{ fontSize: '20px' }} />}
-								htmlType="submit"
-								className="defaultButton"
-								style={{ width: '100%', height: '45px' }}
-							>
-								Sign in with Google
-							</Button>
-						</Link>
+						<Button
+							icon={<FcGoogle style={{ fontSize: '20px' }} />}
+							htmlType="submit"
+							className="defaultButton"
+							style={{ width: '100%', height: '45px' }}
+							onClick={handleGoogleLogin}
+						>
+							Sign in with Google
+						</Button>
 					</Form.Item>
 					<div className="gapMarginFourTeenTop"></div>
 					<div className="textCenter">
