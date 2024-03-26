@@ -1,58 +1,68 @@
 'use client';
 import React from 'react';
 import './style.css';
-import { Button, Checkbox, Form, type FormProps, Input, Row, Col } from 'antd';
+import { Button, Form, Input } from 'antd';
 import ParaText from '@/app/commonUl/ParaText';
-import { FcGoogle } from 'react-icons/fc';
-import Link from 'next/link';
 import Titles from '@/app/commonUl/Titles';
-type FieldType = {
-	username?: string;
-	password?: string;
-	remember?: string;
-};
+import { FaArrowLeft } from 'react-icons/fa6';
+import Link from 'next/link';
+import { forgetEmailPassword } from '@/lib/ApiAdapter';
+
 export default function ForgotPassword() {
-	const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-		console.log('Success:', values);
+	const onFinish = async (values: { email: string }) => {
+		try {
+			await forgetEmailPassword(values);
+			console.log('Reset password link sent successfully');
+		} catch (error) {
+			console.error('Failed to send reset password link:', error);
+		}
 	};
-	const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
+
+	const onFinishFailed = (errorInfo: any) => {
 		console.log('Failed:', errorInfo);
 	};
+
 	return (
-		<>
-			<div className="" id="loginForm">
-				<div>
-					<Titles level={3} color="black" className="textCenter">
-						Welcome back
-					</Titles>
-					<ParaText color="black" size="medium" className="textCenter dBlock">
-						Welcome back! Please enter your details.
-					</ParaText>
-				</div>
-				<div className="gapMarginFourTeenTop"></div>
+		<div className="customContainer">
+			<div className="loginForm">
+				<Titles level={5} color="black" className="textUppercase textCenter">
+					Forgot Password
+				</Titles>
+				<div className="gapMarginTop"></div>
 				<Form
-					name="basic"
+					name="normal_login"
+					className="login-form"
+					initialValues={{ remember: true }}
 					onFinish={onFinish}
 					onFinishFailed={onFinishFailed}
-					autoComplete="off"
-					layout="vertical"
 				>
-					<Form.Item<FieldType>
-						label="Password"
-						name="password"
-						rules={[{ required: true, message: 'Please input your password!' }]}
-					>
-						<Input.Password style={{ width: '100%', height: '45px' }} />
+					<Form.Item name="email" rules={[{ required: true, message: 'Please input your Email!' }]}>
+						<Input className="site-form-item-icon" style={{ height: '45px' }} placeholder="Email" />
 					</Form.Item>
+					<div className="gapMarginTop"></div>
 					<div className="textEnd">
-						<ParaText size="extraSmall" color="defaultColor">
-							<Link href="/en/auth/login" className="fontWeightEight" style={{ color: '#0A8FDC' }}>
-								Login
-							</Link>
+						<Button
+							type="primary"
+							htmlType="submit"
+							className="login-form-button"
+							style={{ width: '100%' }}
+						>
+							Send Me The Link
+						</Button>
+					</div>
+					<div className="gapMarginTop textCenter">
+						<ParaText color="black" size="textGraf">
+							<Link
+								href="/en/login"
+								style={{ color: 'rgba(46, 163, 242, 1) !important', fontWeight: 'bold !important' }}
+							>
+								{' '}
+								<FaArrowLeft /> Back to login{' '}
+							</Link>{' '}
 						</ParaText>
 					</div>
 				</Form>
 			</div>
-		</>
+		</div>
 	);
 }

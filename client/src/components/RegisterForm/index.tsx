@@ -1,78 +1,48 @@
 'use client';
+
 import React, { useContext, useEffect, useState } from 'react';
-import './style.css';
-import { Button, Checkbox, Form, type FormProps, Input, Row, Col, message } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import ParaText from '@/app/commonUl/ParaText';
+import { Form, Input, Button, Checkbox, Row, Col, message } from 'antd';
 import { FcGoogle } from 'react-icons/fc';
 import Link from 'next/link';
 import Titles from '@/app/commonUl/Titles';
-import { useRouter } from 'next/navigation';
-import AuthContext from '@/contexts/AuthContext';
+import ParaText from '@/app/commonUl/ParaText';
 import { signIn, signOut, useSession } from 'next-auth/react';
-import { register, socialLogin } from '@/lib/ApiAdapter';
+import { useRouter } from 'next/navigation';
+import { register } from '@/lib/ApiAdapter';
 import Cookies from 'js-cookie';
+import './style.css';
 import ErrorHandler from '@/lib/ErrorHandler';
-type FieldType = {
-	name?: string;
-	email?: string;
-	password?: string;
-	remember?: string;
-	confirmPassword?: string;
-};
+
 export default function RegisterForm() {
 	const [form] = Form.useForm();
 	const router = useRouter();
 	const [loading, setLoading] = useState(false);
-	const { login, setUser } = useContext(AuthContext);
 	const { data: session } = useSession();
 
 	const onFinish = async (values: any) => {
+		setLoading(true);
 		try {
-			setLoading(true);
-			const res = await register(values);
-			if (res.status === true) {
-				message.success(res.message);
-				form.resetFields();
-				router.push('/en/login');
-			} else {
-				message.error(res.message);
-			}
+			const response = await register(values);
+			console.log('Registration response:', response);
+
+			message.success('Registration successful');
+			router.push('/en/login');
 		} catch (error) {
-			console.log(error);
-			message.error('Failed to register. Please try again later.');
+			console.error('Registration failed:', error);
+			message.error('Registration failed. Please try again later.');
 		} finally {
 			setLoading(false);
 		}
 	};
 
+	const onFinishFailed = (errorInfo: any) => {
+		console.log('Failed:', errorInfo);
+	};
+
 	useEffect(() => {
 		if (session) {
-			SocialData(session.user);
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [session]);
-
-	const SocialData = (user: any) => {
-		const data = {
-			name: user.name,
-			email: user.email
-		};
-		socialLogin(data)
-			.then((res: any) => {
-				if (res) {
-					Cookies.set('session_token', res.token);
-					setUser(res.user);
-					signOut({ redirect: false }).then();
-					router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
-				} else {
-					message.error(res.message);
-				}
-			})
-			.catch((err) => {
-				ErrorHandler.showNotification(err);
-			});
-	};
 
 	const handleGoogleLogin = async () => {
 		try {
@@ -102,22 +72,35 @@ export default function RegisterForm() {
 					</ParaText>
 				</div>
 				<div className="gapMarginFourTeenTop"></div>
-				<Form name="basic" onFinish={onFinish} autoComplete="off" layout="vertical">
-					<Form.Item<FieldType>
-						label="Full Name"
+				<Form
+					name="basic"
+					onFinish={onFinish}
+					onFinishFailed={onFinishFailed}
+					autoComplete="off"
+					layout="vertical"
+				>
+					<Form.Item
+						label="First Name"
 						name="name"
-						rules={[{ required: true, message: 'Please input your FullName!' }]}
+						rules={[{ required: true, message: 'Please input your first name!' }]}
 					>
 						<Input style={{ width: '100%', height: '45px' }} />
 					</Form.Item>
-					<Form.Item<FieldType>
+					<Form.Item
+						label="Last Name"
+						name="lastName"
+						rules={[{ required: true, message: 'Please input your last name!' }]}
+					>
+						<Input style={{ width: '100%', height: '45px' }} />
+					</Form.Item>
+					<Form.Item
 						label="Email"
 						name="email"
-						rules={[{ required: true, message: 'Please input your username!' }]}
+						rules={[{ required: true, message: 'Please input your email!' }]}
 					>
 						<Input style={{ width: '100%', height: '45px' }} />
 					</Form.Item>
-					<Form.Item<FieldType>
+					<Form.Item
 						label="Password"
 						name="password"
 						rules={[{ required: true, message: 'Please input your password!' }]}
@@ -125,7 +108,7 @@ export default function RegisterForm() {
 						<Input.Password style={{ width: '100%', height: '45px' }} />
 					</Form.Item>
 
-					<Form.Item<FieldType>
+					<Form.Item
 						label="Confirm Password"
 						name="confirmPassword"
 						dependencies={['password']}
@@ -146,7 +129,7 @@ export default function RegisterForm() {
 
 					<Row align="middle">
 						<Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
-							<Form.Item<FieldType> name="remember" valuePropName="checked">
+							<Form.Item name="remember" valuePropName="checked">
 								<Checkbox>Remember me</Checkbox>
 							</Form.Item>
 						</Col>
@@ -164,23 +147,20 @@ export default function RegisterForm() {
 					</Row>
 
 					<Form.Item>
-						<Link href="/en/register">
-							<Button type="primary" htmlType="submit" style={{ width: '100%', height: '45px' }}>
-								{loading ? 'Please wait...' : 'Sign Up '}
-							</Button>
-						</Link>
+						<Button type="primary" style={{ width: '100%', height: '45px' }} htmlType="submit">
+							Sign in
+						</Button>
 					</Form.Item>
 					<Form.Item>
-						<Link href="/en/auth/sign-google">
-							<Button
-								icon={<FcGoogle style={{ fontSize: '20px' }} />}
-								htmlType="submit"
-								className="defaultButton"
-								style={{ width: '100%', height: '45px' }}
-							>
-								Sign in with Google
-							</Button>
-						</Link>
+						<Button
+							icon={<FcGoogle style={{ fontSize: '20px' }} />}
+							htmlType="submit"
+							className="defaultButton"
+							style={{ width: '100%', height: '45px' }}
+							onClick={handleGoogleLogin}
+						>
+							Sign in with Google
+						</Button>
 					</Form.Item>
 					<div className="gapMarginFourTeenTop"></div>
 					<div className="textCenter">
