@@ -1,19 +1,14 @@
 'use client';
 import './style.css';
-import React, { useContext } from 'react';
+import React from 'react';
 import type { MenuProps } from 'antd';
-import { Image, Menu } from 'antd';
+import { Menu } from 'antd';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { IoHome } from 'react-icons/io5';
 import { SiBloglovin } from 'react-icons/si';
-import ParaText from '../ParaText';
-import { SiAuthy } from 'react-icons/si';
-import { FaBell } from 'react-icons/fa';
 import { FaAppStore } from 'react-icons/fa';
-import { SlEnvolopeLetter } from 'react-icons/sl';
 import Titles from '../Titles';
-import { FaFileInvoice } from 'react-icons/fa';
 import { MdOutlinePayment } from 'react-icons/md';
 import { FaFilePdf } from 'react-icons/fa6';
 import { MdContacts } from 'react-icons/md';
@@ -47,14 +42,14 @@ const items: MenuItem[] = [
 	),
 	getItem(
 		'Generate Report',
-		'10',
+		'2',
 		<Link href="#" className="">
 			<FaAppStore className="menuIcon" />
 		</Link>,
 		[
 			getItem(
 				'Report Single ',
-				'4',
+				'3',
 				<Link href="/en/admin/report-single">
 					{' '}
 					<SiBloglovin />
@@ -63,8 +58,8 @@ const items: MenuItem[] = [
 
 			getItem(
 				'Generate PDF',
-				'8',
-				<Link href="/en/admin/generate-pdf">
+				'4',
+				<Link href="/en/admin/generatePDF">
 					{' '}
 					<FaFilePdf />
 				</Link>

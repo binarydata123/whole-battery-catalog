@@ -8,6 +8,8 @@ import ContactUs from '@/components/ContactUs';
 import About from '@/components/About';
 import Service from '@/components/Service';
 import Blog from '@/components/Blog';
+import ChoosePlan from '@/components/ChoosePlan';
+import CollapseSection from '@/components/CollapseSection';
 const { TextArea } = Input;
 export default function BannerSubSection() {
 	return (
@@ -123,7 +125,8 @@ export default function BannerSubSection() {
 					</Row>
 				</div>
 			</section>
-
+			<ChoosePlan />
+			<CollapseSection />
 			<ContactUs />
 		</>
 	);

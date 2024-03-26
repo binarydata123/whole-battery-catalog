@@ -75,7 +75,7 @@ export default function HeaderDashTop() {
 						<div className={styles.flexTwo}>
 							{/* <IoLanguageSharp /> */}
 							<FaBell onClick={openNotification} />
-							<MdEmail onClick={handleDivClick} />
+							<FaUserAlt onClick={handleDivClick} />
 						</div>
 					</Col>
 				</Row>

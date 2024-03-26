@@ -19,6 +19,11 @@
             "date": 1711077989955,
             "name": "/opt/lampp/htdocs/whole-battery-catalog/server/errorLogs/error-2024-03-22.log",
             "hash": "8c112eabaf917cfab18c6af326912186edf354fb272c8936e0d7711d0c692657"
+        },
+        {
+            "date": 1711423981165,
+            "name": "/opt/lampp/htdocs/whole-battery-catalog/server/errorLogs/error-2024-03-26.log",
+            "hash": "72f07ee89223b9f8cf6e4c0c79caa100737d08ba8a74a9536641e9b29b0e819c"
         }
     ],
     "hashType": "sha256"
