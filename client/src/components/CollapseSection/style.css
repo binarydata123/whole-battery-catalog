@@ -1,0 +1,15 @@
+.collspanSection {
+  padding: 100px 0px;
+}
+.collspanContent {
+  padding: 0px 100px;
+}
+
+@media (max-width: 991px) {
+  .collspanContent {
+    padding: 0px 20px;
+  }
+  .collspanSection {
+    padding: 20px 0px;
+  }
+}

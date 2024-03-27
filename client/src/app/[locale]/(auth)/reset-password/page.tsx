@@ -13,7 +13,6 @@ export default function ResetPassword() {
 	const token = searchParams.get('token');
 	const router = useRouter();
 	const [loading, setLoading] = useState(false);
-
 	const newPassword = async (values: any) => {
 		try {
 			setLoading(true);

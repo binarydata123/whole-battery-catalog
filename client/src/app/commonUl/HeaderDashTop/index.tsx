@@ -54,7 +54,7 @@ export default function HeaderDashTop() {
 									<TiTimes style={{ fontSize: '20px', color: 'white' }} />
 								</div> // Close icon
 							) : (
-								<TiThMenu style={{ fontSize: '20px' }} /> // Toggle icon
+								<TiThMenu style={{ fontSize: '20px', color: 'white' }} /> // Toggle icon
 							)}
 						</span>
 					</button>
@@ -75,7 +75,7 @@ export default function HeaderDashTop() {
 						<div className={styles.flexTwo}>
 							{/* <IoLanguageSharp /> */}
 							<FaBell onClick={openNotification} />
-							<MdEmail onClick={handleDivClick} />
+							<FaUserAlt onClick={handleDivClick} />
 						</div>
 					</Col>
 				</Row>
