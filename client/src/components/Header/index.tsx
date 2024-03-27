@@ -85,9 +85,9 @@ export default function Header() {
 								<Link href="/en/refund-policy">Refund Policy</Link>
 							</li>
 
-							<li>
+							{/* <li>
 								<Link href="/en/login">Login</Link>
-							</li>
+							</li> */}
 						</ul>
 					</Col>
 					<Col xl={4} md={24} xs={24} className="">
