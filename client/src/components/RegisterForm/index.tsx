@@ -1,23 +1,49 @@
 'use client';
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import './style.css';
-import { Button, Checkbox, Form, type FormProps, Input, Row, Col } from 'antd';
+import { Button, Checkbox, Form, type FormProps, Input, Row, Col, message } from 'antd';
 import ParaText from '@/app/commonUl/ParaText';
 import { FcGoogle } from 'react-icons/fc';
 import Link from 'next/link';
 import Titles from '@/app/commonUl/Titles';
+import { useRouter } from 'next/navigation';
+import AuthContext from '@/contexts/AuthContext';
+import { useSession } from 'next-auth/react';
+import { register } from '@/lib/ApiAdapter';
+
 type FieldType = {
-	username?: string;
+	name?: string;
+	email?: string;
 	password?: string;
+	confirmPassword?: string;
 	remember?: string;
 };
 export default function RegisterForm() {
-	const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-		console.log('Success:', values);
+	const [form] = Form.useForm();
+	const router = useRouter();
+	const [loading, setLoading] = useState(false);
+	const { login, setUser } = useContext(AuthContext);
+	const { data: session } = useSession();
+
+	const onFinish = async (values: any) => {
+		try {
+			setLoading(true);
+			const res = await register(values);
+			if (res.status === true) {
+				message.success(res.message);
+				form.resetFields();
+				router.push('/en/login');
+			} else {
+				message.error(res.message);
+			}
+		} catch (error) {
+			console.log(error);
+			message.error('Failed to register. Please try again later.');
+		} finally {
+			setLoading(false);
+		}
 	};
-	const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
-		console.log('Failed:', errorInfo);
-	};
+
 	return (
 		<>
 			<div className="" id="loginForm">
@@ -30,31 +56,18 @@ export default function RegisterForm() {
 					</ParaText>
 				</div>
 				<div className="gapMarginFourTeenTop"></div>
-				<Form
-					name="basic"
-					onFinish={onFinish}
-					onFinishFailed={onFinishFailed}
-					autoComplete="off"
-					layout="vertical"
-				>
+				<Form name="basic" onFinish={onFinish} autoComplete="off" layout="vertical" form={form}>
 					<Form.Item<FieldType>
-						label="Fast Name"
-						name="username"
-						rules={[{ required: true, message: 'Please input your username!' }]}
-					>
-						<Input style={{ width: '100%', height: '45px' }} />
-					</Form.Item>
-					<Form.Item<FieldType>
-						label="Last Name"
-						name="username"
-						rules={[{ required: true, message: 'Please input your username!' }]}
+						label="Full Name"
+						name="name"
+						rules={[{ required: true, message: 'Please input your first name!' }]}
 					>
 						<Input style={{ width: '100%', height: '45px' }} />
 					</Form.Item>
 					<Form.Item<FieldType>
 						label="Email"
-						name="username"
-						rules={[{ required: true, message: 'Please input your username!' }]}
+						name="email"
+						rules={[{ required: true, message: 'Please input your email!' }]}
 					>
 						<Input style={{ width: '100%', height: '45px' }} />
 					</Form.Item>
@@ -65,50 +78,53 @@ export default function RegisterForm() {
 					>
 						<Input.Password style={{ width: '100%', height: '45px' }} />
 					</Form.Item>
+					<Form.Item<FieldType>
+						label="Confirm Password"
+						name="confirmPassword"
+						dependencies={['password']}
+						rules={[
+							{ required: true, message: 'Please input your password!' },
+							({ getFieldValue }) => ({
+								validator(_, value) {
+									if (!value || getFieldValue('password') === value) {
+										return Promise.resolve();
+									}
+									return Promise.reject(new Error('passwords do not match'));
+								}
+							})
+						]}
+					>
+						<Input.Password style={{ width: '100%', height: '45px' }} />
+					</Form.Item>
 
-					<Row align="middle">
+					{/* <Row align="middle">
 						<Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
 							<Form.Item<FieldType> name="remember" valuePropName="checked">
 								<Checkbox>Remember me</Checkbox>
 							</Form.Item>
 						</Col>
-						<Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12} className="textEnd">
-							<ParaText size="extraSmall" color="defaultColor">
-								<Link
-									href="/en/auth/login"
-									className="fontWeightEight"
-									style={{ color: '#0A8FDC', marginBottom: '12px', display: 'block' }}
-								>
-									Login
-								</Link>
-							</ParaText>
-						</Col>
-					</Row>
+					</Row> */}
 
 					<Form.Item>
-						<Link href="/en/auth/register">
-							<Button type="primary" htmlType="submit" style={{ width: '100%', height: '45px' }}>
-								Sign in
-							</Button>
-						</Link>
+						<Button type="primary" htmlType="submit" style={{ width: '100%', height: '45px' }}>
+							{loading ? 'Please wait...' : 'Register'}
+						</Button>
 					</Form.Item>
 					<Form.Item>
-						<Link href="/en/auth/sign-google">
-							<Button
-								icon={<FcGoogle style={{ fontSize: '20px' }} />}
-								htmlType="submit"
-								className="defaultButton"
-								style={{ width: '100%', height: '45px' }}
-							>
-								Sign in with Google
-							</Button>
-						</Link>
+						<Button
+							icon={<FcGoogle style={{ fontSize: '20px' }} />}
+							htmlType="submit"
+							className="defaultButton"
+							style={{ width: '100%', height: '45px' }}
+						>
+							Sign in with Google
+						</Button>
 					</Form.Item>
 					<div className="gapMarginFourTeenTop"></div>
 					<div className="textCenter">
 						<ParaText size="extraSmall" color="defaultColor">
-							Don’t have an account?{' '}
-							<Link href="/en/auth/login" className="fontWeightEight" style={{ color: '#0A8FDC' }}>
+							Already have an account?{' '}
+							<Link href="/en/login" className="fontWeightEight" style={{ color: '#0A8FDC' }}>
 								Login
 							</Link>
 						</ParaText>

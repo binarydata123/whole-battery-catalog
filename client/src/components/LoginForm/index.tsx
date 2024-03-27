@@ -1,23 +1,113 @@
 'use client';
 import React from 'react';
 import './style.css';
-import { Button, Checkbox, Form, type FormProps, Input, Row, Col } from 'antd';
+import { Button, Checkbox, Form, type FormProps, Input, Row, Col, notification, message } from 'antd';
+import { signIn, signOut, useSession } from 'next-auth/react';
+import { socialLogin } from '@/lib/ApiAdapter';
+import { useRouter } from 'next/navigation';
+import AuthContext from '@/contexts/AuthContext';
+import Cookies from 'js-cookie';
 import ParaText from '@/app/commonUl/ParaText';
 import { FcGoogle } from 'react-icons/fc';
 import Link from 'next/link';
 import Titles from '@/app/commonUl/Titles';
+import ErrorHandler from '@/lib/ErrorHandler';
+
 type FieldType = {
-	username?: string;
-	password?: string;
-	remember?: string;
+	username: string;
+	password: string;
+	remember: Boolean;
 };
 export default function LoginForm() {
-	const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-		console.log('Success:', values);
+	const { data: session } = useSession();
+	const [loading, setLoading] = React.useState<Boolean>(false);
+	const [form] = Form.useForm();
+	const RememberMeCookie = 'rememberMe';
+	const { login, setUser } = React.useContext(AuthContext);
+	const router = useRouter();
+
+	const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
+		setLoading(true);
+		try {
+			if (values.remember) {
+				// if remember me is checked
+				Cookies.set(
+					RememberMeCookie,
+					JSON.stringify({ email: values.username, password: values.password, remember: values.remember })
+				);
+			} else {
+				Cookies.remove(RememberMeCookie);
+			}
+
+			await login(values.username, values.password, '');
+		} catch (error: any) {
+			setLoading(false);
+			console.error(
+				notification.error({
+					message: error.message,
+					description: ''
+				})
+			);
+		} finally {
+			setLoading(false);
+		}
 	};
-	const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
-		console.log('Failed:', errorInfo);
+	React.useEffect(() => {
+		// Check if remember me cookie exists and fill in the form fields
+		const rememberMeData = Cookies.get(RememberMeCookie);
+		if (rememberMeData) {
+			const parsedData = JSON.parse(rememberMeData);
+			if (parsedData && parsedData.email) {
+				form.setFieldsValue({
+					email: parsedData.email,
+					password: parsedData.password || '',
+					remember: true
+				});
+			}
+		}
+	}, [form]);
+
+	const SocialData = (user: any) => {
+		const data = {
+			name: user.name,
+			email: user.email
+		};
+		socialLogin(data)
+			.then((res: any) => {
+				if (res) {
+					Cookies.set('session_token', res.token);
+					console.log(res.user);
+					setUser(res.user);
+
+					// signOut({ redirect: false }).then();
+					router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/${res.user.role}/dashboard`);
+				} else {
+					message.error(res.message);
+				}
+			})
+			.catch((err) => {
+				ErrorHandler.showNotification(err);
+			});
 	};
+	const handleGoogleLogin = async () => {
+		try {
+			await signIn('google');
+		} catch (error) {
+			console.error('Google login failed:', error);
+		}
+	};
+
+	// const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
+	// 	console.log('Failed:', errorInfo);
+	// };
+
+	React.useEffect(() => {
+		if (session) {
+			SocialData(session.user);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [session]);
+
 	return (
 		<>
 			<div className="" id="loginForm">
@@ -31,9 +121,10 @@ export default function LoginForm() {
 				</div>
 				<div className="gapMarginFourTeenTop"></div>
 				<Form
+					form={form}
 					name="basic"
 					onFinish={onFinish}
-					onFinishFailed={onFinishFailed}
+					// onFinishFailed={onFinishFailed}
 					autoComplete="off"
 					layout="vertical"
 				>
@@ -62,7 +153,7 @@ export default function LoginForm() {
 						<Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12} className="textEnd">
 							<ParaText size="extraSmall" color="defaultColor">
 								<Link
-									href="/en/auth/forgot-password"
+									href="/en/forgot-password"
 									className="fontWeightEight"
 									style={{ color: '#0A8FDC', marginBottom: '12px', display: 'block' }}
 								>
@@ -73,29 +164,26 @@ export default function LoginForm() {
 					</Row>
 
 					<Form.Item>
-						<Link href="/en/auth/login">
-							<Button type="primary" htmlType="submit" style={{ width: '100%', height: '45px' }}>
-								Log in
-							</Button>
-						</Link>
+						<Button type="primary" htmlType="submit" style={{ width: '100%', height: '45px' }}>
+							Log in
+						</Button>
 					</Form.Item>
 					<Form.Item>
-						<Link href="/en/auth/sign-google">
-							<Button
-								icon={<FcGoogle style={{ fontSize: '20px' }} />}
-								htmlType="submit"
-								className="defaultButton"
-								style={{ width: '100%', height: '45px' }}
-							>
-								Sign in with Google
-							</Button>
-						</Link>
+						<Button
+							icon={<FcGoogle style={{ fontSize: '20px' }} />}
+							type="link"
+							onClick={handleGoogleLogin}
+							className="defaultButton"
+							style={{ width: '100%', height: '45px' }}
+						>
+							Sign in with Google
+						</Button>
 					</Form.Item>
 					<div className="gapMarginFourTeenTop"></div>
 					<div className="textCenter">
 						<ParaText size="extraSmall" color="defaultColor">
-							Don’t have an account?{' '}
-							<Link href="/en/auth/register" className="fontWeightEight" style={{ color: '#0A8FDC' }}>
+							Don&apos;t have an account?{' '}
+							<Link href="/en/register" className="fontWeightEight" style={{ color: '#0A8FDC' }}>
 								Sign up
 							</Link>
 						</ParaText>
