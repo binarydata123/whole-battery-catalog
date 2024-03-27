@@ -1,0 +1,17 @@
+.generalSettings {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+}
+.generalSettings .ant-input-affix-wrapper {
+  padding: 10px 10px;
+}
+.generalSettings .ant-input-affix-wrapper input {
+  height: auto;
+}
+.generalSettings input {
+  height: 45px;
+}
+.generalSettings .ant-picker .ant-picker-input {
+  height: 35px;
+}

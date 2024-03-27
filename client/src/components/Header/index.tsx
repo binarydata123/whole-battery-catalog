@@ -90,16 +90,16 @@ export default function Header() {
 							</li>
 						</ul>
 					</Col>
-					<Col xl={4} md={24} xs={24} className="textEnd">
-						<Link href="/en/book-appoinment">
+					<Col xl={4} md={24} xs={24} className="">
+						<Link href="/en/login">
 							<Button
+								type="primary"
 								style={{
-									backgroundImage: 'linear-gradient(to right, #6a11cb 0%, #2575fc 100%) !important',
 									height: '60px',
 									color: 'white !important'
 								}}
 							>
-								Book Appoinment
+								Login
 							</Button>
 						</Link>
 					</Col>

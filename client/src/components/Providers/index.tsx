@@ -19,6 +19,7 @@ const Providers = (props: Props) => {
 	const { user } = useContext(AuthContext);
 	const excludedPaths = [
 		'/admin',
+		'/user',
 		'/staff',
 		'/login',
 		'/otp',

@@ -4,17 +4,17 @@ import { Form, Input, Button, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 import AuthContext from '@/contexts/AuthContext';
-import { signIn, useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import Cookies from 'js-cookie';
 import { socialLogin } from '@/lib/ApiAdapter';
+import { redirect, useRouter } from 'next/navigation';
 import ErrorHandler from '@/lib/ErrorHandler';
 
-const LoginForm = () => {
+const Login = () => {
 	const [form] = Form.useForm();
 	const router = useRouter();
 	const [loading, setLoading] = useState(false);
-	const { setUser, login } = useContext(AuthContext);
+	const { login, setUser } = useContext(AuthContext);
 	const { data: session } = useSession();
 
 	const onFinish = async (values: any) => {
@@ -23,30 +23,37 @@ const LoginForm = () => {
 			await login(values.email, values.password, '');
 		} catch (error) {
 			setLoading(false);
-			message.error('Invalid email or password. Please try again.');
 		} finally {
 			setLoading(false);
 		}
 	};
 
-	const SocialData = async (user: any) => {
+	useEffect(() => {
+		if (session) {
+			SocialData(session.user);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [session]);
+
+	const SocialData = (user: any) => {
 		const data = {
 			name: user.name,
 			email: user.email
 		};
-		try {
-			const res = await socialLogin(data);
-			if (res) {
-				Cookies.set('session_token', res.token);
-				setUser(res.user);
-				router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
-			} else {
-				message.error('Social login failed.');
-			}
-		} catch (err) {
-			console.error('Social login failed:', err);
-			ErrorHandler.showNotification(err);
-		}
+		socialLogin(data)
+			.then((res: any) => {
+				if (res) {
+					Cookies.set('session_token', res.token);
+					setUser(res.user);
+					signOut({ redirect: false }).then();
+					router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
+				} else {
+					message.error(res.message);
+				}
+			})
+			.catch((err) => {
+				ErrorHandler.showNotification(err);
+			});
 	};
 
 	const handleGoogleLogin = async () => {
@@ -54,7 +61,6 @@ const LoginForm = () => {
 			await signIn('google');
 		} catch (error) {
 			console.error('Google login failed:', error);
-			message.error('Google login failed. Please try again.');
 		}
 	};
 
@@ -63,7 +69,6 @@ const LoginForm = () => {
 			await signIn('facebook');
 		} catch (error) {
 			console.error('Facebook login failed:', error);
-			message.error('Facebook login failed. Please try again.');
 		}
 	};
 
@@ -118,7 +123,7 @@ const LoginForm = () => {
 			<div style={{ textAlign: 'center', marginTop: '20px' }}>
 				<span>
 					Not registered?{' '}
-					<Link href="/en/Register" passHref>
+					<Link href="/en/register" passHref>
 						Register here
 					</Link>
 				</span>
@@ -135,4 +140,4 @@ const LoginForm = () => {
 	);
 };
 
-export default LoginForm;
+export default Login;
