@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 90
+    },
+    "auditLog": "/home/heena/Sushant/whole-battery-catalog/server/errorLogs/.536ccc3959e406dd307d4d44832f0781ccb53519-audit.json",
+    "files": [
+        {
+            "date": 1711521949402,
+            "name": "/home/heena/Sushant/whole-battery-catalog/server/errorLogs/error-2024-03-27.log",
+            "hash": "f8d782965e6c7b156c43caa46ed2299f866edff61b66d60ecdaab7c10bc4ccaf"
+        }
+    ],
+    "hashType": "sha256"
+}

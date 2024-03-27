@@ -1,0 +1,28 @@
+.chlidClasss span:nth-child(1) {
+  color: #111827;
+  margin: 0px 10px;
+}
+.chlidClasss span:nth-child(2) {
+  color: #6b7280;
+  margin: 0px 10px;
+}
+.chlidClasss span:nth-child(3) {
+  color: #11c15b;
+  margin: 0px 10px;
+}
+.singleVoice {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  position: relative;
+  margin-bottom: 15px;
+}
+.heart {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+.heart svg {
+  font-size: 25px;
+}

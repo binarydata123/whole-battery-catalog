@@ -7,7 +7,7 @@ import AuthContext from '@/contexts/AuthContext';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import Cookies from 'js-cookie';
 import { socialLogin } from '@/lib/ApiAdapter';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import ErrorHandler from '@/lib/ErrorHandler';
 
 const Login = () => {

@@ -126,7 +126,7 @@ const AuthContextProvider = ({ children }: AuthContextProp) => {
 							router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/admin/dashboard`);
 							break;
 						case 'user':
-							router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
+							router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/user/dashboard`);
 							break;
 						default:
 							router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);

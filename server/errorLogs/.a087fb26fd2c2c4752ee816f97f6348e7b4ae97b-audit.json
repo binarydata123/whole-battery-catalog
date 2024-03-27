@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 90
+    },
+    "auditLog": "/home/om/Desktop/whole-battery-catalog/server/errorLogs/.a087fb26fd2c2c4752ee816f97f6348e7b4ae97b-audit.json",
+    "files": [
+        {
+            "date": 1711427047113,
+            "name": "/home/om/Desktop/whole-battery-catalog/server/errorLogs/error-2024-03-26.log",
+            "hash": "914ca421cfadb9c296ac018e787c0806f590d863a54ced965ae412d3c33d4367"
+        }
+    ],
+    "hashType": "sha256"
+}

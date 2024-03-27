@@ -1,18 +1,17 @@
 'use client';
 import './style.css';
-import React, { useContext } from 'react';
+import React from 'react';
 import type { MenuProps } from 'antd';
-import { Image, Menu } from 'antd';
+import { Menu } from 'antd';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { IoHome } from 'react-icons/io5';
 import { SiBloglovin } from 'react-icons/si';
-import ParaText from '../ParaText';
-import { SiAuthy } from 'react-icons/si';
-import { FaBell } from 'react-icons/fa';
+import { FaFilePdf } from 'react-icons/fa';
 import { FaAppStore } from 'react-icons/fa';
-import { SlEnvolopeLetter } from 'react-icons/sl';
 import Titles from '../Titles';
+import { MdContacts, MdOutlinePayment } from 'react-icons/md';
+import { RiLockPasswordFill } from 'react-icons/ri';
 type MenuItem = Required<MenuProps>['items'][number];
 
 function getItem(
@@ -40,34 +39,80 @@ const items: MenuItem[] = [
 		</Link>
 	),
 	getItem(
-		'Appoinments',
+		'Generate Report',
 		'2',
-		<Link href="/en/admin/appoinment">
-			{' '}
-			<FaAppStore />
-		</Link>
+		<Link href="#" className="">
+			<FaAppStore className="menuIcon" />
+		</Link>,
+		[
+			getItem(
+				'Report Single ',
+				'3',
+				<Link href="/en/admin/report-single">
+					{' '}
+					<SiBloglovin />
+				</Link>
+			),
+
+			getItem(
+				'Generate PDF',
+				'4',
+				<Link href="/en/admin/generatePDF">
+					{' '}
+					<FaFilePdf />
+				</Link>
+			)
+		]
 	),
+
 	getItem(
-		'Contact Forms',
-		'3',
-		<Link href="/en/admin/contact-form">
-			<SlEnvolopeLetter />
-		</Link>
-	),
-	getItem(
-		'Blogs',
-		'4',
-		<Link href="/en/admin/blogs">
-			{' '}
-			<SiBloglovin />
-		</Link>
-	),
-	getItem(
-		'author',
+		'Payment History',
 		'5',
-		<Link href="/en/admin/author">
+		<Link href="/en/admin/payment-history">
 			{' '}
-			<SiAuthy />
+			<MdOutlinePayment />
+		</Link>,
+		[
+			getItem(
+				'Single Invoice ',
+				'6',
+				<Link href="/en/admin/single-invoice ">
+					{' '}
+					<SiBloglovin />
+				</Link>
+			)
+		]
+	),
+	getItem(
+		'Change Password',
+		'7',
+		<Link href="/en/admin/change-password">
+			{' '}
+			<RiLockPasswordFill />
+		</Link>
+	),
+	getItem(
+		'Contact Form History',
+		'8',
+		<Link href="/en/admin/contact-form-history">
+			{' '}
+			<MdContacts />
+		</Link>
+	),
+	getItem(
+		'General Settings',
+		'9',
+		<Link href="/en/admin/general-settings">
+			{' '}
+			<MdContacts />
+		</Link>
+	),
+	getItem(
+		'Invoice',
+		'10',
+		<Link href="/en/admin/invoice">
+			{' '}
+			<MdContacts />
 		</Link>
 	)
 ];
