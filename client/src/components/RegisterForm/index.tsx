@@ -1,62 +1,46 @@
 'use client';
-
-import React, { useContext, useEffect, useState } from 'react';
-import { Form, Input, Button, Checkbox, Row, Col, message } from 'antd';
+import React, { useContext, useState } from 'react';
+import './style.css';
+import { Button, Checkbox, Form, type FormProps, Input, Row, Col, message } from 'antd';
+import ParaText from '@/app/commonUl/ParaText';
 import { FcGoogle } from 'react-icons/fc';
 import Link from 'next/link';
 import Titles from '@/app/commonUl/Titles';
-import ParaText from '@/app/commonUl/ParaText';
-import { signIn, signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import AuthContext from '@/contexts/AuthContext';
+import { useSession } from 'next-auth/react';
 import { register } from '@/lib/ApiAdapter';
-import Cookies from 'js-cookie';
-import './style.css';
-import ErrorHandler from '@/lib/ErrorHandler';
 
+type FieldType = {
+	name?: string;
+	email?: string;
+	password?: string;
+	confirmPassword?: string;
+	remember?: string;
+};
 export default function RegisterForm() {
 	const [form] = Form.useForm();
 	const router = useRouter();
 	const [loading, setLoading] = useState(false);
+	const { login, setUser } = useContext(AuthContext);
 	const { data: session } = useSession();
 
 	const onFinish = async (values: any) => {
-		setLoading(true);
 		try {
-			const response = await register(values);
-			console.log('Registration response:', response);
-
-			message.success('Registration successful');
-			router.push('/en/login');
+			setLoading(true);
+			const res = await register(values);
+			if (res.status === true) {
+				message.success(res.message);
+				form.resetFields();
+				router.push('/en/login');
+			} else {
+				message.error(res.message);
+			}
 		} catch (error) {
-			console.error('Registration failed:', error);
-			message.error('Registration failed. Please try again later.');
+			console.log(error);
+			message.error('Failed to register. Please try again later.');
 		} finally {
 			setLoading(false);
-		}
-	};
-
-	const onFinishFailed = (errorInfo: any) => {
-		console.log('Failed:', errorInfo);
-	};
-
-	useEffect(() => {
-		if (session) {
-		}
-	}, [session]);
-
-	const handleGoogleLogin = async () => {
-		try {
-			await signIn('google');
-		} catch (error) {
-			console.error('Google login failed:', error);
-		}
-	};
-
-	const handleFacebookLogin = async () => {
-		try {
-			await signIn('facebook');
-		} catch (error) {
-			console.error('Facebook login failed:', error);
 		}
 	};
 
@@ -72,54 +56,40 @@ export default function RegisterForm() {
 					</ParaText>
 				</div>
 				<div className="gapMarginFourTeenTop"></div>
-				<Form
-					name="basic"
-					onFinish={onFinish}
-					onFinishFailed={onFinishFailed}
-					autoComplete="off"
-					layout="vertical"
-				>
-					<Form.Item
-						label="First Name"
+				<Form name="basic" onFinish={onFinish} autoComplete="off" layout="vertical" form={form}>
+					<Form.Item<FieldType>
+						label="Full Name"
 						name="name"
 						rules={[{ required: true, message: 'Please input your first name!' }]}
 					>
 						<Input style={{ width: '100%', height: '45px' }} />
 					</Form.Item>
-					<Form.Item
-						label="Last Name"
-						name="lastName"
-						rules={[{ required: true, message: 'Please input your last name!' }]}
-					>
-						<Input style={{ width: '100%', height: '45px' }} />
-					</Form.Item>
-					<Form.Item
+					<Form.Item<FieldType>
 						label="Email"
 						name="email"
 						rules={[{ required: true, message: 'Please input your email!' }]}
 					>
 						<Input style={{ width: '100%', height: '45px' }} />
 					</Form.Item>
-					<Form.Item
+					<Form.Item<FieldType>
 						label="Password"
 						name="password"
 						rules={[{ required: true, message: 'Please input your password!' }]}
 					>
 						<Input.Password style={{ width: '100%', height: '45px' }} />
 					</Form.Item>
-
-					<Form.Item
+					<Form.Item<FieldType>
 						label="Confirm Password"
 						name="confirmPassword"
 						dependencies={['password']}
 						rules={[
-							{ required: true, message: 'Please confirm your Password!' },
+							{ required: true, message: 'Please input your password!' },
 							({ getFieldValue }) => ({
 								validator(_, value) {
 									if (!value || getFieldValue('password') === value) {
 										return Promise.resolve();
 									}
-									return Promise.reject(new Error('The two passwords do not match!'));
+									return Promise.reject(new Error('passwords do not match'));
 								}
 							})
 						]}
@@ -127,28 +97,17 @@ export default function RegisterForm() {
 						<Input.Password style={{ width: '100%', height: '45px' }} />
 					</Form.Item>
 
-					<Row align="middle">
+					{/* <Row align="middle">
 						<Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
-							<Form.Item name="remember" valuePropName="checked">
+							<Form.Item<FieldType> name="remember" valuePropName="checked">
 								<Checkbox>Remember me</Checkbox>
 							</Form.Item>
 						</Col>
-						<Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12} className="textEnd">
-							<ParaText size="extraSmall" color="defaultColor">
-								<Link
-									href="/en/login"
-									className="fontWeightEight"
-									style={{ color: '#0A8FDC', marginBottom: '12px', display: 'block' }}
-								>
-									Login
-								</Link>
-							</ParaText>
-						</Col>
-					</Row>
+					</Row> */}
 
 					<Form.Item>
-						<Button type="primary" style={{ width: '100%', height: '45px' }} htmlType="submit">
-							Sign in
+						<Button type="primary" htmlType="submit" style={{ width: '100%', height: '45px' }}>
+							{loading ? 'Please wait...' : 'Register'}
 						</Button>
 					</Form.Item>
 					<Form.Item>
@@ -157,7 +116,6 @@ export default function RegisterForm() {
 							htmlType="submit"
 							className="defaultButton"
 							style={{ width: '100%', height: '45px' }}
-							onClick={handleGoogleLogin}
 						>
 							Sign in with Google
 						</Button>
@@ -165,8 +123,8 @@ export default function RegisterForm() {
 					<div className="gapMarginFourTeenTop"></div>
 					<div className="textCenter">
 						<ParaText size="extraSmall" color="defaultColor">
-							Don’t have an account?{' '}
-							<Link href="/en//login" className="fontWeightEight" style={{ color: '#0A8FDC' }}>
+							Already have an account?{' '}
+							<Link href="/en/login" className="fontWeightEight" style={{ color: '#0A8FDC' }}>
 								Login
 							</Link>
 						</ParaText>
