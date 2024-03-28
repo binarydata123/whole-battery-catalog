@@ -93,10 +93,6 @@ export default function LoginForm() {
 		}
 	};
 
-	// const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
-	// 	console.log('Failed:', errorInfo);
-	// };
-
 	React.useEffect(() => {
 		if (session) {
 			SocialData(session.user);
@@ -120,7 +116,6 @@ export default function LoginForm() {
 					form={form}
 					name="basic"
 					onFinish={(values) => onFinish(values)}
-					// onFinishFailed={onFinishFailed}
 					autoComplete="off"
 					layout="vertical"
 				>
