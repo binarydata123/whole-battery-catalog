@@ -111,7 +111,7 @@ const authController = {
 
 			await newUser.save();
 
-			res.status(201).json({ message: 'Users registered successfully', status: true });
+			res.status(201).json({ message: 'Users registered successfully', user: newUser, status: true });
 		} catch (error) {
 			console.error(error);
 			res.status(500).json({ message: 'Internal Server Error' });

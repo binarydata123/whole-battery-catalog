@@ -1,5 +1,7 @@
 const stripe = require('stripe')('sk_test_8yTMfGjWta7zVzyhB6S3N2ws');
 const Payment = require('../../models/Payment');
+// const Users = require('../../models/Users');
+const mongoose = require('mongoose');
 
 const paymentController = {
 	createCheckoutSession: async (req, res) => {
@@ -20,7 +22,7 @@ const paymentController = {
 					}
 				],
 				mode: 'payment',
-				success_url: `${req.headers.origin}/en/payment/success?payment_id={CHECKOUT_SESSION_ID}`,
+				success_url: `${req.headers.origin}/en/login`,
 				cancel_url: `${req.headers.origin}/en/payment/failed?payment_id={CHECKOUT_SESSION_ID}`
 			});
 
@@ -34,9 +36,12 @@ const paymentController = {
 			});
 			await payment.save();
 
+			//setting hasPaid to true once payment is succeeded
+			await mongoose.model('users').updateOne({ _id: userId }, { hasPaid: true });
+
 			res.json({ id: session.id });
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 			res.status(500).json({ error: 'Error creating checkout session' });
 		}
 	}

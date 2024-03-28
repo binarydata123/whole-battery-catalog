@@ -56,6 +56,7 @@ const userSchema = new mongoose.Schema({
 	loginType: { type: String, default: null },
 	isReported: { type: Boolean, default: false },
 	status: { type: String, enum: ['active', 'inactive', 'deleted', 'suspended'], default: 'active' },
+	hasPaid: { type: Boolean, default: false },
 	createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'users', default: null },
 	createdAt: { type: Date, default: Date.now },
 	updatedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'users', default: null },
