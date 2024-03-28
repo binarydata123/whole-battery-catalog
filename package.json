@@ -41,7 +41,6 @@
 	"dependencies": {
 		"@ant-design/nextjs-registry": "^1.0.0",
 		"@ntegral/react-owl-carousel": "^1.0.1",
-		"@react-pdf/renderer": "^3.4.1",
 		"antd": "^5.13.1",
 		"antd-img-crop": "^4.21.0",
 		"dotenv": "^16.3.1",

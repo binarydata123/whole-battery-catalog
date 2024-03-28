@@ -125,7 +125,7 @@ export default function BannerSubSection() {
 					</Row>
 				</div>
 			</section>
-			<ChoosePlan />
+			{/* <ChoosePlan /> */}
 			<CollapseSection />
 			<ContactUs />
 		</>

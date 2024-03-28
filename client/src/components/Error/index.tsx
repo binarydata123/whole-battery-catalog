@@ -1,5 +1,4 @@
 import ParaText from '@/app/commonUl/ParaText';
-import PrimaryButton from '@/app/commonUl/PrimaryButton';
 import Titles from '@/app/commonUl/Titles';
 import { Button, Image } from 'antd';
 import Link from 'next/link';
