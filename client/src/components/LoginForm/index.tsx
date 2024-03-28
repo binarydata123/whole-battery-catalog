@@ -129,7 +129,7 @@ export default function LoginForm() {
 						name="username"
 						rules={[{ required: true, message: 'Please input your username!' }]}
 					>
-						<Input style={{ width: '100%', height: '45px' }} />
+						<Input style={{ width: '100%', height: '45px' }} defaultValue="smartville" />
 					</Form.Item>
 
 					<Form.Item<FieldType>
@@ -137,7 +137,7 @@ export default function LoginForm() {
 						name="password"
 						rules={[{ required: true, message: 'Please input your password!' }]}
 					>
-						<Input.Password style={{ width: '100%', height: '45px' }} />
+						<Input.Password style={{ width: '100%', height: '45px' }} defaultValue="" />
 					</Form.Item>
 
 					<Row align="middle">
