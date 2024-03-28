@@ -1,13 +1,33 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Col, Form, Row, Select } from 'antd';
 import UploadImage from '../UploadImage';
 import FormInput from '@/app/commonUl/FormInput';
 import PrimaryButton from '@/app/commonUl/PrimaryButton';
-export default function EditModalForm() {
+import { addUpdateUser } from '@/lib/adminApi';
+export default function EditModalForm(props: any) {
+	const onFinish = async (values: any) => {
+		const formData = new FormData();
+		try {
+			formData.append('name', values.name);
+			formData.append('gender', values.gender);
+			formData.append('address', values.address);
+			formData.append('phoneNumber', values.phoneNumber);
+			formData.append('userID', values.userID);
+		} catch (error) {}
+	};
+
+	useEffect(() => {
+		addUpdateUser(FormData).then((res) => {
+			if (res && res.users) {
+				console.log(res, 'userData');
+			}
+		});
+	}, []);
+
 	return (
 		<>
-			<Form>
+			<Form onClick={onFinish}>
 				<label htmlFor="">Title</label>
 				<Form.Item
 					name="title"

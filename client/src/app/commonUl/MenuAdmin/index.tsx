@@ -41,15 +41,23 @@ const items: MenuItem[] = [
 		</Link>
 	),
 	getItem(
-		'Generate Report',
+		'users',
 		'2',
+		<Link href="/en/admin/users">
+			{' '}
+			<IoHome />
+		</Link>
+	),
+	getItem(
+		'Generate Report',
+		'3',
 		<Link href="#" className="">
 			<FaAppStore className="menuIcon" />
 		</Link>,
 		[
 			getItem(
 				'Report Single ',
-				'3',
+				'4',
 				<Link href="/en/admin/report-single">
 					{' '}
 					<SiBloglovin />
@@ -58,7 +66,7 @@ const items: MenuItem[] = [
 
 			getItem(
 				'Generate PDF',
-				'4',
+				'5',
 				<Link href="/en/admin/generatePDF">
 					{' '}
 					<FaFilePdf />
@@ -69,7 +77,7 @@ const items: MenuItem[] = [
 
 	getItem(
 		'Payment History',
-		'5',
+		'6',
 		<Link href="/en/admin/payment-history">
 			{' '}
 			<MdOutlinePayment />
@@ -77,7 +85,7 @@ const items: MenuItem[] = [
 		[
 			getItem(
 				'Single Invoice ',
-				'6',
+				'7',
 				<Link href="/en/admin/single-invoice ">
 					{' '}
 					<SiBloglovin />
@@ -87,7 +95,7 @@ const items: MenuItem[] = [
 	),
 	getItem(
 		'Change Password',
-		'7',
+		'8',
 		<Link href="/en/admin/change-password">
 			{' '}
 			<RiLockPasswordFill />
@@ -95,7 +103,7 @@ const items: MenuItem[] = [
 	),
 	getItem(
 		'Contact Form History',
-		'8',
+		'9',
 		<Link href="/en/admin/contact-form-history">
 			{' '}
 			<MdContacts />
@@ -103,7 +111,7 @@ const items: MenuItem[] = [
 	),
 	getItem(
 		'General Settings',
-		'9',
+		'10',
 		<Link href="/en/admin/general-settings">
 			{' '}
 			<MdContacts />
@@ -111,7 +119,7 @@ const items: MenuItem[] = [
 	),
 	getItem(
 		'Invoice',
-		'10',
+		'11',
 		<Link href="/en/admin/invoice">
 			{' '}
 			<MdContacts />

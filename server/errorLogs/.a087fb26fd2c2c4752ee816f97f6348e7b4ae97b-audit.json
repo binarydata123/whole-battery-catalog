@@ -9,6 +9,11 @@
             "date": 1711427047113,
             "name": "/home/om/Desktop/whole-battery-catalog/server/errorLogs/error-2024-03-26.log",
             "hash": "914ca421cfadb9c296ac018e787c0806f590d863a54ced965ae412d3c33d4367"
+        },
+        {
+            "date": 1711598230772,
+            "name": "/home/om/Desktop/whole-battery-catalog/server/errorLogs/error-2024-03-28.log",
+            "hash": "f4610d4a188a70b156d775e6442912b07594c1082090c2b796c1fb70ef6272b9"
         }
     ],
     "hashType": "sha256"

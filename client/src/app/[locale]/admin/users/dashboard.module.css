@@ -1,0 +1,36 @@
+.dashBody {
+  padding: 6px 20px;
+}
+
+.headerDashboard {
+  padding: 20px;
+  background: #fff;
+}
+
+#dashboardCard {
+  border-radius: 12px;
+  border: 1px solid #eef3f6;
+  padding: 16px;
+  margin-bottom: 20px;
+  background-color: #fff;
+  height: auto;
+  position: relative;
+}
+
+.iconPostion {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+.iconPostion svg {
+  color: #000;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+@media (max-width: 991px) {
+  .dashBody {
+    padding: 0px 0px;
+  }
+}

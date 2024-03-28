@@ -69,7 +69,12 @@ export default function FormModalEdit() {
 		});
 	}, []);
 
+	const fetchuser = async () => {
+		const users = await getAlluser();
+	};
+
 	const handleEditClick = async (record: any) => {
+		// console.log(record, 'data');
 		setEdit(record);
 		setIsEditModalOpen(true);
 	};
@@ -173,7 +178,7 @@ export default function FormModalEdit() {
 		<>
 			<div className="" style={{ background: '#fff', padding: '20px', borderRadius: '10px' }}>
 				<Titles color="black" level={5}>
-					Recent Orders
+					Users List
 				</Titles>
 				<div className="gapMarginTopTwo"></div>
 				<Table
@@ -200,7 +205,7 @@ export default function FormModalEdit() {
 					footer={null}
 					centered
 				>
-					<EditModalForm />
+					<EditModalForm onEdit={edit} />
 				</Modal>
 			</div>
 		</>
