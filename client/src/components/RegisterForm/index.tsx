@@ -1,7 +1,7 @@
 'use client';
 import React, { useContext, useState } from 'react';
 import './style.css';
-import { Button, Checkbox, Form, type FormProps, Input, Row, Col, message } from 'antd';
+import { Button, Checkbox, Form, type FormProps, Input, Row, Col, message, Select } from 'antd';
 import ParaText from '@/app/commonUl/ParaText';
 import { FcGoogle } from 'react-icons/fc';
 import Link from 'next/link';
@@ -10,6 +10,8 @@ import { useRouter } from 'next/navigation';
 import AuthContext from '@/contexts/AuthContext';
 import { useSession } from 'next-auth/react';
 import { register } from '@/lib/ApiAdapter';
+import { loadStripe } from '@stripe/stripe-js';
+import { UserOutlined } from '@ant-design/icons';
 
 type FieldType = {
 	name?: string;
@@ -22,17 +24,51 @@ export default function RegisterForm() {
 	const [form] = Form.useForm();
 	const router = useRouter();
 	const [loading, setLoading] = useState(false);
-	const { login, setUser } = useContext(AuthContext);
-	const { data: session } = useSession();
+	const [currency, setCurrency] = useState('');
+	// const { login, setUser } = useContext(AuthContext);
+	// const { data: session } = useSession();
+
+	const stripePromise = loadStripe('pk_test_FQu4ActGupRmMrkmBpwU26js');
+
+	const handlePayment = async (price: any, userId: any, currency: string) => {
+		try {
+			setLoading(true);
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/payment/create-checkout-session`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ price: price, userId, currency })
+			});
+
+			const session = await response.json();
+
+			const stripe = await stripePromise;
+			const result = await stripe?.redirectToCheckout({
+				sessionId: session.id
+			});
+
+			if (result?.error) {
+				console.error('Error:', result.error);
+				message.error('Payment failed');
+			}
+		} catch (error) {
+			console.error('Error:', error);
+			message.error('Payment failed');
+		} finally {
+			setLoading(false);
+		}
+	};
 
 	const onFinish = async (values: any) => {
 		try {
 			setLoading(true);
 			const res = await register(values);
+			console.log(res);
 			if (res.status === true) {
-				message.success(res.message);
-				form.resetFields();
-				router.push('/en/login');
+				await handlePayment(10, res.user._id, 'usd');
+				// message.success(res.message);
+				// form.resetFields();
 			} else {
 				message.error(res.message);
 			}
@@ -96,15 +132,7 @@ export default function RegisterForm() {
 					>
 						<Input.Password style={{ width: '100%', height: '45px' }} />
 					</Form.Item>
-
-					{/* <Row align="middle">
-						<Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
-							<Form.Item<FieldType> name="remember" valuePropName="checked">
-								<Checkbox>Remember me</Checkbox>
-							</Form.Item>
-						</Col>
-					</Row> */}
-
+					<div className="gapMarginFourTeenTop"></div>
 					<Form.Item>
 						<Button type="primary" htmlType="submit" style={{ width: '100%', height: '45px' }}>
 							{loading ? 'Please wait...' : 'Register'}

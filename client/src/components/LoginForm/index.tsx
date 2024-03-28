@@ -33,7 +33,7 @@ export default function LoginForm() {
 				// if remember me is checked
 				Cookies.set(
 					RememberMeCookie,
-					JSON.stringify({ email: values.username, password: values.password, remember: values.remember })
+					JSON.stringify({ username: values.username, password: values.password, remember: values.remember })
 				);
 			} else {
 				Cookies.remove(RememberMeCookie);
@@ -42,12 +42,7 @@ export default function LoginForm() {
 			await login(values.username, values.password, '');
 		} catch (error: any) {
 			setLoading(false);
-			console.error(
-				notification.error({
-					message: error.message,
-					description: ''
-				})
-			);
+			console.error(error);
 		} finally {
 			setLoading(false);
 		}
@@ -57,15 +52,16 @@ export default function LoginForm() {
 		const rememberMeData = Cookies.get(RememberMeCookie);
 		if (rememberMeData) {
 			const parsedData = JSON.parse(rememberMeData);
-			if (parsedData && parsedData.email) {
+			if (parsedData && parsedData.username) {
 				form.setFieldsValue({
-					email: parsedData.email,
+					username: parsedData.username,
 					password: parsedData.password || '',
 					remember: true
 				});
 			}
 		}
-	}, [form]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const SocialData = (user: any) => {
 		const data = {
@@ -76,7 +72,7 @@ export default function LoginForm() {
 			.then((res: any) => {
 				if (res) {
 					Cookies.set('session_token', res.token);
-					console.log(res.user);
+					// console.log("res.user", res.user);
 					setUser(res.user);
 
 					// signOut({ redirect: false }).then();
@@ -123,7 +119,7 @@ export default function LoginForm() {
 				<Form
 					form={form}
 					name="basic"
-					onFinish={onFinish}
+					onFinish={(values) => onFinish(values)}
 					// onFinishFailed={onFinishFailed}
 					autoComplete="off"
 					layout="vertical"
@@ -165,7 +161,7 @@ export default function LoginForm() {
 
 					<Form.Item>
 						<Button type="primary" htmlType="submit" style={{ width: '100%', height: '45px' }}>
-							Log in
+							{loading ? 'Please wait...' : 'Login'}
 						</Button>
 					</Form.Item>
 					<Form.Item>

@@ -15,7 +15,7 @@ const Register = () => {
 	const [form] = Form.useForm();
 	const router = useRouter();
 	const [loading, setLoading] = useState(false);
-	const { login, setUser } = useContext(AuthContext);
+	const { setUser } = useContext(AuthContext);
 	const { data: session } = useSession();
 
 	const onFinish = async (values: any) => {
