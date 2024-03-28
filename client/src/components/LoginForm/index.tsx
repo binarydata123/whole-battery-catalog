@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import './style.css';
-import { Button, Checkbox, Form, type FormProps, Input, Row, Col, notification, message } from 'antd';
+import { Button, Checkbox, Form, type FormProps, Input, Row, Col, notification, message, Spin } from 'antd';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { socialLogin } from '@/lib/ApiAdapter';
 import { useRouter } from 'next/navigation';
@@ -39,7 +39,8 @@ export default function LoginForm() {
 				Cookies.remove(RememberMeCookie);
 			}
 
-			await login(values.username, values.password, '');
+			const response = await login(values.username, values.password, '');
+			console.log(response);
 		} catch (error: any) {
 			setLoading(false);
 			console.error(error);
@@ -72,7 +73,7 @@ export default function LoginForm() {
 			.then((res: any) => {
 				if (res) {
 					Cookies.set('session_token', res.token);
-					// console.log("res.user", res.user);
+					// console.log('res.user', res.user);
 					setUser(res.user);
 
 					// signOut({ redirect: false }).then();
