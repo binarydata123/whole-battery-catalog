@@ -1,25 +1,33 @@
 import React from 'react';
 import './style.css';
-interface SecondaryButtonProps {
+import { Button } from 'antd';
+interface PrimaryButtonProps {
 	label?: string;
 	className?: string;
-	icon?: any;
 	children?: React.ReactNode;
 	showIcon?: boolean;
 	color?: string;
 	background?: string;
 	height?: number;
-	type?: string;
 	fontSize?: number;
+	borderRedius?: any;
 	onClick?: () => void;
 }
-
-export default function PrimaryButton({ label, className = '', children, onClick, icon, type }: SecondaryButtonProps) {
+export default function PrimaryButton({ label, className = '', children, color, onClick }: PrimaryButtonProps) {
 	return (
-		<div className="PrimaryButton">
-			<button onClick={onClick} className={` ${className}`} id="w100">
-				{label || children}
-			</button>
-		</div>
+		<>
+			<div className="primary-btn-wrapper">
+				<Button
+					type="primary"
+					onClick={onClick}
+					style={{
+						color: `${color}`
+					}}
+					className={`btn-primary ${className}`}
+				>
+					{label || children}
+				</Button>
+			</div>
+		</>
 	);
 }

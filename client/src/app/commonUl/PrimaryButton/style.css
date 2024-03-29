@@ -1,15 +1,21 @@
-.PrimaryButton button {
-  border-radius: 8px;
-  background: #0091f7;
-  height: unset;
-  padding: 8px 20px;
-  border: none;
+.primary-btn-wrapper .ant-btn-primary {
   color: #fff;
-  font-weight: 600;
-  font-size: 12px;
-  cursor: pointer;
-  border: 2px solid #0091f7;
+  background-color: #2ea3f2;
+  box-shadow: 0 2px 0 rgba(5, 145, 255, 0.1);
+  height: 45px;
+  border-radius: 30px !important;
+  font-weight: 700;
+  padding: 0px 20px;
+  font-size: 16px;
 }
-#w100 {
-  width: 100%;
+
+button.ant-btn.css-dev-only-do-not-override-nllxry.ant-btn-primary.btn-primary:hover {
+  background: #4f9ed3 !important;
+}
+
+@media (max-width: 767px) {
+  .primary-btn-wrapper .ant-btn-primary {
+    padding: 0px 20px;
+    font-size: 12px;
+  }
 }

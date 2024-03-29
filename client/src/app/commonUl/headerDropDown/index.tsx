@@ -13,7 +13,14 @@ import Link from 'next/link';
 import { MdDashboard } from 'react-icons/md';
 import { IoIosSettings } from 'react-icons/io';
 import { Avatar, Col, Row } from 'antd';
+import AuthContext from '@/contexts/AuthContext';
+
 export default function HeaderDropDown(props: any) {
+	const { user, logout } = useContext(AuthContext);
+
+	const handleLogout = () => {
+		logout();
+	};
 	return (
 		<>
 			<div className={styles['notificationsBlank']}>
@@ -24,11 +31,11 @@ export default function HeaderDropDown(props: any) {
 						</Col>
 						<Col lg={18} md={18} sm={18} xs={18} className="mobileCenter">
 							<ParaText size="extraSmall" color="black" className="dBlock">
-								Lorem Ipsum
+								{user?.name}
 							</ParaText>
-							<ParaText size="smallExtra" color="black" className="dBlock">
+							{/* <ParaText size="smallExtra" color="black" className="dBlock">
 								All the facts Lip
-							</ParaText>
+							</ParaText> */}
 						</Col>
 					</Row>
 					<div className="gapMarginTopOne"></div>
@@ -44,24 +51,25 @@ export default function HeaderDropDown(props: any) {
 						</div>
 					</div>
 
-					<div
-						className="flex mediumTopMargin"
-						style={{ display: 'flex', marginTop: '10px', alignItems: 'center', marginLeft: '20px' }}
-					>
-						<IoIosSettings />
-						<div className={styles['paddingLeft']}>
-							<Link href="#">
-								{' '}
-								<ParaText size="extraSmall">Admin Setting</ParaText>
-							</Link>
+					{user && user.role === 'admin' && (
+						<div
+							className="flex mediumTopMargin"
+							style={{ display: 'flex', marginTop: '10px', alignItems: 'center', marginLeft: '20px' }}
+						>
+							<IoIosSettings />
+							<div className={styles['paddingLeft']}>
+								<Link href="#">
+									<ParaText size="extraSmall">Admin Setting</ParaText>
+								</Link>
+							</div>
 						</div>
-					</div>
+					)}
 					<div
 						className="flex mediumTopMargin"
 						style={{ display: 'flex', marginTop: '10px', alignItems: 'center', marginLeft: '20px' }}
 					>
 						<CgLogIn style={{ color: '#D04E4F' }} />
-						<div className={styles['paddingLeft']}>
+						<div className={styles['paddingLeft']} onClick={handleLogout}>
 							<Link href="#">
 								{' '}
 								<ParaText size="extraSmall">Log Out</ParaText>

@@ -1,18 +1,20 @@
 'use client';
 import './style.css';
-import React from 'react';
+import React, { useContext } from 'react';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { IoHome } from 'react-icons/io5';
-import { SiBloglovin } from 'react-icons/si';
+import { SiAuthy, SiBloglovin } from 'react-icons/si';
 import { FaAppStore } from 'react-icons/fa';
 import Titles from '../Titles';
 import { MdOutlinePayment } from 'react-icons/md';
 import { FaFilePdf } from 'react-icons/fa6';
 import { MdContacts } from 'react-icons/md';
-import { RiLockPasswordFill } from 'react-icons/ri';
+import { RiLockPasswordFill, RiUser2Fill } from 'react-icons/ri';
+import { FcNews } from 'react-icons/fc';
+import AuthContext from '@/contexts/AuthContext';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -86,16 +88,32 @@ const items: MenuItem[] = [
 		]
 	),
 	getItem(
-		'Change Password',
+		'Invoice',
 		'7',
-		<Link href="/en/admin/change-password">
+		<Link href="/en/admin/invoice">
 			{' '}
-			<RiLockPasswordFill />
+			<MdContacts />
+		</Link>
+	),
+	getItem(
+		'Blogs',
+		'8',
+		<Link href="/en/admin/blogs">
+			{' '}
+			<FcNews />
+		</Link>
+	),
+	getItem(
+		'Author',
+		'9',
+		<Link href="/en/admin/author">
+			{' '}
+			<RiUser2Fill />
 		</Link>
 	),
 	getItem(
 		'Contact Form History',
-		'8',
+		'10',
 		<Link href="/en/admin/contact-form-history">
 			{' '}
 			<MdContacts />
@@ -103,24 +121,41 @@ const items: MenuItem[] = [
 	),
 	getItem(
 		'General Settings',
-		'9',
+		'11',
 		<Link href="/en/admin/general-settings">
 			{' '}
 			<MdContacts />
 		</Link>
 	),
 	getItem(
-		'Invoice',
-		'10',
-		<Link href="/en/admin/invoice">
+		'Change Password',
+		'12',
+		<Link href="/en/admin/change-password">
 			{' '}
-			<MdContacts />
+			<RiLockPasswordFill />
+		</Link>
+	),
+	getItem(
+		'Log Out',
+		'13',
+		<Link href="/en/admin/log-out">
+			{' '}
+			<SiAuthy />
 		</Link>
 	)
 ];
 
 export default function MenuAdmin() {
 	const pathname = usePathname();
+
+	const { logout } = useContext(AuthContext);
+
+	function handleClick(href: any) {
+		if (href.key == 13) {
+			logout();
+		}
+	}
+
 	let defaultSelectedKey;
 	switch (pathname) {
 		case '/admin/dashboard':
@@ -173,6 +208,7 @@ export default function MenuAdmin() {
 							mode="inline"
 							theme="dark"
 							items={items}
+							onClick={handleClick}
 						/>
 					</div>
 				</div>

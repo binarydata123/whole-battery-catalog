@@ -13,7 +13,16 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 	return (
 		<section>
 			<Row className="myRow">
-				<Col sm={24} xs={24} md={24} lg={24} xl={4} xxl={4} className="mobileNone">
+				<Col
+					sm={24}
+					xs={24}
+					md={24}
+					lg={24}
+					xl={4}
+					xxl={4}
+					className="mobileNone"
+					style={{ backgroundImage: 'linear-gradient(-225deg, #473b7b 0%, #3584a7 51%, #30d2be 100%)' }}
+				>
 					<MenuUser />
 				</Col>
 				<Col xs={24} sm={24} md={24} lg={24} xl={20} xxl={20}>
