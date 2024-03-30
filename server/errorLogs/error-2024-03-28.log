@@ -1,0 +1,1 @@
+{"level":"error","message":"MongoServerError: E11000 duplicate key error collection: whole_battery_catalog.users index: email_1 dup key: { email: \"yudhveersinghbinarydata@gmail.com\" }","stack":"at socialLogin (/home/heena/Sushant/whole-battery-catalog/server/src/controllers/frontend/authController.js:434:4)","timestamp":"2024-03-28T12:53:13.856Z"}
