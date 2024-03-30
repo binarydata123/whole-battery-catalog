@@ -6,6 +6,7 @@ import './style.css';
 import Titles from '@/app/commonUl/Titles';
 import ParaText from '@/app/commonUl/ParaText';
 import Link from 'next/link';
+
 export default function Blog() {
 	return (
 		<>
