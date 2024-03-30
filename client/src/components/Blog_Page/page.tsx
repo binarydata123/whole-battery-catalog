@@ -1,41 +1,20 @@
 'use client';
 import React from 'react';
-import { getBlogs } from '@/lib/frontendApi';
 import { Button, Card, Col, Image, Row, Space } from 'antd';
 const { Meta } = Card;
 import './style.css';
 import Titles from '@/app/commonUl/Titles';
 import ParaText from '@/app/commonUl/ParaText';
 import Link from 'next/link';
-import ErrorHandler from '@/lib/ErrorHandler';
 import { dateFormatter } from './dateFormatter';
-import { shuffleArray } from './shuffleArray';
 
-export default function BlogComponent() {
-	const [blogs, setBlogs] = React.useState<any[]>([]);
-
-	const getAllBlogs = async () => {
-		try {
-			const res = await getBlogs();
-			const shuffleBlogs = shuffleArray(res.data);
-			const blogsToShow = shuffleBlogs.slice(0, 4);
-			setBlogs(blogsToShow);
-		} catch (err: any) {
-			ErrorHandler.showNotification(err.message);
-			console.error(err);
-		}
-	};
-
-	React.useEffect(() => {
-		getAllBlogs();
-	}, []);
-
+export default function Blog_Page({ blogs }: any) {
 	return (
 		<>
 			<div className="customContainer" id="blog">
-				<Titles className="textCenter" level={3} color="PrimaryColor">
+				{/* <Titles className="textCenter" level={3} color="PrimaryColor">
 					👋 Blog
-				</Titles>
+				</Titles> */}
 				<div className="gapMarginFourTeenTop"></div>
 				<Row gutter={[16, 16]}>
 					{blogs?.map((blog: any) => (

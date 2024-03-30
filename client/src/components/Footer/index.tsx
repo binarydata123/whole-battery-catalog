@@ -67,37 +67,37 @@ export default function Footer() {
 								<div className="LargerTopMargin tabmediumTopMargin"></div>
 								<ul className={styles['footerLinks']}>
 									<li>
-										<Link href={`${process.env['NEXT_PUBLIC_SITE_URL']}/property/gainesville`}>
+										<Link href={`${process.env['NEXT_PUBLIC_SITE_URL']}/service`}>
 											<ParaText size="textGraf" color="white">
 												EV Battery Health
 											</ParaText>
 										</Link>
 									</li>
 									<li>
-										<Link href={`${process.env['NEXT_PUBLIC_SITE_URL']}/property/gainesville`}>
+										<Link href={`${process.env['NEXT_PUBLIC_SITE_URL']}/service`}>
 											<ParaText size="textGraf" color="white">
-												Female Hormone Replacement
+												Charging Stations
 											</ParaText>
 										</Link>
 									</li>
 									<li>
-										<Link href={`${process.env['NEXT_PUBLIC_SITE_URL']}/property/gainesville`}>
+										<Link href={`${process.env['NEXT_PUBLIC_SITE_URL']}/service`}>
 											<ParaText size="textGraf" color="white">
-												Peptide-Therapy
+												Battery Maintenance
 											</ParaText>
 										</Link>
 									</li>
 									<li>
-										<Link href={`${process.env['NEXT_PUBLIC_SITE_URL']}/property/gainesville`}>
+										<Link href={`${process.env['NEXT_PUBLIC_SITE_URL']}/service`}>
 											<ParaText size="textGraf" color="white">
-												Wellness Services
+												EV Repair
 											</ParaText>
 										</Link>
 									</li>
 									<li>
-										<Link href={`${process.env['NEXT_PUBLIC_SITE_URL']}/property/gainesville`}>
+										<Link href={`${process.env['NEXT_PUBLIC_SITE_URL']}/service`}>
 											<ParaText size="textGraf" color="white">
-												Total Body Transformation
+												Fast Charging
 											</ParaText>
 										</Link>
 									</li>
