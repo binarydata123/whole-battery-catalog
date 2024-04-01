@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect } from 'react';
-import { Result, Button } from 'antd';
+import { Result, Button, Image, Card } from 'antd';
 import { HomeOutlined, CreditCardOutlined, CheckCircleOutlined } from '@ant-design/icons'; // Added CreditCardOutlined
 import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
@@ -13,8 +13,8 @@ export default function SuccessPage() {
 	const paymentId: any = searchParams.get('payment_id');
 
 	useEffect(() => {
-		// const timer = setTimeout(async () => {
 		verifyPayment(paymentId);
+		// const timer = setTimeout(async () => {
 		// router.push('/en/login');
 		// }, 2000);
 		// return () => clearTimeout(timer);
@@ -22,16 +22,32 @@ export default function SuccessPage() {
 	}, []);
 
 	return (
-		<div style={{ maxWidth: '300px', margin: 'auto', paddingTop: '300px' }}>
-			<Result
-				icon={<CheckCircleOutlined style={{ fontSize: '48px', color: '#1890ff' }} />} // Changed icon to CreditCardOutlined
-				title="Payment Successful"
-				extra={
-					<Button type="primary" onClick={() => router.push('/en/login')}>
-						Go to Login
-					</Button>
-				}
-			/>
+		<div
+			style={{
+				maxWidth: '500px',
+				margin: 'auto',
+				paddingTop: '200px',
+				paddingBottom: '10px'
+			}}
+		>
+			<Card hoverable>
+				<Result
+					status="success"
+					// icon={<CheckCircleOutlined style={{ fontSize: '48px', color: '#1890ff' }} />} // Changed icon to CreditCardOutlined
+					icon={
+						<>
+							<Image src="/images/check.gif" alt="payment successful" width={75}></Image>
+						</>
+					}
+					title="Payment Successful"
+					subTitle="Subscription is active now, please head to the login page"
+					extra={
+						<Button type="primary" size="large" onClick={() => router.push('/en/login')}>
+							Go to Login
+						</Button>
+					}
+				/>
+			</Card>
 		</div>
 	);
 }
