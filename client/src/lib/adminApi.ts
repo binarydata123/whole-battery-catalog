@@ -295,3 +295,49 @@ export const getAllNotifications = async (id: string): Promise<any> => {
 		req.then((res) => resolve(res.data)).catch((err) => reject(err));
 	});
 };
+
+export const getUserList = async (): Promise<any> => {
+	return new Promise((resolve, reject) => {
+		const req = axios.request({
+			url: `${process.env['NEXT_PUBLIC_API_URL']}/admin/users`,
+			method: 'get',
+			headers: {
+				Accept: 'application/json',
+				Authorization: `Bearer ${token}`
+			}
+		});
+
+		req.then((res) => resolve(res.data)).catch((err) => reject(err));
+	});
+};
+
+export const updateUser = async (data: any): Promise<any> => {
+	return new Promise((resolve, reject) => {
+		const req = axios.request({
+			url: `${process.env.NEXT_PUBLIC_API_URL}/admin/users/addOrUpdateUser`,
+			method: 'post',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
+				Authorization: `Bearer ${token}`
+			},
+			data
+		});
+		req.then((res) => resolve(res.data)).catch((err) => reject(err));
+	});
+};
+
+export const deleteUser = async (data: any): Promise<any> => {
+	return new Promise((resolve, reject) => {
+		const req = axios.request({
+			url: `${process.env.NEXT_PUBLIC_API_URL}/admin/users/deleteUser`,
+			method: 'post',
+			headers: {
+				Accept: 'application/json',
+				Authorization: `Bearer ${token}`
+			},
+			data
+		});
+		req.then((res) => resolve(res.data)).catch((err) => reject(err));
+	});
+};

@@ -49,6 +49,15 @@ export default function BlogComponent() {
 											preview={false}
 											alt="example"
 											src={blog.image}
+											// eslint-disable-next-line jsx-a11y/alt-text
+											placeholder={
+												// eslint-disable-next-line jsx-a11y/alt-text
+												<Image
+													src="ttps://ruchiragreenearth.com/blog/wp-content/uploads/2023/09/ev-battery.jpg"
+													preview={false}
+													style={{ filter: 'blur(2px)' }}
+												/>
+											}
 											fallback="https://ruchiragreenearth.com/blog/wp-content/uploads/2023/09/ev-battery.jpg"
 										/>
 									}

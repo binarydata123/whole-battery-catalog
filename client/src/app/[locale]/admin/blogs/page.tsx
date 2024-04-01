@@ -58,7 +58,6 @@ export default function AdminBlogs() {
 	};
 
 	const handleUpdateBlog = () => {
-		// console.log('hiii 111>>')
 		fetchData();
 		setIsModalOpen(false);
 	};
