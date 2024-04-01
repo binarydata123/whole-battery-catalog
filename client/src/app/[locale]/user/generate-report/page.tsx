@@ -69,6 +69,7 @@ export default function Page() {
 			const res = await allPeriscopeTestByBatteryId(batteryId);
 			if (res.status == true) {
 				setAllPeriscopeTestData(res.data);
+				setSelectedPeriscopeTestId(res.data[0].periscope_test_id);
 			}
 		} catch (error) {
 			console.error('Error fetching data:', error);
@@ -561,7 +562,7 @@ export default function Page() {
 						<Col span={8} style={{ display: 'flex', alignItems: 'center' }}>
 							<h1 style={{ margin: 0 }}>
 								{batteryData
-									? `${batteryData?.oem?.oem_name} Model ${batteryData?.batteryModel?.model_name.replace(/-/g, '/')}`
+									? `${batteryData?.oem?.oem_name ? batteryData?.oem?.oem_name : ''} Model ${batteryData?.batteryModel?.model_name ? batteryData?.batteryModel?.model_name.replace(/-/g, '/') : ''}`
 									: 'Model Name'}
 							</h1>
 						</Col>
