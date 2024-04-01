@@ -6,7 +6,7 @@ interface GaugeProgressChartProps {
 }
 
 const GaugeProgressChart: React.FC<GaugeProgressChartProps> = ({ percent }) => {
-	const config = {
+	const config: any = {
 		percent: percent, // Use the passed percent value
 		range: {
 			color: 'l(0) 0:#B8E1FF 1:#3D76DD'
