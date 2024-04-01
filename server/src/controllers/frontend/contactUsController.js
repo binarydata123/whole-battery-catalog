@@ -4,7 +4,7 @@ const ContactUs = require('../../models/ContactUs');
 const errorLogger = require('../../../logger');
 const fs = require('fs');
 const ejs = require('ejs');
-const createNotification = require('../../utils/notifications');
+// const createNotification = require('../../utils/notifications');
 const Users = require('../../models/Users');
 
 const contactUsController = {
@@ -35,7 +35,7 @@ const contactUsController = {
 					url: ''
 				};
 
-				createNotification(userNotificationData);
+				// createNotification(userNotificationData);
 			}
 
 			const adminId = await Users.findOne({ role: 'admin' }).select('_id');
@@ -48,7 +48,7 @@ const contactUsController = {
 				url: `/en/admin/contact-form`
 			};
 
-			createNotification(adminNotificationData);
+			// createNotification(adminNotificationData);
 
 			const templatePath = 'views/emails/contactFormUserEmail.ejs';
 			const adminTemplatePath = 'views/emails/contactFormAdminEmail.ejs';
