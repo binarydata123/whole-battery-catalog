@@ -51,6 +51,9 @@ export default function Header() {
 								<Link href="/en/service">Services</Link>
 							</li>
 							<li>
+								<Link href="/en/blogs">Blogs</Link>
+							</li>
+							<li>
 								<Link href="/en/contact-us">Contact Us</Link>
 							</li>
 							<li>
@@ -77,6 +80,9 @@ export default function Header() {
 							</li>
 							<li>
 								<Link href="/en/service">Services</Link>
+							</li>
+							<li>
+								<Link href="/en/blogs">Blogs</Link>
 							</li>
 							<li>
 								<Link href="/en/contact-us">Contact Us</Link>
