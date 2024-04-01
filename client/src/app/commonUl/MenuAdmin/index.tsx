@@ -112,8 +112,16 @@ const items: MenuItem[] = [
 		</Link>
 	),
 	getItem(
-		'Contact Form History',
+		'Users',
 		'10',
+		<Link href="/en/admin/users">
+			{' '}
+			<RiUser2Fill />
+		</Link>
+	),
+	getItem(
+		'Contact Form History',
+		'11',
 		<Link href="/en/admin/contact-form-history">
 			{' '}
 			<MdContacts />
@@ -121,7 +129,7 @@ const items: MenuItem[] = [
 	),
 	getItem(
 		'General Settings',
-		'11',
+		'12',
 		<Link href="/en/admin/general-settings">
 			{' '}
 			<MdContacts />
@@ -129,7 +137,7 @@ const items: MenuItem[] = [
 	),
 	getItem(
 		'Change Password',
-		'12',
+		'13',
 		<Link href="/en/admin/change-password">
 			{' '}
 			<RiLockPasswordFill />
@@ -137,7 +145,7 @@ const items: MenuItem[] = [
 	),
 	getItem(
 		'Log Out',
-		'13',
+		'14',
 		<Link href="/en/admin/log-out">
 			{' '}
 			<SiAuthy />
@@ -157,6 +165,7 @@ export default function MenuAdmin() {
 	}
 
 	let defaultSelectedKey;
+
 	switch (pathname) {
 		case '/admin/dashboard':
 			defaultSelectedKey = '1';
