@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import ParaText from '@/app/commonUl/ParaText';
 import { Col, Image, Row, Select, Table } from 'antd';
@@ -11,35 +12,110 @@ import ColumnChart from '@/components/ColumnChart';
 import GaugeProgressChart from '@/components/GaugeProgressChart';
 import LineChart from '@/components/LineChart';
 import GaugeFullProgressChart from '@/components/GaugeFullProgressChart';
+import {
+	allBatteryByVendor,
+	getBatteryDataById,
+	allPeriscopeTestByBatteryId,
+	getPeriscopeTestData
+} from '@/lib/userApi';
 
 export default function Page() {
-	const [data, setData] = useState<any[]>([]);
+	const [allBatteryData, setAllBatteryData] = useState<any[]>([]);
+	const [batteryId, setBatteryId] = useState<string | null>(null);
+	const [selectedPeriscopeTestId, setSelectedPeriscopeTestId] = useState<string | null>(null);
+	const [allPeriscopeTestData, setAllPeriscopeTestData] = useState<any[]>([]);
+	const [batteryData, setBatteryData] = useState<any>([]);
+	const [periscopeTestData, setPeriscopeTestData] = useState<any>([]);
+	const [carVoltageDistData, setCarVoltageDistData] = useState({
+		barLabels: {},
+		barHeights: {}
+	});
+	// console.log(periscopeTestData);
 
 	useEffect(() => {
-		fetchData();
+		fetchAllBatteryData();
 	}, []);
 
-	const fetchData = () => {
-		fetchDataByVendorId()
-			.then((responseData) => {
-				console.log(responseData);
-				// setData(responseData);
-			})
-			.catch((error) => {
-				console.error('Error fetching data:', error);
-			});
+	useEffect(() => {
+		if (batteryId) fetchBatteryData();
+		// console.log(batteryData);
+	}, [batteryId]);
+
+	useEffect(() => {
+		if (batteryId) fetchAllPeriscopeTestData();
+	}, [batteryId]);
+
+	useEffect(() => {
+		if (selectedPeriscopeTestId) fetchPeriscopeTestData();
+	}, [selectedPeriscopeTestId]);
+
+	const fetchAllBatteryData = async () => {
+		try {
+			const res = await allBatteryByVendor('11');
+			if (res.status == true) {
+				setAllBatteryData(res.data);
+				if (res.data.length > 0) {
+					// console.log(res.data[0].battery_id);
+					setBatteryId(res.data[0].battery_id);
+				}
+			}
+		} catch (error) {
+			console.error('Error fetching data:', error);
+		}
 	};
 
-	const dataSource = [
-		{ key: '1', oem: 'OEM1', model: 'Model1', serial: 'Serial1', date: '2024-03-28' },
-		{ key: '2', oem: 'OEM2', model: 'Model2', serial: 'Serial2', date: '2024-03-27' },
-		{ key: '3', oem: 'OEM3', model: 'Model3', serial: 'Serial3', date: '2024-03-26' },
-		{ key: '4', oem: 'OEM4', model: 'Model4', serial: 'Serial4', date: '2024-03-25' },
-		{ key: '5', oem: 'OEM5', model: 'Model5', serial: 'Serial5', date: '2024-03-24' }
-	];
+	const fetchAllPeriscopeTestData = async () => {
+		try {
+			const res = await allPeriscopeTestByBatteryId(batteryId);
+			if (res.status == true) {
+				setAllPeriscopeTestData(res.data);
+				setSelectedPeriscopeTestId(res.data[0].periscope_test_id);
+			}
+		} catch (error) {
+			console.error('Error fetching data:', error);
+		}
+	};
+
+	const fetchBatteryData = async () => {
+		try {
+			const res = await getBatteryDataById(batteryId);
+			if (res.status == true) {
+				setBatteryData(res.data);
+				setSelectedPeriscopeTestId(null);
+			}
+		} catch (error) {
+			console.error('Error fetching data:', error);
+		}
+	};
+
+	const fetchPeriscopeTestData = async () => {
+		try {
+			const res = await getPeriscopeTestData(selectedPeriscopeTestId);
+			if (res.status == true) {
+				setPeriscopeTestData(res.data);
+			}
+		} catch (error) {
+			console.error('Error fetching data:', error);
+		}
+	};
+
+	const batteryDataSource = allBatteryData.map((data: any, index: number) => {
+		let model = (data.batteryModel?.model_name || 'N/A').replace(/-/g, '/');
+		if (model) {
+			model = 'Model ' + model;
+		}
+		return {
+			key: index + 1,
+			batteryId: data.battery_id,
+			oem: data.oem ? data.oem.oem_name : 'N/A',
+			model: model,
+			serial: data.oem_identifier ? data.oem_identifier : 'N/A',
+			date: data.created_on ? new Date(data.created_on).toISOString().split('T')[0] : 'N/A'
+		};
+	});
 
 	// Columns configuration for the table
-	const columns = [
+	const batteryColumns = [
 		{
 			title: 'OEM',
 			dataIndex: 'oem',
@@ -409,58 +485,115 @@ export default function Page() {
 		}
 	];
 
-	const carVoltageDistData = {
-		barLabels: {
-			'0': 3.6111,
-			'1': 3.6117,
-			'2': 3.6122,
-			'3': 3.6128,
-			'4': 3.6134,
-			'5': 3.614,
-			'6': 3.6146,
-			'7': 3.6152,
-			'8': 3.6157,
-			'9': 3.6163
-		},
-		barHeights: {
-			'0': 1,
-			'1': 0,
-			'2': 7,
-			'3': 3,
-			'4': 0,
-			'5': 9,
-			'6': 3,
-			'7': 9,
-			'8': 11,
-			'9': 9
-		}
+	// const carVoltageDistData = {
+	// 	barLabels: {
+	// 		'0': 3.6111,
+	// 		'1': 3.6117,
+	// 		'2': 3.6122,
+	// 		'3': 3.6128,
+	// 		'4': 3.6134,
+	// 		'5': 3.614,
+	// 		'6': 3.6146,
+	// 		'7': 3.6152,
+	// 		'8': 3.6157,
+	// 		'9': 3.6163
+	// 	},
+	// 	barHeights: {
+	// 		'0': 1,
+	// 		'1': 0,
+	// 		'2': 7,
+	// 		'3': 3,
+	// 		'4': 0,
+	// 		'5': 9,
+	// 		'6': 3,
+	// 		'7': 9,
+	// 		'8': 11,
+	// 		'9': 9
+	// 	}
+	// };
+
+	const handlePeriscopeTestChange = (value: any) => {
+		setSelectedPeriscopeTestId(value);
+		// console.log(selectedPeriscopeTestId);
 	};
+
+	const generateRandomData = () => {
+		const barLabels: Record<string, number> = {}; // Explicitly define as Record<string, number>
+		const barHeights: Record<string, number> = {}; // Explicitly define as Record<string, number>
+		for (let i = 0; i < 10; i++) {
+			const voltage = (Math.random() * (3.6163 - 3.6111) + 3.6111).toFixed(4);
+			barLabels[i.toString()] = parseFloat(voltage);
+			barHeights[i.toString()] = Math.floor(Math.random() * 20); // Random heights for demonstration
+		}
+		return { barLabels, barHeights };
+	};
+
+	useEffect(() => {
+		if (selectedPeriscopeTestId !== null) {
+			const randomData = generateRandomData();
+			setCarVoltageDistData(randomData);
+		}
+	}, [selectedPeriscopeTestId]);
 
 	return (
 		<>
 			<Row className="page-container">
 				<Col xl={7} className="left-section">
 					<h2>Battery Packs</h2>
-					<Table dataSource={dataSource} columns={columns} pagination={false} />
+					<Table
+						dataSource={batteryDataSource}
+						columns={batteryColumns}
+						pagination={false}
+						rowClassName={(record) => {
+							return record.batteryId === batteryId ? 'custom-row selected-row' : 'custom-row';
+						}}
+						onRow={(record: any, rowIndex) => {
+							return {
+								onClick: (event) => {
+									const batteryId = record.batteryId;
+									setBatteryId(batteryId);
+								}
+							};
+						}}
+					/>
 				</Col>
 				<Col span={17} className="right-section">
 					<Row gutter={[16, 16]}>
 						<Col span={8} style={{ display: 'flex', alignItems: 'center' }}>
-							<h1 style={{ margin: 0 }}>Tesla Model 3</h1>
+							<h1 style={{ margin: 0 }}>
+								{batteryData
+									? `${batteryData?.oem?.oem_name ? batteryData?.oem?.oem_name : ''} Model ${batteryData?.batteryModel?.model_name ? batteryData?.batteryModel?.model_name.replace(/-/g, '/') : ''}`
+									: 'Model Name'}
+							</h1>
 						</Col>
 						<Col span={8} style={{ display: 'flex', alignItems: 'center' }}>
-							<p style={{ margin: 0 }}>SN10237</p>
+							<p style={{ margin: 0, fontSize: '20px' }}>{`${batteryData?.oem_identifier || 'N/A'}`}</p>
 						</Col>
 						<Col span={8} style={{ display: 'flex', flexDirection: 'column' }}>
 							<div style={{ display: 'flex', alignItems: 'center' }}>
 								<p style={{ textTransform: 'uppercase', margin: 0, marginRight: '8px' }}>
 									Report Selection
 								</p>
-								<Select defaultValue="" style={{ width: '40%', marginLeft: '10px' }}>
+								<Select
+									style={{ width: '50%', marginLeft: '10px' }}
+									onChange={handlePeriscopeTestChange}
+								>
 									<Select.Option value="">Most recent</Select.Option>
-									<Select.Option value="Option 1">Oldest</Select.Option>
-									<Select.Option value="Option 2">Option 2</Select.Option>
-									<Select.Option value="Option 3">Option 3</Select.Option>
+									{allPeriscopeTestData &&
+										allPeriscopeTestData.map((option, index) => (
+											<Select.Option key={index} value={option.periscope_test_id}>
+												{option.created_on
+													? new Date(option.created_on).toLocaleString('en-US', {
+															year: 'numeric',
+															month: 'numeric',
+															day: 'numeric',
+															hour: 'numeric',
+															minute: 'numeric',
+															hour12: true
+														})
+													: 'N/A'}
+											</Select.Option>
+										))}
 								</Select>
 							</div>
 						</Col>
@@ -479,7 +612,9 @@ export default function Page() {
 								>
 
 								</span> */}
-								<GaugeFullProgressChart percent={0.9} />
+								<GaugeFullProgressChart
+									percent={periscopeTestData.soh ? periscopeTestData.soh / 100 : 0}
+								/>
 							</div>
 						</Col>
 						<Col span={6} style={{ display: 'flex', alignItems: 'center', borderLeft: '1px solid #ccc' }}>
@@ -489,10 +624,12 @@ export default function Page() {
 									style={{
 										marginLeft: '8px',
 										paddingLeft: '8px',
-										fontSize: '40px'
+										fontSize: '30px'
 									}}
 								>
-									A
+									{periscopeTestData?.periscopeTestResults?.grade
+										? periscopeTestData?.periscopeTestResults?.grade
+										: 'N/A'}
 								</span>
 							</div>
 						</Col>
@@ -513,7 +650,7 @@ export default function Page() {
 										fontSize: '40px'
 									}}
 								>
-									9000
+									{periscopeTestData?.price_estimate ? periscopeTestData?.price_estimate : 'N/A'}
 								</span>
 							</div>
 						</Col>
@@ -535,7 +672,9 @@ export default function Page() {
 									<p style={{ margin: 0, fontSize: '14px' }}>Chemistry</p>
 								</Col>
 								<Col xl={12} style={{ textAlign: 'end' }}>
-									<p style={{ margin: 0, fontSize: '14px' }}>NCA</p>
+									<p style={{ margin: 0, fontSize: '14px' }}>
+										{batteryData?.chemistry ? batteryData?.chemistry : 'N/A'}
+									</p>
 								</Col>
 							</Row>
 							<Row gutter={[16, 16]} style={{ paddingTop: '15px' }}>
@@ -601,7 +740,7 @@ export default function Page() {
 									<p style={{ margin: 0, fontSize: '14px' }}>Pack Voltage</p>
 								</Col>
 								<Col xl={12} style={{ textAlign: 'end' }}>
-									<p style={{ margin: 0, fontSize: '14px' }}>345.5 V</p>
+									{batteryData?.data?.batteryDatas?.[0]?.Voltage ?? 'N/A'}
 								</Col>
 							</Row>
 							<Row gutter={[16, 16]} style={{ paddingTop: '15px' }}>

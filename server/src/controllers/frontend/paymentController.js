@@ -56,6 +56,8 @@ const paymentController = {
 
 			//setting hasPaid to true once payment is succeeded
 			await mongoose.model('users').updateOne({ _id: userID }, { hasPaid: true });
+
+			res.status(200).json({ status: true, message: 'payment successful' });
 		}
 	}
 };

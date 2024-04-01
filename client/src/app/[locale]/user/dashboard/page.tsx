@@ -38,7 +38,7 @@ export default function Dashboard() {
 									}}
 								>
 									<ParaText size="large" color="black">
-										Book Appoinment
+										Book appointment
 									</ParaText>
 									<Titles level={4} color="PrimaryColor">
 										0

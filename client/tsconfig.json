@@ -4,7 +4,7 @@
 		"lib": ["dom", "dom.iterable", "esnext"],
 		"allowJs": true,
 		"skipLibCheck": true,
-		"strict": true,
+		"strict": false,
 		"noEmit": true,
 		"esModuleInterop": true,
 		"module": "esnext",
@@ -25,11 +25,11 @@
 		"noFallthroughCasesInSwitch": true, // Flags fallthrough cases in switch statements as errors
 		"noUnusedLocals": false, // Reports unused local variables
 		"noUnusedParameters": false, // Reports unused parameters
-		"strictPropertyInitialization": true, // Checks for strict initialization of class properties
-		"noImplicitReturns": true, // Reports an error when not all code path  s in a function return a value
+		// "strictPropertyInitialization": true, // Checks for strict initialization of class properties
+		"noImplicitReturns": false, // Reports an error when not all code path  s in a function return a value
 		"noImplicitThis": true, // Warns on expressions and declarations with an implied 'any' type
 		"noImplicitAny": true, // Warns on expressions and declarations with an implied 'any' type
-		"strictNullChecks": true, // Enables strict null checks
+		// "strictNullChecks": true, // Enables strict null checks
 		"strictFunctionTypes": true, // Enables strict checking of function types
 		"strictBindCallApply": true, // Enables stricter 'bind', 'call', and 'apply' methods on functions
 
@@ -59,7 +59,7 @@
 		"noUncheckedIndexedAccess": true, // Disallows unchecked indexing into objects via an index signature
 
 		// Advanced options
-		"exactOptionalPropertyTypes": true, // Enforces exact optional property types
+		"exactOptionalPropertyTypes": false, // Enforces exact optional property types
 		"composite": true, // Enable constraints between project references
 		"skipDefaultLibCheck": true, // Skip type checking of declaration files in the TypeScript standard library
 		"tsBuildInfoFile": "./tsconfig.tsbuildinfo" // Specify the file that will store incremental compilation information

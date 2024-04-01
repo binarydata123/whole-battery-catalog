@@ -118,7 +118,6 @@ const authorController = {
 	deleteAuthor: async (req, res) => {
 		try {
 			const { id, userId } = req.body;
-			console.log(req.body);
 
 			// Retrieve feature category information from the database
 			const deletedFeature = await Author.findByIdAndUpdate(
