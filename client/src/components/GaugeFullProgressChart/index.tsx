@@ -1,12 +1,12 @@
 import React from 'react';
 import { Gauge } from '@ant-design/plots';
 
-interface GaugeProgressChartProps {
-	percent: number; // Define prop type for percent
-}
+// interface GaugeProgressChartProps {
+// 	percent: number; // Define prop type for percent
+// }
 
-const GaugeFullProgressChart: React.FC<GaugeProgressChartProps> = ({ percent }) => {
-	const config = {
+const GaugeFullProgressChart = ({ percent }: any) => {
+	const config: any = {
 		percent: percent, // Use the passed percent value
 		range: {
 			color: 'l(0) 0:#B8E1FF 1:#3D76DD'
