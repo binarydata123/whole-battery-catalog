@@ -5,7 +5,7 @@ import Titles from '../Titles';
 import { useRouter } from 'next/navigation';
 import { FaBell } from 'react-icons/fa';
 import { FaUserAlt } from 'react-icons/fa';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useContext } from 'react';
 import { Button, notification } from 'antd';
 import { TiThMenu, TiTimes } from 'react-icons/ti';
 import MenuAdmin from '../MenuAdmin';
@@ -15,8 +15,12 @@ import { MdEmail } from 'react-icons/md';
 import { IoLanguageSharp } from 'react-icons/io5';
 import HeaderDropDown from '../headerDropDown';
 import { BiMenuAltLeft } from 'react-icons/bi';
+import VendorAuth from '@/contexts/VendorAuthProvider';
+
 const Context = React.createContext({ name: 'Default' });
 export default function HeaderDashTop() {
+	const { user } = useContext(VendorAuth);
+
 	const [showNotification, setShowNotification] = useState(false);
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 

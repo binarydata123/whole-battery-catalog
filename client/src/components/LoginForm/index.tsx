@@ -5,7 +5,9 @@ import { Button, Checkbox, Form, type FormProps, Input, Row, Col, notification, 
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { socialLogin } from '@/lib/ApiAdapter';
 import { useRouter } from 'next/navigation';
-import AuthContext from '@/contexts/AuthContext';
+// import AuthContext from '@/contexts/AuthContext';
+import VendorAuth from '@/contexts/VendorAuthProvider';
+// import { vendorLogin } from '@/lib/vendorApiAdapter';
 import Cookies from 'js-cookie';
 import ParaText from '@/app/commonUl/ParaText';
 import { FcGoogle } from 'react-icons/fc';
@@ -23,7 +25,7 @@ export default function LoginForm() {
 	const [loading, setLoading] = React.useState<Boolean>(false);
 	const [form] = Form.useForm();
 	const RememberMeCookie = 'rememberMe';
-	const { login, setUser } = React.useContext(AuthContext);
+	const { vendorLogin, setUser } = React.useContext(VendorAuth);
 	const router = useRouter();
 
 	const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
@@ -39,8 +41,7 @@ export default function LoginForm() {
 				Cookies.remove(RememberMeCookie);
 			}
 
-			const response = await login(values.username, values.password, '');
-			console.log(response);
+			await vendorLogin(values.username, values.password);
 		} catch (error: any) {
 			setLoading(false);
 			console.error(error);
@@ -74,7 +75,7 @@ export default function LoginForm() {
 				if (res) {
 					Cookies.set('session_token', res.token);
 					// console.log('res.user', res.user);
-					setUser(res.user);
+					// setUser(res.user);
 
 					// signOut({ redirect: false }).then();
 					router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/${res.user.role}/dashboard`);

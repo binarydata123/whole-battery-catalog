@@ -30,7 +30,7 @@ export default function Page() {
 		barLabels: {},
 		barHeights: {}
 	});
-	// console.log(periscopeTestData);
+	console.log(periscopeTestData);
 
 	useEffect(() => {
 		fetchAllBatteryData();
@@ -576,6 +576,7 @@ export default function Page() {
 								</p>
 								<Select
 									style={{ width: '50%', marginLeft: '10px' }}
+									value={selectedPeriscopeTestId}
 									onChange={handlePeriscopeTestChange}
 								>
 									<Select.Option value="">Most recent</Select.Option>
@@ -627,8 +628,9 @@ export default function Page() {
 										fontSize: '30px'
 									}}
 								>
-									{periscopeTestData?.periscopeTestResults?.grade
-										? periscopeTestData?.periscopeTestResults?.grade
+									{periscopeTestData?.periscopeTestResults &&
+									periscopeTestData.periscopeTestResults.length > 0
+										? periscopeTestData.periscopeTestResults[0].grade
 										: 'N/A'}
 								</span>
 							</div>
@@ -664,7 +666,16 @@ export default function Page() {
 									<p style={{ margin: 0, fontSize: '14px' }}>BOL Capacity</p>
 								</Col>
 								<Col xl={12} style={{ textAlign: 'end' }}>
-									<p style={{ margin: 0, fontSize: '14px' }}>77.8 kWh</p>
+									<p style={{ margin: 0, fontSize: '14px' }}>
+										{periscopeTestData
+											? periscopeTestData.kwh_capacity && periscopeTestData.soh
+												? (
+														periscopeTestData.kwh_capacity /
+														(periscopeTestData.soh / 100)
+													).toFixed(1) + ' kWh'
+												: 'N/A'
+											: 'N/A'}
+									</p>
 								</Col>
 							</Row>
 							<Row gutter={[16, 16]} style={{ paddingTop: '15px' }}>
@@ -711,7 +722,11 @@ export default function Page() {
 									<p style={{ margin: 0, fontSize: '14px' }}>Cycle Count</p>
 								</Col>
 								<Col xl={12} style={{ textAlign: 'end' }}>
-									<p style={{ margin: 0, fontSize: '14px' }}>130 cycles</p>
+									<p style={{ margin: 0, fontSize: '14px' }}>
+										{periscopeTestData && periscopeTestData.cycle_count
+											? periscopeTestData.cycle_count.toFixed(1) + ' cycles'
+											: 'N/A'}
+									</p>
 								</Col>
 							</Row>
 							<Row gutter={[16, 16]} style={{ paddingTop: '15px' }}>
@@ -719,7 +734,11 @@ export default function Page() {
 									<p style={{ margin: 0, fontSize: '14px' }}>Dch Energy</p>
 								</Col>
 								<Col xl={12} style={{ textAlign: 'end' }}>
-									<p style={{ margin: 0, fontSize: '14px' }}>900 kWh</p>
+									<p style={{ margin: 0, fontSize: '14px' }}>
+										{periscopeTestData && periscopeTestData.total_kwh_dch
+											? periscopeTestData.total_kwh_dch + ' kWh'
+											: 'N/A'}
+									</p>
 								</Col>
 							</Row>
 							<Row gutter={[16, 16]} style={{ paddingTop: '15px' }}>
@@ -784,21 +803,42 @@ export default function Page() {
 											<p style={{ margin: 0, fontSize: '14px' }}>Mean Cell Voltage</p>
 										</Col>
 										<Col xl={12} style={{ textAlign: 'end' }}>
-											<p style={{ margin: 0, fontSize: '14px' }}>3.6 V</p>
+											<p style={{ margin: 0, fontSize: '14px' }}>
+												{periscopeTestData?.periscopeTestResults &&
+												periscopeTestData.periscopeTestResults.length > 0
+													? periscopeTestData.periscopeTestResults[0].secondlife_crate !==
+														null
+														? periscopeTestData.periscopeTestResults[0].secondlife_crate +
+															' V'
+														: 'N/A'
+													: 'N/A'}
+											</p>
 										</Col>
 									</Row>
 									<Row gutter={[16, 16]} style={{ paddingTop: '40px' }}>
 										<Col xl={12} style={{ textAlign: 'center' }}>
 											<GaugeProgressChart percent={0.75} />
 											<p style={{ margin: 0, fontSize: '14px' }}>
-												<strong>2.1 mVv</strong>
+												<strong>
+													{periscopeTestData
+														? periscopeTestData?.rul_result
+															? periscopeTestData?.rul_result?.toFixed(2) + ' mV'
+															: 'N/A'
+														: 'N/A'}
+												</strong>
 											</p>
 											<p style={{ margin: 0, fontSize: '14px' }}>Cell V Std Dev</p>
 										</Col>
 										<Col xl={12} style={{ textAlign: 'center' }}>
 											<GaugeProgressChart percent={0.5} />
 											<p style={{ margin: 0, fontSize: '14px' }}>
-												<strong>5.0 mV</strong>
+												<strong>
+													{periscopeTestData
+														? periscopeTestData?.rul_result_yr
+															? periscopeTestData?.rul_result_yr + ' mV'
+															: 'N/A'
+														: 'N/A'}
+												</strong>
 											</p>
 											<p style={{ margin: 0, fontSize: '14px' }}>Cell V Max-Min Range</p>
 										</Col>
@@ -819,7 +859,11 @@ export default function Page() {
 											<p style={{ margin: 0, fontSize: '14px' }}>Capacity</p>
 										</Col>
 										<Col xl={12} style={{ textAlign: 'end' }}>
-											<p style={{ margin: 0, fontSize: '14px' }}>66.9 kWh</p>
+											<p style={{ margin: 0, fontSize: '14px' }}>
+												{periscopeTestData && periscopeTestData.kwh_capacity
+													? periscopeTestData.kwh_capacity.toFixed(1) + ' kWh'
+													: 'N/A'}
+											</p>
 										</Col>
 									</Row>
 									<Row gutter={[16, 16]} style={{ paddingTop: '15px' }}>
