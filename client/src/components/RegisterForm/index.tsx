@@ -7,17 +7,22 @@ import { FcGoogle } from 'react-icons/fc';
 import Link from 'next/link';
 import Titles from '@/app/commonUl/Titles';
 import { useRouter } from 'next/navigation';
-import { register } from '@/lib/ApiAdapter';
-import handlePayment from '../Payment/handlePayment';
+// import { vendorRegister } from '@/lib/vendorApiAdapter';
+import VendorAuth from '@/contexts/VendorAuthProvider';
+import Cookies from 'js-cookie';
+// import handlePayment from '../Payment/handlePayment';
 
 type FieldType = {
-	name?: string;
+	fullName?: string;
+	username?: string;
 	email?: string;
 	password?: string;
 	confirmPassword?: string;
 	remember?: string;
 };
 export default function RegisterForm() {
+	const { vendorRegister } = useContext(VendorAuth);
+
 	const [form] = Form.useForm();
 	const router = useRouter();
 	const [loading, setLoading] = useState(false);
@@ -25,28 +30,10 @@ export default function RegisterForm() {
 	const onFinish = async (values: any) => {
 		try {
 			setLoading(true);
-			const res = await register(values);
-			console.log(res);
-			if (res.status === true) {
-				notification.success({
-					message: 'User Registered successfully',
-					description: (
-						<div style={{ display: 'flex', columnGap: 6 }}>
-							<Spin />
-							<p>redirecting to payment page...</p>
-						</div>
-					),
-					duration: 3000
-				});
-				setTimeout(async () => {
-					await handlePayment(10, 'usd', res.user._id);
-				}, 3000);
-			} else {
-				message.error(res.message);
-			}
-		} catch (error) {
-			console.log(error);
-			message.error('Failed to register. Please try again later.');
+			await vendorRegister(values.fullName, values.username, values.email, values.password);
+		} catch (error: any) {
+			setLoading(false);
+			console.error(error);
 		} finally {
 			setLoading(false);
 		}
@@ -67,8 +54,15 @@ export default function RegisterForm() {
 				<Form name="basic" onFinish={onFinish} autoComplete="off" layout="vertical" form={form}>
 					<Form.Item<FieldType>
 						label="Full Name"
-						name="name"
+						name="fullName"
 						rules={[{ required: true, message: 'Please input your first name!' }]}
+					>
+						<Input style={{ width: '100%', height: '45px' }} />
+					</Form.Item>
+					<Form.Item<FieldType>
+						label="Username"
+						name="username"
+						rules={[{ required: true, message: 'Please input your username!' }]}
 					>
 						<Input style={{ width: '100%', height: '45px' }} />
 					</Form.Item>

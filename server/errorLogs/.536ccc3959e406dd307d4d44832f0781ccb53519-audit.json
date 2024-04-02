@@ -24,6 +24,11 @@
             "date": 1711943579586,
             "name": "/home/heena/Sushant/whole-battery-catalog/server/errorLogs/error-2024-04-01.log",
             "hash": "0bd13ec45350e2832b450c6c788a29073c315b357f2826ba4d9ac211272a1425"
+        },
+        {
+            "date": 1712029087739,
+            "name": "/home/heena/Sushant/whole-battery-catalog/server/errorLogs/error-2024-04-02.log",
+            "hash": "f43eba0035ffdd2c01cf29d8fa9c1ad6ece874e8b11e84dcb5c8e05c5c6070d6"
         }
     ],
     "hashType": "sha256"

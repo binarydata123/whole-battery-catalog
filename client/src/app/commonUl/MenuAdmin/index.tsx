@@ -14,7 +14,8 @@ import { FaFilePdf } from 'react-icons/fa6';
 import { MdContacts } from 'react-icons/md';
 import { RiLockPasswordFill, RiUser2Fill } from 'react-icons/ri';
 import { FcNews } from 'react-icons/fc';
-import AuthContext from '@/contexts/AuthContext';
+// import AuthContext from '@/contexts/AuthContext';
+import VendorAuth from '@/contexts/VendorAuthProvider';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -156,7 +157,7 @@ const items: MenuItem[] = [
 export default function MenuAdmin() {
 	const pathname = usePathname();
 
-	const { logout } = useContext(AuthContext);
+	const { logout } = useContext(VendorAuth);
 
 	function handleClick(href: any) {
 		if (href.key == 13) {
