@@ -63,9 +63,9 @@ export default function Users() {
 						onChange={handleSearchChange}
 					/>
 				</Col>
-				<Col xl={19} md={19} sm={24} xs={24} className="textEnd mNone">
+				{/* <Col xl={19} md={19} sm={24} xs={24} className="textEnd mNone">
 					<PrimaryButton label="Add User" onClick={showModal} />
-				</Col>
+				</Col> */}
 			</Row>
 			<div className="gapMarginTopOne"></div>
 			<TableData users={filteredUsers} fetchUser={fetchData} />
