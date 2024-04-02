@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import ParaText from '@/app/commonUl/ParaText';
 import Titles from '@/app/commonUl/Titles';
 import { Breadcrumb, Col, Row, Image } from 'antd';
@@ -36,8 +37,16 @@ const SinglePage = ({ blogData }: any) => {
 			<div className="customContainer">
 				<Image
 					src={blogData?.image}
-					alt={blogData?.metaDescription}
-					fallback="https://ruchiragreenearth.com/blog/wp-content/uploads/2023/09/ev-battery.jpg"
+					fallback="/images/ev-battery.jpg"
+					placeholder={
+						<Image
+							src="/images/ev-battery.jpg"
+							width={1520}
+							height={700}
+							preview={false}
+							style={{ filter: 'blur(2px)' }}
+						/>
+					}
 					width={1520}
 					height={700}
 					preview={false}
