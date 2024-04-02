@@ -13,10 +13,11 @@ import Link from 'next/link';
 import { MdDashboard } from 'react-icons/md';
 import { IoIosSettings } from 'react-icons/io';
 import { Avatar, Col, Row } from 'antd';
-import AuthContext from '@/contexts/AuthContext';
+// import AuthContext from '@/contexts/AuthContext';
+import VendorAuth from '@/contexts/VendorAuthProvider';
 
 export default function HeaderDropDown(props: any) {
-	const { user, logout } = useContext(AuthContext);
+	const { user, logout } = useContext(VendorAuth);
 
 	const handleLogout = () => {
 		logout();
@@ -31,7 +32,7 @@ export default function HeaderDropDown(props: any) {
 						</Col>
 						<Col lg={18} md={18} sm={18} xs={18} className="mobileCenter">
 							<ParaText size="extraSmall" color="black" className="dBlock">
-								{user?.name}
+								<span>{user && user.vendor_email_id ? user.vendor_email_id : 'hello'}</span>
 							</ParaText>
 							{/* <ParaText size="smallExtra" color="black" className="dBlock">
 								All the facts Lip

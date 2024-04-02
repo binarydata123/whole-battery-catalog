@@ -9,6 +9,6 @@ const router = express.Router();
 
 router.use('/api', frontendRoutes);
 router.use('/api/admin', verifyToken, checkRole('admin'), adminRoutes);
-router.use('/api/user', verifyToken, checkRole('user'), userRoutes);
+router.use('/api/user', userRoutes);
 
 module.exports = router;
