@@ -6,6 +6,7 @@ import { User } from '@/lib/types';
 import Cookies from 'js-cookie';
 import { message, notification, Spin } from 'antd';
 import { useRouter } from 'next/navigation';
+import MyLottieAnimation from '@/components/LoaderAnimation';
 import ErrorHandler from '@/lib/ErrorHandler';
 
 const api = axios.create({
@@ -104,7 +105,19 @@ const VendorAuthProvider = ({ children }: AuthContextProp) => {
 
 	// Render Spinner or null while initialization is in progress
 	if (!initialized) {
-		return <Spin />;
+		return (
+			<div
+				style={{
+					width: '100vw',
+					height: '100vh',
+					display: 'flex',
+					alignItems: 'center',
+					justifyContent: 'center'
+				}}
+			>
+				<MyLottieAnimation />
+			</div>
+		);
 	}
 
 	return (
