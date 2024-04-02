@@ -12,6 +12,8 @@ import { FaAppStore } from 'react-icons/fa';
 import Titles from '../Titles';
 import { MdContacts, MdOutlinePayment } from 'react-icons/md';
 import { RiLockPasswordFill } from 'react-icons/ri';
+import VendorAuth from '@/contexts/VendorAuthProvider';
+
 type MenuItem = Required<MenuProps>['items'][number];
 
 function getItem(

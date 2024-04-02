@@ -14,6 +14,7 @@ import { FaFilePdf } from 'react-icons/fa6';
 import { MdContacts } from 'react-icons/md';
 import { RiLockPasswordFill } from 'react-icons/ri';
 import { CgBattery } from 'react-icons/cg';
+import VendorAuth from '@/contexts/VendorAuthProvider';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -85,6 +86,8 @@ const items: MenuItem[] = [
 ];
 
 export default function MenuAdmin() {
+	const { user } = React.useContext(VendorAuth);
+
 	const pathname = usePathname();
 	let defaultSelectedKey;
 	switch (pathname) {
