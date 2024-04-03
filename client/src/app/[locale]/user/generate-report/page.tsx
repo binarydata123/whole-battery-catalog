@@ -2,7 +2,7 @@
 'use client';
 import ParaText from '@/app/commonUl/ParaText';
 import { Col, Image, Row, Select, Table } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FaShoppingCart } from 'react-icons/fa';
 import './style.css';
 import RateStar from '@/app/commonUl/RateStar';
@@ -18,6 +18,10 @@ import {
 	allPeriscopeTestByBatteryId,
 	getPeriscopeTestData
 } from '@/lib/userApi';
+import { RiDownload2Fill } from 'react-icons/ri';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import VendorAuth from '@/contexts/VendorAuthProvider';
 
 export default function Page() {
 	const [allBatteryData, setAllBatteryData] = useState<any[]>([]);
@@ -26,14 +30,14 @@ export default function Page() {
 	const [allPeriscopeTestData, setAllPeriscopeTestData] = useState<any[]>([]);
 	const [batteryData, setBatteryData] = useState<any>([]);
 	const [periscopeTestData, setPeriscopeTestData] = useState<any>([]);
+	const { user } = useContext(VendorAuth);
 	const [carVoltageDistData, setCarVoltageDistData] = useState({
 		barLabels: {},
 		barHeights: {}
 	});
-	console.log(periscopeTestData);
 
 	useEffect(() => {
-		fetchAllBatteryData();
+		if (user) fetchAllBatteryData(user?.access_token);
 	}, []);
 
 	useEffect(() => {
@@ -49,9 +53,9 @@ export default function Page() {
 		if (selectedPeriscopeTestId) fetchPeriscopeTestData();
 	}, [selectedPeriscopeTestId]);
 
-	const fetchAllBatteryData = async () => {
+	const fetchAllBatteryData = async (token: any) => {
 		try {
-			const res = await allBatteryByVendor('11');
+			const res = await allBatteryByVendor(token);
 			if (res.status == true) {
 				setAllBatteryData(res.data);
 				if (res.data.length > 0) {
@@ -535,11 +539,44 @@ export default function Page() {
 		}
 	}, [selectedPeriscopeTestId]);
 
+	const handleDownloadPDF = () => {
+		const input = document.getElementById('pdf-content');
+
+		html2canvas(input, { scale: 4 }) // Increase DPI
+			.then((canvas) => {
+				const imgData = canvas.toDataURL('image/jpeg'); // Use JPEG format
+				const pdf = new jsPDF();
+				const imgWidth = 210;
+				const pageHeight = 295;
+				const imgHeight = (canvas.height * imgWidth) / canvas.width;
+				let heightLeft = imgHeight;
+				let position = 0;
+
+				pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+				heightLeft -= pageHeight;
+
+				while (heightLeft >= 0) {
+					position = heightLeft - imgHeight;
+					pdf.addPage();
+					pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+					heightLeft -= pageHeight;
+				}
+
+				pdf.save('download.pdf');
+			})
+			.catch((error) => {
+				console.error('Error generating PDF:', error);
+			});
+	};
+
 	return (
 		<>
 			<Row className="page-container">
 				<Col xl={7} className="left-section">
-					<h2>Battery Packs</h2>
+					<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+						<h2>Battery Packs</h2>
+						<RiDownload2Fill size={40} onClick={handleDownloadPDF} style={{ cursor: 'pointer' }} />
+					</div>
 					<Table
 						dataSource={batteryDataSource}
 						columns={batteryColumns}
@@ -557,7 +594,7 @@ export default function Page() {
 						}}
 					/>
 				</Col>
-				<Col span={17} className="right-section">
+				<Col span={17} className="right-section" id="pdf-content">
 					<Row gutter={[16, 16]}>
 						<Col span={8} style={{ display: 'flex', alignItems: 'center' }}>
 							<h1 style={{ margin: 0 }}>

@@ -25,10 +25,16 @@ export default function ForgotPassword() {
 	return (
 		<div className="customContainer">
 			<div className="loginForm">
-				<Titles level={5} color="black" className="textUppercase textCenter">
-					Forgot Password
-				</Titles>
-				<div className="gapMarginTop"></div>
+				<div>
+					<Titles level={3} color="black" className="textUppercase textCenter">
+						Forgot Password?
+					</Titles>
+					<ParaText color="black" size="small" className="textCenter dBlock">
+						Enter your email below to get the magic link!
+					</ParaText>
+				</div>
+				<div className="gapMarginFourTeenTop"></div>
+
 				<Form
 					name="normal_login"
 					className="login-form"
@@ -36,8 +42,22 @@ export default function ForgotPassword() {
 					onFinish={onFinish}
 					onFinishFailed={onFinishFailed}
 				>
-					<Form.Item name="email" rules={[{ required: true, message: 'Please input your Email!' }]}>
-						<Input className="site-form-item-icon" style={{ height: '45px' }} placeholder="Email" />
+					<Form.Item
+						name="email"
+						rules={[
+							{ required: true, message: 'Please input your email!' },
+							{
+								pattern: /^[\w\.-]+@[a-zA-Z\d-]+(\.[a-zA-Z\d-]+)*$/,
+								message: 'Enter valid email address'
+							}
+						]}
+					>
+						<Input
+							className="site-form-item-icon"
+							style={{ height: '45px' }}
+							placeholder="Email"
+							maxLength={50}
+						/>
 					</Form.Item>
 					<div className="gapMarginTop"></div>
 					<div className="textEnd">
@@ -45,19 +65,28 @@ export default function ForgotPassword() {
 							type="primary"
 							htmlType="submit"
 							className="login-form-button"
-							style={{ width: '100%' }}
+							style={{ width: '100%', height: '45px' }}
 						>
 							Send Me The Link
 						</Button>
 					</div>
-					<div className="gapMarginTop textCenter">
-						<ParaText color="black" size="textGraf">
+					<div className="gapMarginFourTeenTop textEnd">
+						<ParaText color="black" size="small">
 							<Link
 								href="/en/login"
 								style={{ color: 'rgba(46, 163, 242, 1) !important', fontWeight: 'bold !important' }}
 							>
 								{' '}
-								<FaArrowLeft /> Back to login{' '}
+								<div
+									style={{
+										display: 'flex',
+										alignItems: 'center',
+										gap: 6,
+										justifyContent: 'flex-end'
+									}}
+								>
+									<FaArrowLeft /> Back to login{' '}
+								</div>
 							</Link>{' '}
 						</ParaText>
 					</div>

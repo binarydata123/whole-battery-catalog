@@ -2,18 +2,18 @@
 import React from 'react';
 import './style.css';
 import { Button, Checkbox, Form, type FormProps, Input, Row, Col, notification, message, Spin } from 'antd';
-import { signIn, signOut, useSession } from 'next-auth/react';
-import { socialLogin } from '@/lib/ApiAdapter';
+// import { signIn, signOut, useSession } from 'next-auth/react';
+// import { socialLogin } from '@/lib/ApiAdapter';
 import { useRouter } from 'next/navigation';
 // import AuthContext from '@/contexts/AuthContext';
 import VendorAuth from '@/contexts/VendorAuthProvider';
 // import { vendorLogin } from '@/lib/vendorApiAdapter';
 import Cookies from 'js-cookie';
 import ParaText from '@/app/commonUl/ParaText';
-import { FcGoogle } from 'react-icons/fc';
+// import { FcGoogle } from 'react-icons/fc';
 import Link from 'next/link';
 import Titles from '@/app/commonUl/Titles';
-import ErrorHandler from '@/lib/ErrorHandler';
+// import ErrorHandler from '@/lib/ErrorHandler';
 
 type FieldType = {
 	username: string;
@@ -21,11 +21,11 @@ type FieldType = {
 	remember: Boolean;
 };
 export default function LoginForm() {
-	const { data: session } = useSession();
+	// const { data: session } = useSession();
 	const [loading, setLoading] = React.useState<Boolean>(false);
 	const [form] = Form.useForm();
 	const RememberMeCookie = 'rememberMe';
-	const { vendorLogin, setUser } = React.useContext(VendorAuth);
+	const { vendorLogin, setUser, user } = React.useContext(VendorAuth);
 	const router = useRouter();
 
 	const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
@@ -49,6 +49,7 @@ export default function LoginForm() {
 			setLoading(false);
 		}
 	};
+
 	React.useEffect(() => {
 		// Check if remember me cookie exists and fill in the form fields
 		const rememberMeData = Cookies.get(RememberMeCookie);
@@ -65,52 +66,52 @@ export default function LoginForm() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	const SocialData = (user: any) => {
-		const data = {
-			name: user.name,
-			email: user.email
-		};
-		socialLogin(data)
-			.then((res: any) => {
-				if (res) {
-					Cookies.set('session_token', res.token);
-					// console.log('res.user', res.user);
-					// setUser(res.user);
+	// const SocialData = (user: any) => {
+	// 	const data = {
+	// 		name: user.name,
+	// 		email: user.email
+	// 	};
+	// 	socialLogin(data)
+	// 		.then((res: any) => {
+	// 			if (res) {
+	// 				Cookies.set('session_token', res.token);
+	// 				// console.log('res.user', res.user);
+	// 				// setUser(res.user);
 
-					// signOut({ redirect: false }).then();
-					router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/${res.user.role}/dashboard`);
-				} else {
-					message.error(res.message);
-				}
-			})
-			.catch((err) => {
-				ErrorHandler.showNotification(err);
-			});
-	};
-	const handleGoogleLogin = async () => {
-		try {
-			await signIn('google');
-		} catch (error) {
-			console.error('Google login failed:', error);
-		}
-	};
+	// 				// signOut({ redirect: false }).then();
+	// 				router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/${res.user.role}/dashboard`);
+	// 			} else {
+	// 				message.error(res.message);
+	// 			}
+	// 		})
+	// 		.catch((err) => {
+	// 			ErrorHandler.showNotification(err);
+	// 		});
+	// };
+	// const handleGoogleLogin = async () => {
+	// 	try {
+	// 		await signIn('google');
+	// 	} catch (error) {
+	// 		console.error('Google login failed:', error);
+	// 	}
+	// };
 
-	React.useEffect(() => {
-		if (session) {
-			SocialData(session.user);
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [session]);
+	// React.useEffect(() => {
+	// 	if (session) {
+	// 		SocialData(session.user);
+	// 	}
+	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
+	// }, [session]);
 
 	return (
 		<>
 			<div className="" id="loginForm">
 				<div>
 					<Titles level={3} color="black" className="textCenter">
-						Welcome back
+						Welcome back!
 					</Titles>
 					<ParaText color="black" size="medium" className="textCenter dBlock">
-						Welcome back! Please enter your details.
+						Login to Your Account and Explore Exciting Features
 					</ParaText>
 				</div>
 				<div className="gapMarginFourTeenTop"></div>
@@ -124,17 +125,23 @@ export default function LoginForm() {
 					<Form.Item<FieldType>
 						label="Username"
 						name="username"
-						rules={[{ required: true, message: 'Please input your username!' }]}
+						rules={[
+							{ required: true, message: 'Please input your username!' },
+							{ pattern: /^\S*$/, message: 'No whitespace allowed' }
+						]}
 					>
-						<Input style={{ width: '100%', height: '45px' }} defaultValue="smartville" />
+						<Input style={{ width: '100%', height: '45px' }} maxLength={40} />
 					</Form.Item>
 
 					<Form.Item<FieldType>
 						label="Password"
 						name="password"
-						rules={[{ required: true, message: 'Please input your password!' }]}
+						rules={[
+							{ required: true, message: 'Please input your password!' },
+							{ pattern: /^\S*$/, message: 'No whitespace allowed' }
+						]}
 					>
-						<Input.Password style={{ width: '100%', height: '45px' }} defaultValue="" />
+						<Input.Password style={{ width: '100%', height: '45px' }} maxLength={50} />
 					</Form.Item>
 
 					<Row align="middle">
@@ -150,7 +157,7 @@ export default function LoginForm() {
 									className="fontWeightEight"
 									style={{ color: '#0A8FDC', marginBottom: '12px', display: 'block' }}
 								>
-									Forgot password
+									Forgot password?
 								</Link>
 							</ParaText>
 						</Col>
@@ -161,7 +168,7 @@ export default function LoginForm() {
 							{loading ? 'Please wait...' : 'Login'}
 						</Button>
 					</Form.Item>
-					<Form.Item>
+					{/* <Form.Item>
 						<Button
 							icon={<FcGoogle style={{ fontSize: '20px' }} />}
 							type="link"
@@ -171,7 +178,7 @@ export default function LoginForm() {
 						>
 							Sign in with Google
 						</Button>
-					</Form.Item>
+					</Form.Item> */}
 					<div className="gapMarginFourTeenTop"></div>
 					<div className="textCenter">
 						<ParaText size="extraSmall" color="defaultColor">

@@ -44,10 +44,10 @@ export default function RegisterForm() {
 			<div className="" id="loginForm">
 				<div>
 					<Titles level={3} color="black" className="textCenter">
-						Welcome back
+						Create Your Account
 					</Titles>
-					<ParaText color="black" size="medium" className="textCenter dBlock">
-						Welcome back! Please enter your details.
+					<ParaText color="black" size="small" className="textCenter dBlock">
+						Join Our Community Today and Unlock Exclusive Benefits!
 					</ParaText>
 				</div>
 				<div className="gapMarginFourTeenTop"></div>
@@ -55,30 +55,46 @@ export default function RegisterForm() {
 					<Form.Item<FieldType>
 						label="Full Name"
 						name="fullName"
-						rules={[{ required: true, message: 'Please input your first name!' }]}
+						rules={[
+							{ required: true, message: 'Please input your first name!' },
+							{ pattern: /^[a-zA-Z\s]+$/, message: 'Only alphabets and whitespace allowed' }
+						]}
 					>
-						<Input style={{ width: '100%', height: '45px' }} />
+						<Input style={{ width: '100%', height: '45px', textTransform: 'capitalize' }} maxLength={40} />
 					</Form.Item>
 					<Form.Item<FieldType>
 						label="Username"
 						name="username"
-						rules={[{ required: true, message: 'Please input your username!' }]}
+						rules={[
+							{ required: true, message: 'Please input your username!' },
+							{ pattern: /^\S*$/, message: 'No whitespace allowed' }
+						]}
 					>
-						<Input style={{ width: '100%', height: '45px' }} />
+						<Input style={{ width: '100%', height: '45px' }} maxLength={40} />
 					</Form.Item>
 					<Form.Item<FieldType>
 						label="Email"
 						name="email"
-						rules={[{ required: true, message: 'Please input your email!' }]}
+						rules={[
+							{ required: true, message: 'Please input your email!' },
+							{
+								pattern: /^[\w\.-]+@[a-zA-Z\d-]+(\.[a-zA-Z\d-]+)*$/,
+								message: 'Enter valid email address'
+							}
+						]}
 					>
-						<Input style={{ width: '100%', height: '45px' }} />
+						<Input style={{ width: '100%', height: '45px' }} maxLength={50} />
 					</Form.Item>
 					<Form.Item<FieldType>
 						label="Password"
 						name="password"
-						rules={[{ required: true, message: 'Please input your password!' }]}
+						rules={[
+							{ required: true, message: 'Please input your password!' },
+							{ min: 8, message: 'Need at least 8 characters' },
+							{ pattern: /^\S*$/, message: 'No whitespace allowed' }
+						]}
 					>
-						<Input.Password style={{ width: '100%', height: '45px' }} />
+						<Input.Password style={{ width: '100%', height: '45px' }} maxLength={50} />
 					</Form.Item>
 					<Form.Item<FieldType>
 						label="Confirm Password"
@@ -86,9 +102,10 @@ export default function RegisterForm() {
 						dependencies={['password']}
 						rules={[
 							{ required: true, message: 'Please input your password!' },
+							{ pattern: /^\S*$/, message: 'No whitespace allowed' },
 							({ getFieldValue }) => ({
 								validator(_, value) {
-									if (!value || getFieldValue('password') === value) {
+									if (getFieldValue('password') === value) {
 										return Promise.resolve();
 									}
 									return Promise.reject(new Error('passwords do not match'));
@@ -96,7 +113,7 @@ export default function RegisterForm() {
 							})
 						]}
 					>
-						<Input.Password style={{ width: '100%', height: '45px' }} />
+						<Input.Password style={{ width: '100%', height: '45px' }} maxLength={50} />
 					</Form.Item>
 					<div className="gapMarginFourTeenTop"></div>
 					<Form.Item>
