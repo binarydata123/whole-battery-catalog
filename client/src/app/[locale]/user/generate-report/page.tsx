@@ -2,7 +2,7 @@
 'use client';
 import ParaText from '@/app/commonUl/ParaText';
 import { Col, Image, Row, Select, Table } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FaShoppingCart } from 'react-icons/fa';
 import './style.css';
 import RateStar from '@/app/commonUl/RateStar';
@@ -21,6 +21,7 @@ import {
 import { RiDownload2Fill } from 'react-icons/ri';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import VendorAuth from '@/contexts/VendorAuthProvider';
 
 export default function Page() {
 	const [allBatteryData, setAllBatteryData] = useState<any[]>([]);
@@ -29,14 +30,14 @@ export default function Page() {
 	const [allPeriscopeTestData, setAllPeriscopeTestData] = useState<any[]>([]);
 	const [batteryData, setBatteryData] = useState<any>([]);
 	const [periscopeTestData, setPeriscopeTestData] = useState<any>([]);
+	const { user } = useContext(VendorAuth);
 	const [carVoltageDistData, setCarVoltageDistData] = useState({
 		barLabels: {},
 		barHeights: {}
 	});
-	console.log(periscopeTestData);
 
 	useEffect(() => {
-		fetchAllBatteryData();
+		if (user) fetchAllBatteryData(user?.access_token);
 	}, []);
 
 	useEffect(() => {
@@ -52,9 +53,9 @@ export default function Page() {
 		if (selectedPeriscopeTestId) fetchPeriscopeTestData();
 	}, [selectedPeriscopeTestId]);
 
-	const fetchAllBatteryData = async () => {
+	const fetchAllBatteryData = async (token: any) => {
 		try {
-			const res = await allBatteryByVendor('11');
+			const res = await allBatteryByVendor(token);
 			if (res.status == true) {
 				setAllBatteryData(res.data);
 				if (res.data.length > 0) {
