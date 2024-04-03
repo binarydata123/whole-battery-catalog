@@ -103,7 +103,7 @@ const VendorAuthProvider = ({ children }: AuthContextProp) => {
 		await performAuthAction(requestData, '/vendorAuth/register', '/user/dashboard', 'Registration Successful');
 	};
 
-	// Render Spinner or null while initialization is in progress
+	// Render Spinner or null while initialization in progress
 	if (!initialized) {
 		return (
 			<>
