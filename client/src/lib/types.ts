@@ -113,6 +113,7 @@ export interface MetaTags {
 }
 
 export interface User {
+	[x: string]: any;
 	vendor_email_id: string;
 	find(arg0: (r: any) => boolean): unknown;
 	_id?: string | null;
