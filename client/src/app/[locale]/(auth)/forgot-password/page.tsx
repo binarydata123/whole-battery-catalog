@@ -8,6 +8,7 @@ import { VscArrowCircleLeft } from 'react-icons/vsc';
 import { VscArrowCircleRight } from 'react-icons/vsc';
 import ParaText from '@/app/commonUl/ParaText';
 import ForgotPassword from '@/components/ForgotPassword';
+
 export default function Page() {
 	const [value, setValue] = useState(3);
 	return (
@@ -24,10 +25,10 @@ export default function Page() {
 						</Col>
 						<Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
 							<div className="fullImageLogin">
-								<div className="bottomSection">
-									<ParaText size="extraSmall" color="white">
-										“Crema is purely based on Material ui components and follows Material ui
-										guidelines.”
+								<div className="bottomSection" style={{ float: 'right' }}>
+									<ParaText size="small" fontWeightBold={600} color="white">
+										The rise of electric vehicles marks the beginning of a new era in
+										transportation, one where sustainability and innovation go hand in hand.
 									</ParaText>
 									<Row align="middle" gutter={[16, 16]}>
 										<Col xs={24} sm={24} md={24} lg={16} xl={16} xxl={16}>

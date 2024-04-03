@@ -10,7 +10,8 @@ import Titles from '@/app/commonUl/Titles';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 
 export default function Dashboard() {
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
+
 	useEffect(() => {
 		const timer = setTimeout(() => {
 			setLoading(false);
