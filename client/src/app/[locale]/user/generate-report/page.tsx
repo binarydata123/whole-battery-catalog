@@ -30,7 +30,7 @@ export default function Page() {
 	const [allPeriscopeTestData, setAllPeriscopeTestData] = useState<any[]>([]);
 	const [batteryData, setBatteryData] = useState<any>([]);
 	const [periscopeTestData, setPeriscopeTestData] = useState<any>([]);
-	const { user } = useContext(VendorAuth);
+	const { user, logout } = useContext(VendorAuth);
 	const [carVoltageDistData, setCarVoltageDistData] = useState({
 		barLabels: {},
 		barHeights: {}
@@ -38,10 +38,11 @@ export default function Page() {
 
 	useEffect(() => {
 		if (user) fetchAllBatteryData(user?.access_token);
-	}, []);
+	}, [user]);
 
 	useEffect(() => {
 		if (batteryId) fetchBatteryData();
+
 		// console.log(batteryData);
 	}, [batteryId]);
 
@@ -57,6 +58,7 @@ export default function Page() {
 		try {
 			const res = await allBatteryByVendor(token);
 			if (res.status == true) {
+				// console.log(res);
 				setAllBatteryData(res.data);
 				if (res.data.length > 0) {
 					// console.log(res.data[0].battery_id);
@@ -84,8 +86,8 @@ export default function Page() {
 		try {
 			const res = await getBatteryDataById(batteryId);
 			if (res.status == true) {
+				// console.log('batteryData', res.data);
 				setBatteryData(res.data);
-				setSelectedPeriscopeTestId(null);
 			}
 		} catch (error) {
 			console.error('Error fetching data:', error);
@@ -587,6 +589,7 @@ export default function Page() {
 						onRow={(record: any, rowIndex) => {
 							return {
 								onClick: (event) => {
+									// event.preventDefault();
 									const batteryId = record.batteryId;
 									setBatteryId(batteryId);
 								}
@@ -651,7 +654,7 @@ export default function Page() {
 
 								</span> */}
 								<GaugeFullProgressChart
-									percent={periscopeTestData.soh ? periscopeTestData.soh / 100 : 0}
+									percent={periscopeTestData.soh ? periscopeTestData?.soh / 100 : 0}
 								/>
 							</div>
 						</Col>
@@ -667,7 +670,7 @@ export default function Page() {
 								>
 									{periscopeTestData?.periscopeTestResults &&
 									periscopeTestData.periscopeTestResults.length > 0
-										? periscopeTestData.periscopeTestResults[0].grade
+										? periscopeTestData.periscopeTestResults[0]?.grade
 										: 'N/A'}
 								</span>
 							</div>
@@ -730,7 +733,9 @@ export default function Page() {
 									<p style={{ margin: 0, fontSize: '14px' }}>Cell Configuration</p>
 								</Col>
 								<Col xl={12} style={{ textAlign: 'end' }}>
-									<p style={{ margin: 0, fontSize: '14px' }}>96s46p</p>
+									<p style={{ margin: 0, fontSize: '14px' }}>
+										{batteryData?.cell_config ? batteryData?.cell_config : 'N/A'}
+									</p>
 								</Col>
 							</Row>
 							<Row gutter={[16, 16]} style={{ paddingTop: '15px' }}>
@@ -738,7 +743,9 @@ export default function Page() {
 									<p style={{ margin: 0, fontSize: '14px' }}>Cell Type</p>
 								</Col>
 								<Col xl={12} style={{ textAlign: 'end' }}>
-									<p style={{ margin: 0, fontSize: '14px' }}>2170</p>
+									<p style={{ margin: 0, fontSize: '14px' }}>
+										{batteryData?.cell_type ? batteryData?.cell_type : 'N/A'}
+									</p>
 								</Col>
 							</Row>
 						</Col>
@@ -804,7 +811,9 @@ export default function Page() {
 									<p style={{ margin: 0, fontSize: '14px' }}>Pack SOC</p>
 								</Col>
 								<Col xl={12} style={{ textAlign: 'end' }}>
-									<p style={{ margin: 0, fontSize: '14px' }}>55%</p>
+									<p style={{ margin: 0, fontSize: '14px' }}>
+										{batteryData?.data?.batteryDatas?.[0]?.battery_Data?.SoC ?? 'N/A'}%
+									</p>
 								</Col>
 							</Row>
 							<Row gutter={[16, 16]} style={{ paddingTop: '15px' }}>

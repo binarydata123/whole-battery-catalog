@@ -8,9 +8,23 @@ import FormTableData from './FormTableData';
 import ParaText from '@/app/commonUl/ParaText';
 import Titles from '@/app/commonUl/Titles';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
+import VendorAuth from '@/contexts/VendorAuthProvider';
+import { allBatteryByVendor } from '@/lib/userApi';
 
 export default function Dashboard() {
-	const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState<boolean>(true);
+	const [allBatteryData, setAllBatteryData] = useState<any[]>([]);
+
+	const { user } = React.useContext(VendorAuth);
+
+	const fetchAllBatteryData = async (token: any) => {
+		try {
+			const res = await allBatteryByVendor(token);
+			setAllBatteryData(res.data);
+		} catch (error) {
+			console.error('Error fetching data:', error);
+		}
+	};
 
 	useEffect(() => {
 		const timer = setTimeout(() => {
@@ -19,6 +33,13 @@ export default function Dashboard() {
 
 		return () => clearTimeout(timer);
 	}, []);
+
+	useEffect(() => {
+		if (user && user.access_token) {
+			fetchAllBatteryData(user.access_token);
+		}
+	}, [user]);
+
 	return (
 		<>
 			<div className={styles.dashBody}>
@@ -30,7 +51,7 @@ export default function Dashboard() {
 				<div className="gapMarginTopOne"></div>
 				<Row gutter={[16, 16]} align={'middle'}>
 					<Col xs={24} sm={12} md={6} xl={6}>
-						<Link href="">
+						<Link href="/en/user/generate-report">
 							<div>
 								<div
 									id={styles.dashboardCard}
@@ -39,10 +60,10 @@ export default function Dashboard() {
 									}}
 								>
 									<ParaText size="large" color="black">
-										Book appointment
+										Battery Reports
 									</ParaText>
 									<Titles level={4} color="PrimaryColor">
-										0
+										{allBatteryData.length}
 									</Titles>
 									<ParaText
 										size="extraSmall"
@@ -60,7 +81,7 @@ export default function Dashboard() {
 						</Link>
 					</Col>
 
-					<Col xs={24} sm={12} md={6} xl={6}>
+					{/* <Col xs={24} sm={12} md={6} xl={6}>
 						<Link href="">
 							<div>
 								<div
@@ -144,11 +165,11 @@ export default function Dashboard() {
 								</div>
 							</div>
 						</Link>
-					</Col>
+					</Col> */}
 				</Row>
 				<Row gutter={[16, 16]}>
 					<Col lg={24}>
-						<FormTableData />
+						<FormTableData allBatteryData={allBatteryData} />
 					</Col>
 					{/* <Col sm={24} xs={24} md={24} lg={8}>
 						<Row gutter={[16, 16]}>

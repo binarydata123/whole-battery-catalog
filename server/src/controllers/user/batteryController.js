@@ -92,7 +92,7 @@ const batteryController = {
 			let options = {
 				hostname: 'ec2-52-25-67-77.us-west-2.compute.amazonaws.com',
 				port: 3000,
-				path: '/battery/' + req.params.id,
+				path: '/battery/byBatteryId/' + req.params.id,
 				method: 'GET'
 			};
 

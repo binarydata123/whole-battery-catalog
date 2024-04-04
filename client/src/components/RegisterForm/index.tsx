@@ -3,13 +3,13 @@ import React, { useContext, useState } from 'react';
 import './style.css';
 import { Button, Form, Input, message, notification, Spin } from 'antd';
 import ParaText from '@/app/commonUl/ParaText';
-import { FcGoogle } from 'react-icons/fc';
+// import { FcGoogle } from 'react-icons/fc';
 import Link from 'next/link';
 import Titles from '@/app/commonUl/Titles';
 import { useRouter } from 'next/navigation';
 // import { vendorRegister } from '@/lib/vendorApiAdapter';
 import VendorAuth from '@/contexts/VendorAuthProvider';
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 // import handlePayment from '../Payment/handlePayment';
 
 type FieldType = {
@@ -56,18 +56,21 @@ export default function RegisterForm() {
 						label="Full Name"
 						name="fullName"
 						rules={[
-							{ required: true, message: 'Please input your first name!' },
+							{ required: true, message: 'Please input your full name!' },
 							{ pattern: /^[a-zA-Z\s]+$/, message: 'Only alphabets and whitespace allowed' }
 						]}
 					>
-						<Input style={{ width: '100%', height: '45px', textTransform: 'capitalize' }} maxLength={40} />
+						<Input style={{ width: '100%', height: '45px', textTransform: 'capitalize' }} maxLength={50} />
 					</Form.Item>
 					<Form.Item<FieldType>
 						label="Username"
 						name="username"
 						rules={[
 							{ required: true, message: 'Please input your username!' },
-							{ pattern: /^\S*$/, message: 'No whitespace allowed' }
+							{
+								pattern: /^(?!.*\s)[a-zA-Z0-9]+(?:[._][a-zA-Z0-9]+)?$/,
+								message: 'only alphanumerics, one (.) and one (_) allowed, no whitespace'
+							}
 						]}
 					>
 						<Input style={{ width: '100%', height: '45px' }} maxLength={40} />
@@ -79,7 +82,7 @@ export default function RegisterForm() {
 							{ required: true, message: 'Please input your email!' },
 							{
 								pattern: /^[\w\.-]+@[a-zA-Z\d-]+(\.[a-zA-Z\d-]+)*$/,
-								message: 'Enter valid email address'
+								message: 'Please enter valid email address'
 							}
 						]}
 					>
@@ -101,11 +104,10 @@ export default function RegisterForm() {
 						name="confirmPassword"
 						dependencies={['password']}
 						rules={[
-							{ required: true, message: 'Please input your password!' },
-							{ pattern: /^\S*$/, message: 'No whitespace allowed' },
+							// { required: true, message: 'Please input your password again!' },
 							({ getFieldValue }) => ({
 								validator(_, value) {
-									if (getFieldValue('password') === value) {
+									if (!value || getFieldValue('password') === value) {
 										return Promise.resolve();
 									}
 									return Promise.reject(new Error('passwords do not match'));
@@ -121,7 +123,7 @@ export default function RegisterForm() {
 							{loading ? 'Please wait...' : 'Register'}
 						</Button>
 					</Form.Item>
-					<Form.Item>
+					{/* <Form.Item>
 						<Button
 							icon={<FcGoogle style={{ fontSize: '20px' }} />}
 							// htmlType="submit"
@@ -130,7 +132,7 @@ export default function RegisterForm() {
 						>
 							Sign in with Google
 						</Button>
-					</Form.Item>
+					</Form.Item> */}
 					<div className="gapMarginFourTeenTop"></div>
 					<div className="textCenter">
 						<ParaText size="extraSmall" color="defaultColor">

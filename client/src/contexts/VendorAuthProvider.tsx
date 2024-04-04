@@ -6,7 +6,7 @@ import { User } from '@/lib/types';
 import Cookies from 'js-cookie';
 import { message, notification, Spin } from 'antd';
 import { useRouter } from 'next/navigation';
-import MyLoaderAnimation from '@/components/LoaderAnimation';
+// import MyLoaderAnimation from '@/components/LoaderAnimation';
 import ErrorHandler from '@/lib/ErrorHandler';
 
 const api = axios.create({
@@ -16,6 +16,7 @@ const api = axios.create({
 interface AuthContextDefaults {
 	user?: User | undefined;
 	setUser: React.Dispatch<React.SetStateAction<User | undefined>>;
+	setInitialized: React.Dispatch<React.SetStateAction<boolean>>;
 	logout: () => Promise<void>;
 	vendorLogin: (username: string, password: string) => Promise<any>;
 	vendorRegister: (fullName: string, username: string, email: string, password: string) => Promise<any>;
@@ -29,6 +30,7 @@ const VendorAuth = createContext<AuthContextDefaults>({
 	logout: () => Promise.resolve(),
 	vendorLogin: () => Promise.resolve(''),
 	vendorRegister: () => Promise.resolve(''),
+	setInitialized: () => Promise.resolve(''),
 	setUser: () => {}
 });
 
@@ -104,16 +106,16 @@ const VendorAuthProvider = ({ children }: AuthContextProp) => {
 	};
 
 	// Render Spinner or null while initialization in progress
-	if (!initialized) {
-		return (
-			<>
-				<MyLoaderAnimation />
-			</>
-		);
-	}
+	// if (!initialized) {
+	// 	return (
+	// 		<>
+	// 			<MyLoaderAnimation />
+	// 		</>
+	// 	);
+	// }
 
 	return (
-		<VendorAuth.Provider value={{ user, setUser, vendorLogin, vendorRegister, logout }}>
+		<VendorAuth.Provider value={{ user, setUser, setInitialized, vendorLogin, vendorRegister, logout }}>
 			{children}
 		</VendorAuth.Provider>
 	);
