@@ -127,7 +127,10 @@ export default function LoginForm() {
 						name="username"
 						rules={[
 							{ required: true, message: 'Please input your username!' },
-							{ pattern: /^\S*$/, message: 'No whitespace allowed' }
+							{
+								pattern: /^(?!.*\s)[a-zA-Z0-9]+(?:[._][a-zA-Z0-9]+)?$/,
+								message: 'only alphanumerics, one (.) and one (_) allowed, no whitespace'
+							}
 						]}
 					>
 						<Input style={{ width: '100%', height: '45px' }} maxLength={40} />

@@ -78,7 +78,7 @@ const items: MenuItem[] = [
 	getItem(
 		'Logout',
 		'6',
-		<Link href="#">
+		<Link href="#" onClick={(e) => e.preventDefault()}>
 			{' '}
 			<RiLockPasswordFill />
 		</Link>
@@ -86,7 +86,7 @@ const items: MenuItem[] = [
 ];
 
 export default function MenuAdmin() {
-	const { user } = React.useContext(VendorAuth);
+	const { user, logout } = React.useContext(VendorAuth);
 
 	const pathname = usePathname();
 	let defaultSelectedKey;
@@ -141,6 +141,11 @@ export default function MenuAdmin() {
 							mode="inline"
 							theme="dark"
 							items={items}
+							onClick={({ key }) => {
+								if (key === '6') {
+									logout();
+								}
+							}}
 						/>
 					</div>
 				</div>
