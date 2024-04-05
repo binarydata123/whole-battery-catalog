@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
 	name: { type: String, default: null },
+	username: { type: String, unique: true, required: true, default: null },
 	email: { type: String, unique: true, required: true, index: true },
 	role: { type: String, enum: ['superAdmin', 'admin', 'user'], default: 'user' },
 	slug: { type: String, default: null },

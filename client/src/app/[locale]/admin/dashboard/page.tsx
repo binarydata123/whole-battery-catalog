@@ -8,9 +8,24 @@ import FormTableData from './FormTableData';
 import ParaText from '@/app/commonUl/ParaText';
 import Titles from '@/app/commonUl/Titles';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
+import VendorAuth from '@/contexts/VendorAuthProvider';
+import { allBatteryReports } from '@/lib/adminApi';
 
 export default function Dashboard() {
+	const [allBatteryData, setAllBatteryData] = useState<any[]>([]);
 	const [loading, setLoading] = useState(false);
+
+	const { user } = React.useContext(VendorAuth);
+
+	const fetchAllBatteryData = async () => {
+		try {
+			const res = await allBatteryReports();
+			setAllBatteryData(res.data);
+		} catch (error) {
+			console.error('Error fetching data:', error);
+		}
+	};
+
 	useEffect(() => {
 		const timer = setTimeout(() => {
 			setLoading(false);
@@ -18,6 +33,13 @@ export default function Dashboard() {
 
 		return () => clearTimeout(timer);
 	}, []);
+
+	useEffect(() => {
+		if (user && user.access_token) {
+			fetchAllBatteryData();
+		}
+	}, [user]);
+
 	return (
 		<>
 			<div className={styles.dashBody}>
@@ -29,7 +51,7 @@ export default function Dashboard() {
 				<div className="gapMarginTopOne"></div>
 				<Row gutter={[16, 16]} align={'middle'}>
 					<Col xs={24} sm={12} md={6} xl={6}>
-						<Link href="">
+						<Link href="/en/admin/report-single">
 							<div>
 								<div
 									id={styles.dashboardCard}
@@ -38,7 +60,7 @@ export default function Dashboard() {
 									}}
 								>
 									<ParaText size="large" color="black">
-										Book appointment
+										Total Reports
 									</ParaText>
 									<Titles level={4} color="PrimaryColor">
 										0
@@ -60,14 +82,14 @@ export default function Dashboard() {
 					</Col>
 
 					<Col xs={24} sm={12} md={6} xl={6}>
-						<Link href="">
+						<Link href="/en/admin/single-invoice">
 							<div>
 								<div
 									id={styles.dashboardCard}
 									style={{ backgroundImage: 'linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%)' }}
 								>
 									<ParaText size="large" color="black">
-										User Count
+										Total Payments
 									</ParaText>
 									<Titles level={4} color="PrimaryColor">
 										120
@@ -95,7 +117,7 @@ export default function Dashboard() {
 									style={{ backgroundImage: 'linear-gradient(to top, #ebbba7 0%, #cfc7f8 100%)' }}
 								>
 									<ParaText size="large" color="black">
-										Contact
+										Total Tickets
 									</ParaText>
 									<Titles level={4} color="PrimaryColor">
 										1234
@@ -116,7 +138,7 @@ export default function Dashboard() {
 						</Link>
 					</Col>
 					<Col xs={24} sm={12} md={6} xl={6}>
-						<Link href="">
+						<Link href="en/admin/contact-form-history">
 							<div>
 								<div
 									id={styles.dashboardCard}
@@ -124,7 +146,7 @@ export default function Dashboard() {
 								>
 									<ParaText size="large" color="black">
 										{' '}
-										New Customers
+										Total Contact Requests
 									</ParaText>
 									<Titles level={4} color="PrimaryColor">
 										901
@@ -147,7 +169,7 @@ export default function Dashboard() {
 				</Row>
 				<Row gutter={[16, 16]}>
 					<Col lg={24}>
-						<FormTableData />
+						<FormTableData allBatteryData={allBatteryData} />
 					</Col>
 					{/* <Col sm={24} xs={24} md={24} lg={8}>
 						<Row gutter={[16, 16]}>
