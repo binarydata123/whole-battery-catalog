@@ -51,9 +51,9 @@ const items: MenuItem[] = [
 		</Link>,
 		[
 			getItem(
-				'Report Single ',
+				'Battery Reports ',
 				'3',
-				<Link href="/en/admin/report-single">
+				<Link href="#">
 					{' '}
 					<SiBloglovin />
 				</Link>
@@ -73,7 +73,7 @@ const items: MenuItem[] = [
 	getItem(
 		'Payment History',
 		'5',
-		<Link href="/en/admin/payment-history">
+		<Link href="#">
 			{' '}
 			<MdOutlinePayment />
 		</Link>,
@@ -81,7 +81,7 @@ const items: MenuItem[] = [
 			getItem(
 				'Single Invoice ',
 				'6',
-				<Link href="/en/admin/single-invoice ">
+				<Link href="# ">
 					{' '}
 					<SiBloglovin />
 				</Link>
@@ -147,7 +147,7 @@ const items: MenuItem[] = [
 	getItem(
 		'Log Out',
 		'14',
-		<Link href="/en/admin/log-out">
+		<Link href="#">
 			{' '}
 			<SiAuthy />
 		</Link>
@@ -160,7 +160,7 @@ export default function MenuAdmin() {
 	const { logout } = useContext(VendorAuth);
 
 	function handleClick(href: any) {
-		if (href.key == 13) {
+		if (href.key == 14) {
 			logout();
 		}
 	}

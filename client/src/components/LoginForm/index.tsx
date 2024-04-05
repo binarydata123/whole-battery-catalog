@@ -1,11 +1,10 @@
 'use client';
 import React from 'react';
 import './style.css';
-import { Button, Checkbox, Form, type FormProps, Input, Row, Col, notification, message, Spin } from 'antd';
+import { Button, Checkbox, Form, type FormProps, Input, Row, Col, notification, message, Spin, Segmented } from 'antd';
 // import { signIn, signOut, useSession } from 'next-auth/react';
 // import { socialLogin } from '@/lib/ApiAdapter';
 import { useRouter } from 'next/navigation';
-// import AuthContext from '@/contexts/AuthContext';
 import VendorAuth from '@/contexts/VendorAuthProvider';
 // import { vendorLogin } from '@/lib/vendorApiAdapter';
 import Cookies from 'js-cookie';
@@ -13,6 +12,8 @@ import ParaText from '@/app/commonUl/ParaText';
 // import { FcGoogle } from 'react-icons/fc';
 import Link from 'next/link';
 import Titles from '@/app/commonUl/Titles';
+import AuthContext from '@/contexts/AuthContext';
+import { SegmentedValue } from 'antd/es/segmented';
 // import ErrorHandler from '@/lib/ErrorHandler';
 
 type FieldType = {
@@ -22,10 +23,11 @@ type FieldType = {
 };
 export default function LoginForm() {
 	// const { data: session } = useSession();
+	const [loginOption, setLoginOption] = React.useState<SegmentedValue>('User');
 	const [loading, setLoading] = React.useState<Boolean>(false);
 	const [form] = Form.useForm();
 	const RememberMeCookie = 'rememberMe';
-	const { vendorLogin, setUser, user } = React.useContext(VendorAuth);
+	const { vendorLogin, setUser, user, adminLogin } = React.useContext(VendorAuth);
 	const router = useRouter();
 
 	const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
@@ -41,7 +43,11 @@ export default function LoginForm() {
 				Cookies.remove(RememberMeCookie);
 			}
 
-			await vendorLogin(values.username, values.password);
+			if (loginOption === 'User') {
+				await vendorLogin(values.username, values.password);
+			} else {
+				await adminLogin(values.username, values.password);
+			}
 		} catch (error: any) {
 			setLoading(false);
 			console.error(error);
@@ -108,13 +114,22 @@ export default function LoginForm() {
 			<div className="" id="loginForm">
 				<div>
 					<Titles level={3} color="black" className="textCenter">
-						Welcome back!
+						{loginOption === 'User' ? 'Welcome back!' : 'Admin Panel'}
 					</Titles>
 					<ParaText color="black" size="medium" className="textCenter dBlock">
 						Login to Your Account and Explore Exciting Features
 					</ParaText>
 				</div>
 				<div className="gapMarginFourTeenTop"></div>
+				<div style={{ width: '100%', display: 'flex', justifyContent: 'flex-end' }}>
+					<Segmented
+						options={['User', 'Admin']}
+						defaultValue={loginOption}
+						value={loginOption}
+						onChange={setLoginOption}
+					/>
+				</div>
+				<div className="gapMarginTop"></div>
 				<Form
 					form={form}
 					name="basic"
@@ -128,8 +143,8 @@ export default function LoginForm() {
 						rules={[
 							{ required: true, message: 'Please input your username!' },
 							{
-								pattern: /^(?!.*\s)[a-zA-Z0-9]+(?:[._][a-zA-Z0-9]+)?$/,
-								message: 'only alphanumerics, one (.) and one (_) allowed, no whitespace'
+								pattern: /^[a-zA-Z0-9._]+$/,
+								message: 'only alphanumerics, (.) and (_) allowed, no whitespace'
 							}
 						]}
 					>

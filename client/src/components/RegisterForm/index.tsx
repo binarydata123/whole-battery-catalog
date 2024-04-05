@@ -9,6 +9,7 @@ import Titles from '@/app/commonUl/Titles';
 import { useRouter } from 'next/navigation';
 // import { vendorRegister } from '@/lib/vendorApiAdapter';
 import VendorAuth from '@/contexts/VendorAuthProvider';
+import { register } from '@/lib/ApiAdapter';
 // import Cookies from 'js-cookie';
 // import handlePayment from '../Payment/handlePayment';
 
@@ -30,7 +31,8 @@ export default function RegisterForm() {
 	const onFinish = async (values: any) => {
 		try {
 			setLoading(true);
-			await vendorRegister(values.fullName, values.username, values.email, values.password);
+			// await vendorRegister(values.fullName, values.username, values.email, values.password);
+			await register(values);
 		} catch (error: any) {
 			setLoading(false);
 			console.error(error);
@@ -68,8 +70,8 @@ export default function RegisterForm() {
 						rules={[
 							{ required: true, message: 'Please input your username!' },
 							{
-								pattern: /^(?!.*\s)[a-zA-Z0-9]+(?:[._][a-zA-Z0-9]+)?$/,
-								message: 'only alphanumerics, one (.) and one (_) allowed, no whitespace'
+								pattern: /^[a-zA-Z0-9._]+$/,
+								message: 'only alphanumerics, (.) and (_) allowed, no whitespace'
 							}
 						]}
 					>

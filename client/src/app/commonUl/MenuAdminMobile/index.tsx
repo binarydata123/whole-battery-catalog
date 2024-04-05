@@ -12,7 +12,7 @@ import { FaAppStore } from 'react-icons/fa';
 import Titles from '../Titles';
 import { MdContacts, MdOutlinePayment } from 'react-icons/md';
 import { RiLockPasswordFill } from 'react-icons/ri';
-import VendorAuth from '@/contexts/VendorAuthProvider';
+// import VendorAuth from '@/contexts/VendorAuthProvider';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -48,9 +48,9 @@ const items: MenuItem[] = [
 		</Link>,
 		[
 			getItem(
-				'Report Single ',
+				'Battery Reports',
 				'3',
-				<Link href="/en/admin/report-single">
+				<Link href="#">
 					{' '}
 					<SiBloglovin />
 				</Link>
@@ -70,7 +70,7 @@ const items: MenuItem[] = [
 	getItem(
 		'Payment History',
 		'5',
-		<Link href="/en/admin/payment-history">
+		<Link href="#">
 			{' '}
 			<MdOutlinePayment />
 		</Link>,
@@ -78,7 +78,7 @@ const items: MenuItem[] = [
 			getItem(
 				'Single Invoice ',
 				'6',
-				<Link href="/en/admin/single-invoice ">
+				<Link href="#">
 					{' '}
 					<SiBloglovin />
 				</Link>
