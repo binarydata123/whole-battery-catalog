@@ -53,7 +53,7 @@ export default function Dashboard() {
 				<div className="gapMarginTopOne"></div>
 				<Row gutter={[16, 16]} align={'middle'}>
 					<Col xs={24} sm={12} md={6} xl={6}>
-						<Link href="/en/admin/report-single">
+						<Link href="/en/admin/battery-reports">
 							<div>
 								<div
 									id={styles.dashboardCard}
@@ -84,7 +84,7 @@ export default function Dashboard() {
 					</Col>
 
 					<Col xs={24} sm={12} md={6} xl={6}>
-						<Link href="">
+						<Link href="#">
 							<div>
 								<div
 									id={styles.dashboardCard}
@@ -112,7 +112,7 @@ export default function Dashboard() {
 						</Link>
 					</Col>
 					<Col xs={24} sm={12} md={6} xl={6}>
-						<Link href="">
+						<Link href="#">
 							<div>
 								<div
 									id={styles.dashboardCard}
