@@ -15,12 +15,9 @@ import { MdEmail } from 'react-icons/md';
 import { IoLanguageSharp } from 'react-icons/io5';
 import HeaderDropDown from '../headerDropDown';
 import { BiMenuAltLeft } from 'react-icons/bi';
-import VendorAuth from '@/contexts/VendorAuthProvider';
 
 const Context = React.createContext({ name: 'Default' });
 export default function HeaderDashTop() {
-	const { user } = useContext(VendorAuth);
-
 	const [showNotification, setShowNotification] = useState(false);
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 

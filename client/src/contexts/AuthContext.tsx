@@ -7,8 +7,8 @@ import ErrorHandler from '@/lib/ErrorHandler';
 import { User } from '@/lib/types';
 import { useRouter } from 'next/navigation';
 import { message, notification, Spin } from 'antd';
-import handlePayment from '@/components/Payment/handlePayment';
-import verifyPayment from '@/components/Payment/verifyPayment';
+// import handlePayment from '@/components/Payment/handlePayment';
+// import verifyPayment from '@/components/Payment/verifyPayment';
 
 const api = axios.create({
 	baseURL: process.env['NEXT_PUBLIC_API_URL'] || ''
@@ -37,72 +37,71 @@ const AuthContextProvider = ({ children }: AuthContextProp) => {
 	const [sessionId, setSessionId] = useState(null);
 	const [initialized, setInitialized] = useState<boolean>(false);
 
-	// useEffect(() => {
-	// 	const token = Cookies.get('session_token');
-	// 	console.log('tttttttttttttttttttttttttttt');
-	// 	const checkSession = async () => {
-	// 		if (token) {
-	// 			try {
-	// 				const response = await api.get('/auth/check-session', {
-	// 					headers: {
-	// 						Authorization: `${token}`
-	// 					}
-	// 				});
+	useEffect(() => {
+		const token = Cookies.get('session_token');
+		const checkSession = async () => {
+			if (token) {
+				try {
+					const response = await api.get('/auth/check-session', {
+						headers: {
+							Authorization: `${token}`
+						}
+					});
 
-	// 				if (response && response.data && response.data.user) {
-	// 					setInitialized(true);
-	// 					setUser(response.data.user);
-	// 					Cookies.set('session_token', response.data.refreshedToken);
-	// 				} else {
-	// 					setInitialized(true);
-	// 					Cookies.remove('session_token');
-	// 					setUser(undefined);
-	// 					router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
-	// 				}
-	// 			} catch (error) {
-	// 				setInitialized(true);
-	// 				ErrorHandler.showNotification(error);
-	// 				Cookies.remove('session_token');
-	// 				setUser(undefined);
-	// 				router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
-	// 			}
-	// 		} else {
-	// 			// router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
-	// 		}
-	// 	};
+					if (response && response.data && response.data.user) {
+						setInitialized(true);
+						setUser(response.data.user);
+						Cookies.set('session_token', response.data.refreshedToken);
+					} else {
+						setInitialized(true);
+						Cookies.remove('session_token');
+						setUser(undefined);
+						router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
+					}
+				} catch (error) {
+					setInitialized(true);
+					ErrorHandler.showNotification(error);
+					Cookies.remove('session_token');
+					setUser(undefined);
+					router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
+				}
+			} else {
+				router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
+			}
+		};
 
-	// 	checkSession();
-	// }, []);
+		checkSession();
+	}, []);
 
-	// useEffect(() => {
-	// 	if (initialized && user) {
-	// 		const currentPath = window.location.pathname;
-	// 		if (
-	// 			(currentPath.startsWith('/admin') && user?.role !== 'admin') ||
-	// 			(currentPath.startsWith('/user') && user?.role !== 'user')
-	// 		) {
-	// 			console.error('[AUTH] Unauthorized');
-	// 			switch (user?.role) {
-	// 				case 'admin':
-	// 					router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/admin/dashboard`);
-	// 					break;
-	// 				case 'user':
-	// 					router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
-	// 					break;
-	// 				default:
-	// 					router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
-	// 					break;
-	// 			}
-	// 			return;
-	// 		} else {
-	// 			return;
-	// 		}
-	// 	}
-	// }, [initialized, user]);
+	useEffect(() => {
+		if (initialized && user) {
+			const currentPath = window.location.pathname;
+			if (
+				(currentPath.startsWith('/admin') && user?.role !== 'admin') ||
+				(currentPath.startsWith('/user') && user?.role !== 'user')
+			) {
+				console.error('[AUTH] Unauthorized');
+				switch (user?.role) {
+					case 'admin':
+						router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/admin/dashboard`);
+						break;
+					case 'user':
+						router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
+						break;
+					default:
+						router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
+						break;
+				}
+				return;
+			} else {
+				return;
+			}
+		}
+	}, [initialized, user]);
 
-	const login = async (email: string, password: string, url: string) => {
+	const login = async (username: string, password: string, url: string) => {
 		const data = {
-			email: email,
+			username: username,
 			password: password
 		};
 		const requestConfig: AxiosRequestConfig = {
@@ -115,48 +114,49 @@ const AuthContextProvider = ({ children }: AuthContextProp) => {
 
 		try {
 			const response = await axios(requestConfig);
+			console.log('response from reqConfig', response);
 			if (response && response.data && response.data.token && response.data.user) {
 				const { token, user: loggedInUser } = response.data;
 
 				//check user has paid or not
-				if (!loggedInUser.hasPaid) {
-					notification.info({
-						message: 'No active subscription',
-						description: (
-							<div style={{ display: 'flex', columnGap: 6 }}>
-								<Spin />
-								<p>redirecting to payment page...</p>
-							</div>
-						),
-						duration: 3000
-					});
-					setTimeout(async () => {
-						await handlePayment(10, 'usd', loggedInUser._id);
-					}, 3000);
+				// if (!loggedInUser.hasPaid) {
+				// 	notification.info({
+				// 		message: 'No active subscription',
+				// 		description: (
+				// 			<div style={{ display: 'flex', columnGap: 6 }}>
+				// 				<Spin />
+				// 				<p>redirecting to payment page...</p>
+				// 			</div>
+				// 		),
+				// 		duration: 3000
+				// 	});
+				// 	setTimeout(async () => {
+				// 		await handlePayment(10, 'usd', loggedInUser._id);
+				// 	}, 3000);
+				// } else {
+				axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+				Cookies.set('session_token', token);
+				setUser(loggedInUser);
+				message.success('You are logged In!');
+				if (url) {
+					router.push(url);
 				} else {
-					axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-					Cookies.set('session_token', token);
-					setUser(loggedInUser);
-					message.success('You are logged In!');
-					if (url) {
-						router.push(url);
-					} else {
-						switch (loggedInUser.role) {
-							case 'admin':
-								router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/admin/dashboard`);
-								break;
-							case 'user':
-								router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/user/dashboard`);
-								break;
-							default:
-								router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
-								break;
-						}
+					switch (loggedInUser.role) {
+						case 'admin':
+							router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/admin/dashboard`);
+							break;
+						case 'user':
+							router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/user/dashboard`);
+							break;
+						default:
+							router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
+							break;
 					}
-
-					return token;
 				}
+
+				return token;
 			}
+			// }
 		} catch (error: any) {
 			ErrorHandler.showNotification(error);
 		}

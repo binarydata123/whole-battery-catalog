@@ -22,7 +22,6 @@ import Link from 'next/link';
 // }
 
 export default function FormTableData({ allBatteryData }: any) {
-	console.log(allBatteryData);
 	// const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 	// const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 

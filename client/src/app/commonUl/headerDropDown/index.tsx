@@ -32,7 +32,7 @@ export default function HeaderDropDown(props: any) {
 						</Col>
 						<Col lg={18} md={18} sm={18} xs={18} className="mobileCenter">
 							<ParaText size="extraSmall" color="black" className="dBlock">
-								<span>{user && user.vendor_email_id ? user.vendor_email_id : null}</span>
+								<span>{user && user.email ? user.email : null}</span>
 							</ParaText>
 							{/* <ParaText size="smallExtra" color="black" className="dBlock">
 								All the facts Lip

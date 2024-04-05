@@ -49,6 +49,7 @@ const userController = {
 					const userData = {
 						image: req.file ? req.file.filename : req.body.image,
 						name: req.body.name,
+						username: req.body.username,
 						email: req.body.email,
 						gender: req.body.gender,
 						designation: req.body.designation,

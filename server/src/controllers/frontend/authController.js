@@ -120,14 +120,13 @@ const authController = {
 
 	login: async (req, res) => {
 		try {
-			const { email, password } = req.body;
+			const { username, password } = req.body;
 
-			const user = await Users.findOne({ email });
+			const user = await Users.findOne({ username });
 
 			if (!user) {
-				return res.status(400).json({ status: false, message: 'Invalid email address' });
+				return res.status(404).json({ status: false, message: `${username} doesn't exist` });
 			}
-
 			const isPasswordValid = await bcrypt.compare(password, user.password);
 			if (!isPasswordValid) {
 				return res.status(400).json({ status: false, message: 'Incorrect password' });
@@ -435,5 +434,17 @@ const authController = {
 			res.status(500).json({ status: false, message: 'Internal Server Error' });
 		}
 	}
+
+	// checkUserInDB: async (req, res) => {
+	// 	try {
+	// 		const { username } = req.body;
+
+	// 		const
+
+	// 	} catch (error) {
+	// 		logError(error);
+	// 		res.status(500).json({ status: false, message: 'Internal Server Error' });
+	// 	}
+	// }
 };
 module.exports = authController;
