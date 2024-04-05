@@ -114,7 +114,7 @@ export default function LoginForm() {
 			<div className="" id="loginForm">
 				<div>
 					<Titles level={3} color="black" className="textCenter">
-						Welcome back!
+						{loginOption === 'User' ? 'Welcome back!' : 'Admin Panel'}
 					</Titles>
 					<ParaText color="black" size="medium" className="textCenter dBlock">
 						Login to Your Account and Explore Exciting Features

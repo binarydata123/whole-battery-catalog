@@ -1,9 +1,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-const token = Cookies.get('session_token');
-
-const user = JSON.parse(sessionStorage.getItem('user'));
+const token: string = Cookies.get('access_token');
 
 export const getAllBlogs = async (searchTerm: string = ''): Promise<any> => {
 	return new Promise((resolve, reject) => {
@@ -345,14 +343,14 @@ export const deleteUser = async (data: any): Promise<any> => {
 };
 
 // admin battery access
-export const allBatteryReports = async (): Promise<any> => {
+export const allBatteryReports = async (access_token: string): Promise<any> => {
 	return new Promise((resolve, reject) => {
 		const req = axios.request({
 			url: `${process.env['NEXT_PUBLIC_API_URL']}/admin/battery`,
 			method: 'get',
 			headers: {
 				Accept: 'application/json',
-				Authorization: `Bearer ${user.access_token}`
+				Authorization: `Bearer ${token}`
 			}
 		});
 

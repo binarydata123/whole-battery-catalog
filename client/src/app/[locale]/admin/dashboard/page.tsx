@@ -19,7 +19,7 @@ export default function Dashboard() {
 
 	const fetchAllBatteryData = async () => {
 		try {
-			const res = await allBatteryReports();
+			const res = await allBatteryReports(user.access_token);
 			setAllBatteryData(res.data);
 		} catch (error) {
 			console.error('Error fetching data:', error);
@@ -27,6 +27,7 @@ export default function Dashboard() {
 	};
 
 	useEffect(() => {
+		setLoading(true);
 		const timer = setTimeout(() => {
 			setLoading(false);
 		}, 1000);
@@ -38,6 +39,7 @@ export default function Dashboard() {
 		if (user && user.access_token) {
 			fetchAllBatteryData();
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [user]);
 
 	return (
@@ -63,7 +65,7 @@ export default function Dashboard() {
 										Total Reports
 									</ParaText>
 									<Titles level={4} color="PrimaryColor">
-										0
+										{allBatteryData.length}
 									</Titles>
 									<ParaText
 										size="extraSmall"
@@ -82,7 +84,7 @@ export default function Dashboard() {
 					</Col>
 
 					<Col xs={24} sm={12} md={6} xl={6}>
-						<Link href="/en/admin/single-invoice">
+						<Link href="">
 							<div>
 								<div
 									id={styles.dashboardCard}
@@ -171,116 +173,6 @@ export default function Dashboard() {
 					<Col lg={24}>
 						<FormTableData allBatteryData={allBatteryData} />
 					</Col>
-					{/* <Col sm={24} xs={24} md={24} lg={8}>
-						<Row gutter={[16, 16]}>
-							<Col lg={12} md={24} sm={24} xs={24} className="textCenter">
-								<div id={styles.dashboardCard}>
-									<Image
-										src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQF3oU7H7X1GKBA_XWlLMoNHagnr6qPvyJzpA&usqp=CAU"
-										alt=""
-										width={60}
-										preview={false}
-										height={60}
-									/>
-									<ParaText size="large" color="black" className="dBlock">
-										New Customers
-									</ParaText>
-									<Titles level={4} color="black">
-										901
-									</Titles>
-								</div>
-							</Col>
-							<Col lg={12} md={24} sm={24} xs={24} className="textCenter">
-								<div id={styles.dashboardCard}>
-									<Image
-										src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuaWlZa9i7X2YuVfqTXYQkBFFpWJAN279Go0M687ZYI3S6Qbovgsh0wkrrnZNcsGgQrAg&usqp=CAU"
-										alt=""
-										width={60}
-										preview={false}
-										height={60}
-									/>
-									<ParaText size="large" color="black" className="dBlock">
-										New Customers
-									</ParaText>
-									<Titles level={4} color="black">
-										901
-									</Titles>
-								</div>
-							</Col>
-						</Row>
-						<Row gutter={[16, 16]}>
-							<Col lg={12} md={24} sm={24} xs={24} className="textCenter">
-								<div id={styles.dashboardCard}>
-									<Image
-										src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRD3HvDZTpzUBoomr_pm5D17dvbV681QNTR-g&usqp=CAU"
-										alt=""
-										width={60}
-										preview={false}
-										height={60}
-									/>
-									<ParaText size="large" color="black" className="dBlock">
-										New Customers
-									</ParaText>
-									<Titles level={4} color="black">
-										901
-									</Titles>
-								</div>
-							</Col>
-							<Col lg={12} md={24} sm={24} xs={24} className="textCenter">
-								<div id={styles.dashboardCard}>
-									<Image
-										src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_Buy6-Jp_vnuZLyjJPFM9uzyuKqxGdrC__w&usqp=CAU"
-										alt=""
-										width={60}
-										preview={false}
-										height={60}
-									/>
-									<ParaText size="large" color="black" className="dBlock">
-										New Customers
-									</ParaText>
-									<Titles level={4} color="black">
-										901
-									</Titles>
-								</div>
-							</Col>
-						</Row>
-						<Row gutter={[16, 16]}>
-							<Col lg={12} md={24} sm={24} xs={24} className="textCenter">
-								<div id={styles.dashboardCard}>
-									<Image
-										src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQreV70gqOk1rWUV7T0GhhosIqtp56XcIraRQ&usqp=CAU"
-										alt=""
-										width={60}
-										preview={false}
-										height={60}
-									/>
-									<ParaText size="large" color="black" className="dBlock">
-										New Customers
-									</ParaText>
-									<Titles level={4} color="black">
-										901
-									</Titles>
-								</div>
-							</Col>
-							<Col lg={12} md={24} sm={24} xs={24} className="textCenter">
-								<div id={styles.dashboardCard}>
-									<Image
-										src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyIGILEbZLKjQFpZ7unZNDuPFJ5yImEJIQSQ&usqp=CAU"
-										alt=""
-										width={60}
-										preview={false}
-										height={60}
-									/>
-									<ParaText size="large" color="black" className="dBlock">
-										New Customers
-									</ParaText>
-									<Titles level={4} color="black">
-										901
-									</Titles>
-								</div>
-							</Col>
-						</Row>
-					</Col> */}
 				</Row>
 			</div>
 		</>

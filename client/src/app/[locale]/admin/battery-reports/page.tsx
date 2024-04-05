@@ -8,17 +8,12 @@ import './style.css';
 import RateStar from '@/app/commonUl/RateStar';
 import { CiHeart } from 'react-icons/ci';
 // import { fetchDataByVendorId } from '@/lib/vendorApi';
-import { allBatteryReports } from '@/lib/adminApi';
 import ColumnChart from '@/components/ColumnChart';
 import GaugeProgressChart from '@/components/GaugeProgressChart';
 import LineChart from '@/components/LineChart';
 import GaugeFullProgressChart from '@/components/GaugeFullProgressChart';
-import {
-	allBatteryByVendor,
-	getBatteryDataById,
-	allPeriscopeTestByBatteryId,
-	getPeriscopeTestData
-} from '@/lib/userApi';
+import { allBatteryReports } from '@/lib/adminApi';
+import { getBatteryDataById, allPeriscopeTestByBatteryId, getPeriscopeTestData } from '@/lib/userApi';
 import { RiDownload2Fill } from 'react-icons/ri';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -57,7 +52,7 @@ export default function Page() {
 
 	const fetchAllBatteryData = async () => {
 		try {
-			const res = await allBatteryReports();
+			const res = await allBatteryReports(user.access_token);
 			if (res.status == true) {
 				// console.log(res);
 				setAllBatteryData(res.data);
@@ -521,7 +516,6 @@ export default function Page() {
 
 	const handlePeriscopeTestChange = (value: any) => {
 		setSelectedPeriscopeTestId(value);
-		// console.log(selectedPeriscopeTestId);
 	};
 
 	const generateRandomData = () => {

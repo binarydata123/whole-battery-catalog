@@ -130,12 +130,16 @@ const VendorAuthProvider = ({ children }: AuthContextProp) => {
 				const { token: access_token, user: loggedInUser } = response.data;
 
 				if (loggedInUser.role !== 'admin') {
-					message.error('Not an admin');
+					notification.error({
+						message: 'Not an admin',
+						duration: 3
+					});
 				} else {
-					// axios.defaults.headers.common.Authorization = `Bearer ${access_token}`;
+					// axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
 					Cookies.set('refresh_token', loggedInUser.refresh_token);
+					Cookies.set('access_token', access_token);
 					const userData: any = {
-						access_token: access_token,
+						access_token,
 						username: loggedInUser.username,
 						email: loggedInUser.email,
 						role: loggedInUser.role
