@@ -19,6 +19,7 @@ interface AuthContextDefaults {
 	setInitialized: React.Dispatch<React.SetStateAction<boolean>>;
 	logout: () => Promise<void>;
 	vendorLogin: (username: string, password: string) => Promise<any>;
+	adminLogin: (username: string, password: string) => Promise<any>;
 	vendorRegister: (fullName: string, username: string, email: string, password: string) => Promise<any>;
 }
 
@@ -29,6 +30,7 @@ interface AuthContextProp {
 const VendorAuth = createContext<AuthContextDefaults>({
 	logout: () => Promise.resolve(),
 	vendorLogin: () => Promise.resolve(''),
+	adminLogin: () => Promise.resolve(''),
 	vendorRegister: () => Promise.resolve(''),
 	setInitialized: () => Promise.resolve(''),
 	setUser: () => {}
@@ -74,7 +76,12 @@ const VendorAuthProvider = ({ children }: AuthContextProp) => {
 			if (response && response.data && response.data.data) {
 				const { vendorRegistrationResponse: loggedInUser } = response.data.data;
 				Cookies.set('refresh_token', loggedInUser.refresh_token);
-				const { refresh_token, ...userData } = loggedInUser;
+				const userData: any = {
+					access_token: loggedInUser.access_token,
+					email: loggedInUser.vendor_email_id,
+					username: loggedInUser.vendor_username,
+					role: 'user'
+				};
 				setUser(userData);
 				sessionStorage.setItem('user', JSON.stringify(userData)); // Store user data in sessionStorage
 				message.success(successMessage);
@@ -105,17 +112,47 @@ const VendorAuthProvider = ({ children }: AuthContextProp) => {
 		await performAuthAction(requestData, '/vendorAuth/register', '/user/dashboard', 'Registration Successful');
 	};
 
-	// Render Spinner or null while initialization in progress
-	// if (!initialized) {
-	// 	return (
-	// 		<>
-	// 			<MyLoaderAnimation />
-	// 		</>
-	// 	);
-	// }
+	// Admin Login
+	const adminLogin = async (username: string, password: string) => {
+		const requestConfigAdmin: AxiosRequestConfig = {
+			url: process.env.NEXT_PUBLIC_API_URL + '/auth/login',
+			method: 'POST',
+			data: {
+				username,
+				password
+			}
+		};
+
+		try {
+			const response = await axios(requestConfigAdmin);
+
+			if (response && response.data.token && response.data.user) {
+				const { token: access_token, user: loggedInUser } = response.data;
+
+				if (loggedInUser.role !== 'admin') {
+					message.error('Not an admin');
+				} else {
+					// axios.defaults.headers.common.Authorization = `Bearer ${access_token}`;
+					Cookies.set('refresh_token', loggedInUser.refresh_token);
+					const userData: any = {
+						access_token: access_token,
+						username: loggedInUser.username,
+						email: loggedInUser.email,
+						role: loggedInUser.role
+					};
+					setUser(userData);
+					sessionStorage.setItem('user', JSON.stringify(userData));
+					message.success('Login Successful');
+					router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/admin/dashboard`);
+				}
+			}
+		} catch (error) {
+			ErrorHandler.showNotification(error);
+		}
+	};
 
 	return (
-		<VendorAuth.Provider value={{ user, setUser, setInitialized, vendorLogin, vendorRegister, logout }}>
+		<VendorAuth.Provider value={{ user, setUser, setInitialized, vendorLogin, adminLogin, vendorRegister, logout }}>
 			{children}
 		</VendorAuth.Provider>
 	);

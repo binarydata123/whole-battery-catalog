@@ -147,7 +147,7 @@ const items: MenuItem[] = [
 	getItem(
 		'Log Out',
 		'14',
-		<Link href="/en/admin/log-out">
+		<Link href="#">
 			{' '}
 			<SiAuthy />
 		</Link>
@@ -160,7 +160,7 @@ export default function MenuAdmin() {
 	const { logout } = useContext(VendorAuth);
 
 	function handleClick(href: any) {
-		if (href.key == 13) {
+		if (href.key == 14) {
 			logout();
 		}
 	}
