@@ -1,14 +1,29 @@
+/* eslint-disable jsx-a11y/alt-text */
 'use client';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Card, Col, Image, Row, Space } from 'antd';
 const { Meta } = Card;
 import './style.css';
 import Titles from '@/app/commonUl/Titles';
+import { getBlogs } from '@/lib/frontendApi';
 import ParaText from '@/app/commonUl/ParaText';
 import Link from 'next/link';
 import { dateFormatter } from './dateFormatter';
 
-export default function Blog_Page({ blogs }: any) {
+export default function Blog_Page() {
+	const [allBlogs, setAllBlogs] = useState(null);
+
+	const fetchData = async () => {
+		const res = await getBlogs();
+		if (res.status == true) {
+			setAllBlogs(res.data);
+		}
+	};
+
+	useEffect(() => {
+		fetchData();
+	}, []);
+
 	return (
 		<>
 			<div className="customContainer" id="blog">
@@ -17,7 +32,7 @@ export default function Blog_Page({ blogs }: any) {
 				</Titles> */}
 				<div className="gapMarginFourTeenTop"></div>
 				<Row gutter={[16, 16]}>
-					{blogs?.map((blog: any) => (
+					{allBlogs?.map((blog: any) => (
 						<Col xs={24} sm={24} md={12} lg={12} xl={6} xxl={6} key={blog._id}>
 							<Link href={`/en/blogs/${blog.slug}`}>
 								<Card
@@ -26,8 +41,13 @@ export default function Blog_Page({ blogs }: any) {
 									cover={
 										<Image
 											preview={false}
-											alt="example"
 											src={blog.image}
+											placeholder={
+												<Image
+													src="https://ruchiragreenearth.com/blog/wp-content/uploads/2023/09/ev-battery.jpg"
+													preview={false}
+												/>
+											}
 											fallback="https://ruchiragreenearth.com/blog/wp-content/uploads/2023/09/ev-battery.jpg"
 										/>
 									}

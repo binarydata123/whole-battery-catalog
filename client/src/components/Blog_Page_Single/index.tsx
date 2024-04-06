@@ -71,8 +71,14 @@ const SinglePage = ({ blogData }: any) => {
 					<Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
 						<Image
 							src={blogData?.image}
-							alt={blogData?.metaDescription}
 							fallback="https://ruchiragreenearth.com/blog/wp-content/uploads/2023/09/ev-battery.jpg"
+							placeholder={
+								<Image
+									src="https://ruchiragreenearth.com/blog/wp-content/uploads/2023/09/ev-battery.jpg"
+									preview={false}
+									style={{ borderRadius: '12px', filter: 'blue(2px)' }}
+								/>
+							}
 							preview={false}
 							style={{ borderRadius: '12px' }}
 						/>
@@ -100,8 +106,21 @@ const SinglePage = ({ blogData }: any) => {
 								<Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
 									<Image
 										src={blogData?.authorId?.imageProfile}
-										alt={blogData?.authorId?.name}
-										fallback="/images/user-svgrepo-com.svg"
+										// alt={blogData?.authorId?.name}
+										fallback="/images/user.svg"
+										placeholder={
+											<Image
+												src="/images/user.svg"
+												preview={false}
+												style={{
+													borderRadius: '50%',
+													height: '50px',
+													width: '50px',
+													objectFit: 'cover',
+													filter: 'blur(2px)'
+												}}
+											/>
+										}
 										preview={false}
 										style={{
 											borderRadius: '50%',

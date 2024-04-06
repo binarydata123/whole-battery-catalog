@@ -1,8 +1,6 @@
-import React from 'react';
-import { getBlogs } from '@/lib/frontendApi';
+// import React, { useEffect, useState } from 'react';
 import ParaText from '@/app/commonUl/ParaText';
 import './style.css';
-
 import Blog_Page from '@/components/Blog_Page/page';
 
 import { Metadata } from 'next';
@@ -32,8 +30,6 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Blogs() {
-	const res = await getBlogs();
-
 	return (
 		<>
 			<div className="topbarSection">
@@ -41,7 +37,7 @@ export default async function Blogs() {
 					Blogs
 				</ParaText>
 			</div>
-			<Blog_Page blogs={res.data} />
+			<Blog_Page />
 		</>
 	);
 }

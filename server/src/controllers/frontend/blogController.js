@@ -4,7 +4,10 @@ const errorLogger = require('../../../logger');
 const blogController = {
 	allBlogs: async (req, res) => {
 		try {
-			const activeAndLatestBlogs = await blog.find({ status: 'active' }).sort({ createdAt: -1 }).populate('authorId');
+			const activeAndLatestBlogs = await blog
+				.find({ status: 'active' })
+				.sort({ updatedAt: -1 })
+				.populate('authorId');
 
 			res.status(200).json({ status: true, data: activeAndLatestBlogs });
 		} catch (error) {
