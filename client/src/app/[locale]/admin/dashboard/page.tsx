@@ -84,7 +84,7 @@ export default function Dashboard() {
 					</Col>
 
 					<Col xs={24} sm={12} md={6} xl={6}>
-						<Link href="#">
+						<Link href="/en/admin/single-invoice">
 							<div>
 								<div
 									id={styles.dashboardCard}
@@ -140,7 +140,7 @@ export default function Dashboard() {
 						</Link>
 					</Col>
 					<Col xs={24} sm={12} md={6} xl={6}>
-						<Link href="en/admin/contact-form-history">
+						<Link href="/en/admin/contact-form-history">
 							<div>
 								<div
 									id={styles.dashboardCard}
