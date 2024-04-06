@@ -31,8 +31,7 @@ export default function RegisterForm() {
 	const onFinish = async (values: any) => {
 		try {
 			setLoading(true);
-			// await vendorRegister(values.fullName, values.username, values.email, values.password);
-			await register(values);
+			await vendorRegister(values.fullName, values.username, values.email, values.password);
 		} catch (error: any) {
 			setLoading(false);
 			console.error(error);
