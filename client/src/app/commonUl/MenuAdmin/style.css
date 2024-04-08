@@ -1,5 +1,5 @@
 .menuDash {
-  background-image: linear-gradient(-225deg, #473b7b 0%, #3584a7 51%, #30d2be 100%);
+  background: linear-gradient(90deg, #00227a 0%, #03257e 88.16%, rgba(5, 40, 131, 0.63) 100%);
   padding: 32px 15px;
   height: 100vh;
   max-width: 100%;
