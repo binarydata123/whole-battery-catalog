@@ -1,5 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
+import ImageWithFallback from '@/components/ImageWithFallback';
 import {
 	Form,
 	Input,
@@ -134,22 +135,23 @@ const TableData = ({ users, fetchUser }: props) => {
 			key: 'image',
 			render: (image: string) => (
 				// eslint-disable-next-line jsx-a11y/alt-text
-				<Image
-					src={image}
-					fallback={'/images/user.svg'}
-					placeholder={
-						<Image
-							src="/images/user.svg"
-							width={50}
-							height={50}
-							alt="User"
-							preview={false}
-							style={{ filter: 'blur(2px)' }}
-						/>
-					}
-					// alt="Profile"
-					style={{ width: 60, height: 60 }}
-				/>
+				// <Image
+				// 	src={image}
+				// 	fallback={'/images/user.svg'}
+				// 	placeholder={
+				// 		<Image
+				// 			src="/images/user.svg"
+				// 			width={50}
+				// 			height={50}
+				// 			alt="User"
+				// 			preview={false}
+				// 			style={{ filter: 'blur(2px)' }}
+				// 		/>
+				// 	}
+				// 	// alt="Profile"
+				// 	style={{ width: 60, height: 60 }}
+				// />
+				<ImageWithFallback src={image} fallbackSrc="/images/user.png" width={50} height={50} preview={false} />
 			)
 		},
 

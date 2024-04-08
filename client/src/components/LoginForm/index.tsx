@@ -127,6 +127,7 @@ export default function LoginForm() {
 						defaultValue={loginOption}
 						value={loginOption}
 						onChange={setLoginOption}
+						style={{ backgroundColor: '#1ca0f0', color: 'white' }}
 					/>
 				</div>
 				<div className="gapMarginTop"></div>
@@ -186,17 +187,6 @@ export default function LoginForm() {
 							{loading ? 'Please wait...' : 'Login'}
 						</Button>
 					</Form.Item>
-					{/* <Form.Item>
-						<Button
-							icon={<FcGoogle style={{ fontSize: '20px' }} />}
-							type="link"
-							onClick={handleGoogleLogin}
-							className="defaultButton"
-							style={{ width: '100%', height: '45px' }}
-						>
-							Sign in with Google
-						</Button>
-					</Form.Item> */}
 					<div className="gapMarginFourTeenTop"></div>
 					<div className="textCenter">
 						<ParaText size="extraSmall" color="defaultColor">

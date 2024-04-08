@@ -30,7 +30,7 @@ const blogController = {
 	getAllBlogs: async (req, res) => {
 		try {
 			const blogs = await Blog.find({ status: { $in: ['active', 'inactive'] } })
-				.sort({ _id: -1 })
+				.sort({ updatedAt: -1 })
 				.populate('authorId');
 			res.status(200).json({ status: true, data: blogs });
 		} catch (error) {
@@ -40,7 +40,7 @@ const blogController = {
 	},
 
 	addUpdateBlogDetails: async (req, res) => {
-		console.log(req.body);
+		// console.log(req.body);
 		try {
 			upload.single('image')(req, res, async (err) => {
 				if (err) {
@@ -62,7 +62,7 @@ const blogController = {
 						authorId: req.body.authorId
 					};
 
-					console.log(blogData);
+					// console.log(blogData);
 
 					if (req.body.blogId) {
 						const existingBlog = await Blog.findById(req.body.blogId);

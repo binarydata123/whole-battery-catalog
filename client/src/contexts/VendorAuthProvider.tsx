@@ -45,6 +45,7 @@ const VendorAuthProvider = ({ children }: AuthContextProp) => {
 		setUser(undefined);
 		sessionStorage.removeItem('user'); // Clear user data from sessionStorage
 		Cookies.remove('refresh_token');
+		Cookies.remove('session_token');
 		router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/login`);
 	};
 
@@ -56,6 +57,70 @@ const VendorAuthProvider = ({ children }: AuthContextProp) => {
 		}
 		setInitialized(true);
 	}, []);
+
+	useEffect(() => {
+		const token = Cookies.get('session_token');
+		const checkSession = async () => {
+			console.log('checkSession triggered');
+			if (token) {
+				try {
+					const response = await api.get('/auth/check-session', {
+						headers: {
+							Authorization: `${token}`
+						}
+					});
+
+					if (response && response.data && response.data.user) {
+						setInitialized(true);
+						setUser(response.data.user);
+						Cookies.set('session_token', response.data.refreshedToken);
+					} else {
+						setInitialized(true);
+						Cookies.remove('session_token');
+						setUser(undefined);
+						router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
+					}
+				} catch (error) {
+					setInitialized(true);
+					ErrorHandler.showNotification(error);
+					Cookies.remove('session_token');
+					setUser(undefined);
+					router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
+				}
+			}
+			// } else {
+			// 	// router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
+			// }
+		};
+
+		checkSession();
+	}, [router]);
+
+	useEffect(() => {
+		if (initialized && user) {
+			const currentPath = window.location.pathname;
+			if (
+				(currentPath.startsWith('/en/admin') && user?.role !== 'admin') ||
+				(currentPath.startsWith('/en/user') && user?.role !== 'user')
+			) {
+				console.error('[AUTH] Unauthorized');
+				switch (user?.role) {
+					case 'admin':
+						router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/admin/dashboard`);
+						break;
+					case 'user':
+						router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/user/dashboard`);
+						break;
+					default:
+						router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
+						break;
+				}
+				return;
+			} else {
+				return;
+			}
+		}
+	}, [initialized, user, router]);
 
 	const performAuthAction = async (
 		requestData: any,
@@ -137,7 +202,7 @@ const VendorAuthProvider = ({ children }: AuthContextProp) => {
 				} else {
 					// axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
 					Cookies.set('refresh_token', loggedInUser.refresh_token);
-					Cookies.set('access_token', access_token);
+					Cookies.set('session_token', access_token);
 					const userData: any = {
 						access_token,
 						username: loggedInUser.username,
