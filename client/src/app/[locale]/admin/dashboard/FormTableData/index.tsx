@@ -58,7 +58,7 @@ export default function FormTableData({ allBatteryData }: any) {
 					Recent Reports
 				</Titles>
 				<div className="gapMarginTopTwo"></div>
-				<Link href="/en/user/generate-report">
+				<Link href="/en/admin/battery-reports">
 					<Table
 						dataSource={batteryDataSource}
 						columns={batteryColumns}

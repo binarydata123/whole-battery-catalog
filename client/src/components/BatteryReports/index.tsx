@@ -2,21 +2,16 @@
 'use client';
 import { Col, Image, Row, Select, Table } from 'antd';
 import React, { useContext, useEffect, useState } from 'react';
-import { FaShoppingCart } from 'react-icons/fa';
 import './style.css';
 import RateStar from '@/app/commonUl/RateStar';
 import { CiHeart } from 'react-icons/ci';
-import { fetchDataByVendorId } from '@/lib/vendorApi';
+// import { fetchDataByVendorId } from '@/lib/vendorApi';
 import ColumnChart from '@/components/ColumnChart';
 import GaugeProgressChart from '@/components/GaugeProgressChart';
 import LineChart from '@/components/LineChart';
 import GaugeFullProgressChart from '@/components/GaugeFullProgressChart';
-import {
-	allBatteryByVendor,
-	getBatteryDataById,
-	allPeriscopeTestByBatteryId,
-	getPeriscopeTestData
-} from '@/lib/userApi';
+import { allBatteryReports } from '@/lib/adminApi';
+import { getBatteryDataById, allPeriscopeTestByBatteryId, getPeriscopeTestData } from '@/lib/userApi';
 import { RiDownload2Fill } from 'react-icons/ri';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -31,32 +26,10 @@ export default function Page() {
 	const [batteryData, setBatteryData] = useState<any>([]);
 	const [periscopeTestData, setPeriscopeTestData] = useState<any>([]);
 	const { user, logout } = useContext(VendorAuth);
-	const [carVoltageDistData, setCarVoltageDistData] = useState({
-		barLabels: {},
-		barHeights: {}
-	});
 
-	useEffect(() => {
-		if (user) fetchAllBatteryData(user?.access_token);
-	}, [user]);
-
-	useEffect(() => {
-		if (batteryId) fetchBatteryData();
-
-		// console.log(batteryData);
-	}, [batteryId]);
-
-	useEffect(() => {
-		if (batteryId) fetchAllPeriscopeTestData();
-	}, [batteryId]);
-
-	useEffect(() => {
-		if (selectedPeriscopeTestId) fetchPeriscopeTestData();
-	}, [selectedPeriscopeTestId]);
-
-	const fetchAllBatteryData = async (token: any) => {
+	const fetchAllBatteryData = async () => {
 		try {
-			const res = await allBatteryByVendor(token);
+			const res = await allBatteryReports(user.access_token);
 			if (res.status == true) {
 				// console.log(res);
 				setAllBatteryData(res.data);
@@ -66,19 +39,7 @@ export default function Page() {
 				}
 			}
 		} catch (error) {
-			console.error('Error fetching data:', error);
-		}
-	};
-
-	const fetchAllPeriscopeTestData = async () => {
-		try {
-			const res = await allPeriscopeTestByBatteryId(batteryId);
-			if (res.status == true) {
-				setAllPeriscopeTestData(res.data);
-				setSelectedPeriscopeTestId(res.data[0].periscope_test_id);
-			}
-		} catch (error) {
-			console.error('Error fetching data:', error);
+			console.error('Error fetching all battery data :', error);
 		}
 	};
 
@@ -90,10 +51,21 @@ export default function Page() {
 				setBatteryData(res.data);
 			}
 		} catch (error) {
-			console.error('Error fetching data:', error);
+			console.error('Error fetching battery data by Id:', error);
 		}
 	};
 
+	const fetchAllPeriscopeTestData = async () => {
+		try {
+			const res = await allPeriscopeTestByBatteryId(batteryId);
+			if (res.status == true) {
+				setAllPeriscopeTestData(res.data);
+				setSelectedPeriscopeTestId(res.data[0]?.periscope_test_id);
+			}
+		} catch (error) {
+			console.error('Error fetching all periscope tests by battery id:', error);
+		}
+	};
 	const fetchPeriscopeTestData = async () => {
 		try {
 			const res = await getPeriscopeTestData(selectedPeriscopeTestId);
@@ -101,7 +73,7 @@ export default function Page() {
 				setPeriscopeTestData(res.data);
 			}
 		} catch (error) {
-			console.error('Error fetching data:', error);
+			console.error('Error fetching Periscope test data:', error);
 		}
 	};
 
@@ -491,8 +463,6 @@ export default function Page() {
 		}
 	];
 
-	// const carVoltageDistData = {
-	// 	barLabels: {
 	// 		'0': 3.6111,
 	// 		'1': 3.6117,
 	// 		'2': 3.6122,
@@ -520,26 +490,7 @@ export default function Page() {
 
 	const handlePeriscopeTestChange = (value: any) => {
 		setSelectedPeriscopeTestId(value);
-		// console.log(selectedPeriscopeTestId);
 	};
-
-	const generateRandomData = () => {
-		const barLabels: Record<string, number> = {}; // Explicitly define as Record<string, number>
-		const barHeights: Record<string, number> = {}; // Explicitly define as Record<string, number>
-		for (let i = 0; i < 10; i++) {
-			const voltage = (Math.random() * (3.6163 - 3.6111) + 3.6111).toFixed(4);
-			barLabels[i.toString()] = parseFloat(voltage);
-			barHeights[i.toString()] = Math.floor(Math.random() * 20); // Random heights for demonstration
-		}
-		return { barLabels, barHeights };
-	};
-
-	useEffect(() => {
-		if (selectedPeriscopeTestId !== null) {
-			const randomData = generateRandomData();
-			setCarVoltageDistData(randomData);
-		}
-	}, [selectedPeriscopeTestId]);
 
 	const handleDownloadPDF = () => {
 		const input = document.getElementById('pdf-content');
@@ -570,6 +521,22 @@ export default function Page() {
 				console.error('Error generating PDF:', error);
 			});
 	};
+
+	useEffect(() => {
+		if (user) fetchAllBatteryData();
+	}, [user]);
+
+	useEffect(() => {
+		if (batteryId) fetchBatteryData();
+	}, [batteryId]);
+
+	useEffect(() => {
+		if (batteryId) fetchAllPeriscopeTestData();
+	}, [batteryId]);
+
+	useEffect(() => {
+		if (selectedPeriscopeTestId) fetchPeriscopeTestData();
+	}, [selectedPeriscopeTestId]);
 
 	return (
 		<>
@@ -647,14 +614,14 @@ export default function Page() {
 									<div style={{ display: 'flex', alignItems: 'center' }}>
 										<p style={{ fontSize: '20px', marginRight: '8px' }}>SOH</p>
 										{/* <span
-																		style={{
-																			marginLeft: '8px',
-																			paddingLeft: '8px',
-																			fontSize: '40px'
-																		}}
-																	>
+																			style={{
+																				marginLeft: '8px',
+																				paddingLeft: '8px',
+																				fontSize: '40px'
+																			}}
+																		>
 
-																	</span> */}
+																		</span> */}
 										<GaugeFullProgressChart
 											percent={
 												periscopeTestData && periscopeTestData.soh
