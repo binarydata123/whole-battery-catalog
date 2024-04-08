@@ -1,6 +1,8 @@
 .menuDash {
   padding: 32px 15px;
   max-width: 100%;
+  height: 100vh;
+  background: linear-gradient(90deg, #00227a 0%, #03257e 88.16%, rgba(5, 40, 131, 0.63) 100%);
 }
 .ddd {
   position: fixed;

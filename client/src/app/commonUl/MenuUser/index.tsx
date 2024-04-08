@@ -2,7 +2,7 @@
 import './style.css';
 import React from 'react';
 import type { MenuProps } from 'antd';
-import { Menu } from 'antd';
+import { Menu, Image } from 'antd';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { IoHome } from 'react-icons/io5';
@@ -129,9 +129,7 @@ export default function MenuAdmin() {
 					<div className="menuDash darkMenuDash" id="menuDash">
 						<div className="textCenter">
 							<Link href="/">
-								<Titles color="white" className="textUppercase" level={5}>
-									whole battery catalog
-								</Titles>
+								<Image src="/images/logo-site.png" alt="" preview={false} width={190} />
 							</Link>
 						</div>
 						<div className="gapMarginFourTeenTop"></div>

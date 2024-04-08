@@ -1,10 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
-
 * {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Tight' !important;
   margin: 0;
   padding: 0;
 }
+/* Import the font file */
+@font-face {
+  font-family: 'Inter Tight';
+  src: url('https://example.com/fonts/inter_tight.woff2') format('woff2'); /* Update the URL */
+  font-weight: normal;
+  font-style: normal;
+}
+
 .dark-mode {
   background-color: black;
   color: white;
@@ -15,7 +21,9 @@
   color: black;
 }
 body {
+  font-family: 'Inter Tight', sans-serif;
   overflow-x: hidden;
+  font-size: 16px;
 }
 html {
   overflow-x: hidden;
