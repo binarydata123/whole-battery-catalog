@@ -6,6 +6,8 @@ import { PiPlugChargingBold } from 'react-icons/pi';
 import { TbCheckupList } from 'react-icons/tb';
 import { GiAutoRepair } from 'react-icons/gi';
 import About from '../About';
+import Titles from '@/app/commonUl/Titles';
+import ParaText from '@/app/commonUl/ParaText';
 export default function Service() {
 	return (
 		<div>
@@ -15,43 +17,67 @@ export default function Service() {
 					<Col xs={24} sm={24} md={24} lg={8} xl={8} xxl={8}>
 						<div className="service">
 							<RiChargingPileLine />
-							<h3>Charging Stations</h3>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat, voluptas.</p>
+							<Titles level={5} color="black">
+								Charging Stations
+							</Titles>
+							<ParaText size="medium">
+								Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat, voluptas.
+							</ParaText>
 						</div>
 					</Col>
 					<Col xs={24} sm={24} md={24} lg={8} xl={8} xxl={8}>
 						<div className="service">
 							<RiBattery2ChargeLine />
-							<h3>Battery Maintenance</h3>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat, voluptas.</p>
+							<Titles level={5} color="black">
+								Battery Maintenance
+							</Titles>
+							<ParaText size="medium">
+								Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat, voluptas.
+							</ParaText>
 						</div>
 					</Col>
 					<Col xs={24} sm={24} md={24} lg={8} xl={8} xxl={8}>
 						<div className="service">
 							<RiCarLine />
-							<h3>EV Repair</h3>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat, voluptas.</p>
+							<Titles level={5} color="black">
+								EV Repair
+							</Titles>
+							<ParaText size="medium">
+								Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat, voluptas.
+							</ParaText>
 						</div>
 					</Col>
 					<Col xs={24} sm={24} md={24} lg={8} xl={8} xxl={8}>
 						<div className="service">
 							<PiPlugChargingBold />
-							<h3>Fast Charging</h3>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat, voluptas.</p>
+							<Titles level={5} color="black">
+								Fast Charging
+							</Titles>
+							<ParaText size="medium">
+								Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat, voluptas.
+							</ParaText>
 						</div>
 					</Col>
 					<Col xs={24} sm={24} md={24} lg={8} xl={8} xxl={8}>
 						<div className="service">
 							<TbCheckupList />
-							<h3>Battery Checkup</h3>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat, voluptas.</p>
+							<Titles level={5} color="black">
+								Battery Checkup
+							</Titles>
+							<ParaText size="medium">
+								Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat, voluptas.
+							</ParaText>
 						</div>
 					</Col>
 					<Col xs={24} sm={24} md={24} lg={8} xl={8} xxl={8}>
 						<div className="service">
 							<GiAutoRepair />
-							<h3>Repair Services</h3>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat, voluptas.</p>
+							<Titles level={5} color="black">
+								Repair Services
+							</Titles>
+							<ParaText size="medium">
+								Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat, voluptas.
+							</ParaText>
 						</div>
 					</Col>
 				</Row>

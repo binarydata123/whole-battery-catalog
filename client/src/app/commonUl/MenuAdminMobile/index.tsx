@@ -2,7 +2,7 @@
 import './style.css';
 import React from 'react';
 import type { MenuProps } from 'antd';
-import { Menu } from 'antd';
+import { Menu, Image } from 'antd';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { IoHome } from 'react-icons/io5';
@@ -41,30 +41,12 @@ const items: MenuItem[] = [
 		</Link>
 	),
 	getItem(
-		'Generate Report',
-		'2',
-		<Link href="#" className="">
-			<FaAppStore className="menuIcon" />
-		</Link>,
-		[
-			getItem(
-				'Battery Reports',
-				'3',
-				<Link href="#">
-					{' '}
-					<SiBloglovin />
-				</Link>
-			),
-
-			getItem(
-				'Generate PDF',
-				'4',
-				<Link href="/en/admin/generatePDF">
-					{' '}
-					<FaFilePdf />
-				</Link>
-			)
-		]
+		'Battery Reports',
+		'3',
+		<Link href="/en/admin/battery-reports">
+			{' '}
+			<SiBloglovin />
+		</Link>
 	),
 
 	getItem(
@@ -161,9 +143,7 @@ export default function MenuAdminMobile() {
 					<div className="menuDashMoble darkMenuDashMoble" id="menuDashMoble">
 						<div className="textCenter">
 							<Link href="/">
-								<Titles color="black" className="textUppercase" level={5}>
-									whole battery catalog
-								</Titles>
+								<Image src="/images/logo-site.png" alt="" preview={false} width={190} />
 							</Link>
 						</div>
 						<div className="gapMarginTop"></div>

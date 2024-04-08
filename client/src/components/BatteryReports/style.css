@@ -1,0 +1,25 @@
+.page-container {
+  width: 100%;
+}
+
+.left-section {
+  border-right: 1px solid #ccc; /* Add border only on the right side */
+  padding: 10px; /* Optional: Add padding */
+}
+
+.right-section {
+  padding: 20px;
+}
+
+/* .custom-row:hover {
+  cursor: pointer;
+} */
+
+.custom-row,
+.selected-row {
+  cursor: pointer;
+}
+
+.selected-row {
+  background-color: #f0f0f0;
+}

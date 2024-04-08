@@ -29,87 +29,90 @@ export default function Header() {
 	};
 	return (
 		<>
-			<div>
-				<div className="headerMobile">
-					<Link href="/">
-						<h2>Whole Battery Catalog</h2>
-					</Link>
-					<div className="menu-toggle" onClick={toggleMenu}>
-						{isOpen ? <AiOutlineClose /> : <TiThMenu />}
-					</div>
-				</div>
-				{isOpen && (
-					<nav id="menu">
-						<ul className="listItems">
-							<li>
-								<Link href="/">Home</Link>
-							</li>
-							<li>
-								<Link href="/en/about-us">About Us</Link>
-							</li>
-							<li>
-								<Link href="/en/service">Services</Link>
-							</li>
-							<li>
-								<Link href="/en/blogs">Blogs</Link>
-							</li>
-							<li>
-								<Link href="/en/contact-us">Contact Us</Link>
-							</li>
-							<li>
-								<Link href="/en/refund-policy">Refund Policy</Link>
-							</li>
-						</ul>
-					</nav>
-				)}
-			</div>
-			<div className="customContainer" id="customContainer">
-				<Row align="middle" gutter={[16, 16]}>
-					<Col xl={6} md={6} xs={24} className="logoMain">
+			<div className="headerSection">
+				<div>
+					<div className="headerMobile">
 						<Link href="/">
-							<h2>Whole Battery Catalog</h2>
+							<Image src="/images/logo-site.png" alt="" width={190} preview={false} />
 						</Link>
-					</Col>
-					<Col xl={14} md={20} xs={24} className="textEnd">
-						<ul className="listItems">
-							<li>
-								<Link href="/">Home</Link>
-							</li>
-							<li>
-								<Link href="/en/about-us">About Us</Link>
-							</li>
-							<li>
-								<Link href="/en/service">Services</Link>
-							</li>
-							<li>
-								<Link href="/en/blogs">Blogs</Link>
-							</li>
-							<li>
-								<Link href="/en/contact-us">Contact Us</Link>
-							</li>
-							<li>
-								<Link href="/en/refund-policy">Refund Policy</Link>
-							</li>
+						<div className="menu-toggle" onClick={toggleMenu}>
+							{isOpen ? <AiOutlineClose /> : <TiThMenu />}
+						</div>
+					</div>
+					{isOpen && (
+						<nav id="menu">
+							<ul className="listItems">
+								<li>
+									<Link href="/">Home</Link>
+								</li>
+								<li>
+									<Link href="/en/about-us">About Us</Link>
+								</li>
+								<li>
+									<Link href="/en/service">Services</Link>
+								</li>
+								<li>
+									<Link href="/en/blogs">Blogs</Link>
+								</li>
+								<li>
+									<Link href="/en/contact-us">Contact Us</Link>
+								</li>
+								<li>
+									<Link href="/en/refund-policy">Refund Policy</Link>
+								</li>
+							</ul>
+						</nav>
+					)}
+				</div>
+				<div className="customContainer" id="customContainer">
+					<Row align="middle" gutter={[16, 16]}>
+						<Col xs={24} sm={24} md={24} lg={3} xl={3} xxl={3} className="logoMain">
+							<Link href="/">
+								<Image src="/images/logo-site.png" alt="" preview={false} />
+							</Link>
+						</Col>
+						<Col xs={24} sm={24} md={24} lg={19} xl={19} xxl={19} className="textCenter">
+							<ul className="listItems">
+								<li>
+									<Link href="/">Home</Link>
+								</li>
+								<li>
+									<Link href="/en/about-us">About Us</Link>
+								</li>
+								<li>
+									<Link href="/en/service">Services</Link>
+								</li>
+								<li>
+									<Link href="/en/blogs">Blogs</Link>
+								</li>
+								<li>
+									<Link href="/en/contact-us">Contact Us</Link>
+								</li>
+								<li>
+									<Link href="/en/refund-policy">Refund Policy</Link>
+								</li>
 
-							{/* <li>
+								{/* <li>
 								<Link href="/en/login">Login</Link>
 							</li> */}
-						</ul>
-					</Col>
-					<Col xl={4} md={24} xs={24} className="">
-						<Link href="/en/login">
-							<Button
-								type="primary"
-								style={{
-									height: '60px',
-									color: 'white !important'
-								}}
-							>
-								Login
-							</Button>
-						</Link>
-					</Col>
-				</Row>
+							</ul>
+						</Col>
+						<Col xs={24} sm={24} md={24} lg={2} xl={2} xxl={2} className="textEnd">
+							<Link href="/en/login">
+								<Button
+									type="primary"
+									style={{
+										height: '60px',
+										width: '100%',
+										color: 'white !important'
+									}}
+								>
+									Login
+								</Button>
+							</Link>
+						</Col>
+					</Row>
+				</div>
 			</div>
 		</>
 	);

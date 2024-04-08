@@ -1,7 +1,7 @@
 'use client';
 import './style.css';
 import React, { useContext } from 'react';
-import type { MenuProps } from 'antd';
+import { MenuProps, Image } from 'antd';
 import { Menu } from 'antd';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -44,30 +44,12 @@ const items: MenuItem[] = [
 		</Link>
 	),
 	getItem(
-		'Generate Report',
-		'2',
-		<Link href="#" className="">
-			<FaAppStore className="menuIcon" />
-		</Link>,
-		[
-			getItem(
-				'Battery Reports ',
-				'3',
-				<Link href="/en/admin/battery-reports">
-					{' '}
-					<SiBloglovin />
-				</Link>
-			),
-
-			getItem(
-				'Generate PDF',
-				'4',
-				<Link href="/en/admin/generatePDF">
-					{' '}
-					<FaFilePdf />
-				</Link>
-			)
-		]
+		'Battery Reports ',
+		'3',
+		<Link href="/en/admin/battery-reports">
+			{' '}
+			<SiBloglovin />
+		</Link>
 	),
 
 	getItem(
@@ -206,9 +188,7 @@ export default function MenuAdmin() {
 					<div className="menuDash darkMenuDash" id="menuDash">
 						<div className="textCenter">
 							<Link href="/">
-								<Titles color="white" className="textUppercase" level={5}>
-									whole battery catalog
-								</Titles>
+								<Image src="/images/logo-site.png" alt="" preview={false} width={190} />
 							</Link>
 						</div>
 						<div className="gapMarginFourTeenTop"></div>
