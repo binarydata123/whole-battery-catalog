@@ -44,30 +44,12 @@ const items: MenuItem[] = [
 		</Link>
 	),
 	getItem(
-		'Generate Report',
-		'2',
-		<Link href="#" className="">
-			<FaAppStore className="menuIcon" />
-		</Link>,
-		[
-			getItem(
-				'Battery Reports ',
-				'3',
-				<Link href="/en/admin/battery-reports">
-					{' '}
-					<SiBloglovin />
-				</Link>
-			),
-
-			getItem(
-				'Generate PDF',
-				'4',
-				<Link href="/en/admin/generatePDF">
-					{' '}
-					<FaFilePdf />
-				</Link>
-			)
-		]
+		'Battery Reports ',
+		'3',
+		<Link href="/en/admin/battery-reports">
+			{' '}
+			<SiBloglovin />
+		</Link>
 	),
 
 	getItem(
