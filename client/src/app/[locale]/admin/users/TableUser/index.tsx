@@ -1,23 +1,9 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ImageWithFallback from '@/components/ImageWithFallback';
-import {
-	Form,
-	Input,
-	InputNumber,
-	Popconfirm,
-	Table,
-	Typography,
-	Modal,
-	Row,
-	Col,
-	Button,
-	notification,
-	Image
-} from 'antd';
+import { Form, Input, InputNumber, Popconfirm, Table, Typography, Modal, Row, Col, Button, notification } from 'antd';
 import FormModal from '../FormModal';
 import { deleteUser } from '@/lib/adminApi';
-// import ErrorHandler from '@/lib/ErrorHandler';
 
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
@@ -134,23 +120,6 @@ const TableData = ({ users, fetchUser }: props) => {
 			dataIndex: 'image',
 			key: 'image',
 			render: (image: string) => (
-				// eslint-disable-next-line jsx-a11y/alt-text
-				// <Image
-				// 	src={image}
-				// 	fallback={'/images/user.svg'}
-				// 	placeholder={
-				// 		<Image
-				// 			src="/images/user.svg"
-				// 			width={50}
-				// 			height={50}
-				// 			alt="User"
-				// 			preview={false}
-				// 			style={{ filter: 'blur(2px)' }}
-				// 		/>
-				// 	}
-				// 	// alt="Profile"
-				// 	style={{ width: 60, height: 60 }}
-				// />
 				<ImageWithFallback src={image} fallbackSrc="/images/user.png" width={50} height={50} preview={false} />
 			)
 		},
@@ -189,7 +158,7 @@ const TableData = ({ users, fetchUser }: props) => {
 								handleEditClick(record);
 							}}
 						>
-							<EditOutlined />{' '}
+							<EditOutlined />
 						</Button>
 						<Popconfirm
 							title="Are you sure to delete this user?"
@@ -199,7 +168,7 @@ const TableData = ({ users, fetchUser }: props) => {
 							onCancel={handleDeleteCancel}
 						>
 							<Button style={{ marginLeft: '10px' }}>
-								<DeleteOutlined />{' '}
+								<DeleteOutlined />
 							</Button>
 						</Popconfirm>
 					</div>
