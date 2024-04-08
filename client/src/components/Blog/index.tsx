@@ -11,6 +11,7 @@ import Link from 'next/link';
 import ErrorHandler from '@/lib/ErrorHandler';
 import { dateFormatter } from './dateFormatter';
 import { shuffleArray } from './shuffleArray';
+import ImageWithFallback from '../ImageWithFallback';
 
 export default function BlogComponent() {
 	const [blogs, setBlogs] = React.useState<any[]>([]);
@@ -46,17 +47,10 @@ export default function BlogComponent() {
 									hoverable
 									style={{ position: 'relative', overflow: 'hidden', width: '100%' }}
 									cover={
-										<Image
-											preview={false}
+										<ImageWithFallback
 											src={blog.image}
-											placeholder={
-												<Image
-													src="/images/ev-battery.jpg"
-													preview={false}
-													style={{ filter: 'blur(2px)' }}
-												/>
-											}
-											fallback="/images/ev-battery.jpg"
+											preview={false}
+											fallbackSrc="/images/ev-battery.jpg"
 										/>
 									}
 								>

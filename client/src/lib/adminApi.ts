@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-const token: string = Cookies.get('access_token');
+const token: string = Cookies.get('session_token');
 
 export const getAllBlogs = async (searchTerm: string = ''): Promise<any> => {
 	return new Promise((resolve, reject) => {

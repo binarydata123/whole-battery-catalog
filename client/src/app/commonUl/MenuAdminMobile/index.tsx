@@ -50,7 +50,7 @@ const items: MenuItem[] = [
 			getItem(
 				'Battery Reports',
 				'3',
-				<Link href="#">
+				<Link href="/en/admin/battery-reports">
 					{' '}
 					<SiBloglovin />
 				</Link>

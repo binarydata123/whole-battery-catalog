@@ -2,6 +2,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { Button, Card, Col, Image, Row, Space } from 'antd';
+import ImageWithFallback from '../ImageWithFallback';
 const { Meta } = Card;
 import './style.css';
 import Titles from '@/app/commonUl/Titles';
@@ -39,16 +40,10 @@ export default function Blog_Page() {
 									hoverable
 									style={{ position: 'relative', overflow: 'hidden', width: '100%' }}
 									cover={
-										<Image
-											preview={false}
+										<ImageWithFallback
 											src={blog.image}
-											placeholder={
-												<Image
-													src="https://ruchiragreenearth.com/blog/wp-content/uploads/2023/09/ev-battery.jpg"
-													preview={false}
-												/>
-											}
-											fallback="https://ruchiragreenearth.com/blog/wp-content/uploads/2023/09/ev-battery.jpg"
+											preview={false}
+											fallbackSrc="/images/ev-battery.jpg"
 										/>
 									}
 								>

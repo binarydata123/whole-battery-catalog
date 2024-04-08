@@ -2,6 +2,7 @@
 import ParaText from '@/app/commonUl/ParaText';
 import Titles from '@/app/commonUl/Titles';
 import { Breadcrumb, Col, Row, Image } from 'antd';
+import ImageWithFallback from '@/components/ImageWithFallback/index';
 
 import Link from 'next/link';
 import React from 'react';
@@ -35,7 +36,7 @@ const SinglePage = ({ blogData }: any) => {
 			</div>
 			<div className="gapMarginFourTeenTop"></div>
 			<div className="customContainer">
-				<Image
+				{/* <Image
 					src={blogData?.image}
 					fallback="/images/ev-battery.jpg"
 					placeholder={
@@ -51,6 +52,14 @@ const SinglePage = ({ blogData }: any) => {
 					height={700}
 					preview={false}
 					style={{ borderRadius: '24px' }}
+				/> */}
+
+				<ImageWithFallback
+					src={blogData?.image}
+					fallbackSrc="/images/ev-battery.jpg"
+					preview={false}
+					width={1520}
+					height={700}
 				/>
 				<div className="gapMarginFourTeenTop"></div>
 				<Titles level={4} color="PrimaryColor">
@@ -69,7 +78,7 @@ const SinglePage = ({ blogData }: any) => {
 				<div className="gapMarginFourTeenTop"></div>
 				<Row gutter={[24, 24]}>
 					<Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
-						<Image
+						{/* <Image
 							src={blogData?.image}
 							fallback="https://ruchiragreenearth.com/blog/wp-content/uploads/2023/09/ev-battery.jpg"
 							placeholder={
@@ -81,6 +90,13 @@ const SinglePage = ({ blogData }: any) => {
 							}
 							preview={false}
 							style={{ borderRadius: '12px' }}
+						/> */}
+
+						<ImageWithFallback
+							src={blogData?.image}
+							fallbackSrc="/images/ev-battery.jpg"
+							styles={{ borderRadius: '12px' }}
+							preview={false}
 						/>
 					</Col>
 					<Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
@@ -104,7 +120,7 @@ const SinglePage = ({ blogData }: any) => {
 						<Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
 							<Row gutter={[4, 4]}>
 								<Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-									<Image
+									{/* <Image
 										src={blogData?.authorId?.imageProfile}
 										// alt={blogData?.authorId?.name}
 										fallback="/images/user.svg"
@@ -128,6 +144,17 @@ const SinglePage = ({ blogData }: any) => {
 											width: '50px',
 											objectFit: 'cover'
 										}}
+									/> */}
+									<ImageWithFallback
+										src={blogData?.authorId?.imageProfile}
+										fallbackSrc="/images/user.png"
+										styles={{
+											borderRadius: '50%',
+											height: '50px',
+											width: '50px',
+											objectFit: 'cover'
+										}}
+										preview={false}
 									/>
 								</Col>
 								<Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18}>
