@@ -10,14 +10,18 @@ import { Button, notification } from 'antd';
 import { TiThMenu, TiTimes } from 'react-icons/ti';
 import MenuAdmin from '../MenuAdmin';
 import MenuAdminMobile from '../MenuAdminMobile';
+import MenuUserMobile from '../MenuUserMobile';
 import { CiSearch } from 'react-icons/ci';
 import { MdEmail } from 'react-icons/md';
 import { IoLanguageSharp } from 'react-icons/io5';
 import HeaderDropDown from '../headerDropDown';
 import { BiMenuAltLeft } from 'react-icons/bi';
+import VendorAuth from '@/contexts/VendorAuthProvider';
 
 const Context = React.createContext({ name: 'Default' });
 export default function HeaderDashTop() {
+	const { user } = React.useContext(VendorAuth);
+
 	const [showNotification, setShowNotification] = useState(false);
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -61,7 +65,7 @@ export default function HeaderDashTop() {
 						</span>
 					</button>
 					<div className={`navbar-collapse ${isMenuOpen ? 'show' : ''}`}>
-						<MenuAdminMobile />
+						{user?.role === 'admin' ? <MenuAdminMobile /> : <MenuUserMobile />}
 					</div>
 				</div>
 				<Row className="" align="middle" gutter={[16, 16]}>

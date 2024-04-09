@@ -3,12 +3,12 @@
 import React from 'react';
 import { Col, Row } from 'antd';
 import { usePathname } from 'next/navigation';
-import MenuAdmin from '@/app/commonUl/MenuAdmin';
+// import MenuAdmin from '@/app/commonUl/MenuAdmin';
 import HeaderDashTop from '@/app/commonUl/HeaderDashTop';
 import MenuUser from '@/app/commonUl/MenuUser';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-	const pathname = usePathname();
+	// const pathname = usePathname();
 
 	return (
 		<section>

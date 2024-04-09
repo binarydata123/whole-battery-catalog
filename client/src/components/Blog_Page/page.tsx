@@ -10,14 +10,25 @@ import { getBlogs } from '@/lib/frontendApi';
 import ParaText from '@/app/commonUl/ParaText';
 import Link from 'next/link';
 import { dateFormatter } from './dateFormatter';
+import SpinLoader from '../Spin-loader';
+import ErrorHandler from '@/lib/ErrorHandler';
 
 export default function Blog_Page() {
+	const [loading, setLoading] = useState<boolean>(false);
 	const [allBlogs, setAllBlogs] = useState(null);
 
 	const fetchData = async () => {
-		const res = await getBlogs();
-		if (res.status == true) {
-			setAllBlogs(res.data);
+		try {
+			setLoading(true);
+			const res = await getBlogs();
+			if (res.status == true) {
+				setAllBlogs(res.data);
+			}
+		} catch (error) {
+			setLoading(false);
+			ErrorHandler.showNotification(error);
+		} finally {
+			setLoading(false);
 		}
 	};
 
@@ -47,28 +58,30 @@ export default function Blog_Page() {
 										/>
 									}
 								>
-									<ParaText size="smallExtra" color="black">
-										{dateFormatter(blog.updatedAt)}
-									</ParaText>
-									<div className="gapMarginTopTwo"></div>
-									<Meta
-										title={
-											<ParaText size="extraSmall" color="PrimaryColor">
-												{blog.metaTitle}
-											</ParaText>
-										}
-										description={blog.metaDescription}
-									/>
-									<div className="gapMarginTopTwo"></div>
-									<div style={{ position: 'absolute', top: 20, right: 20 }}>
-										<Button shape="round" type="default">
-											EV Battery
-										</Button>
-									</div>
-									<Space>
-										<Button>EV Battery</Button>
-										<Button>EV Battery</Button>
-									</Space>
+									<SpinLoader loading={loading}>
+										<ParaText size="smallExtra" color="black">
+											{dateFormatter(blog.updatedAt)}
+										</ParaText>
+										<div className="gapMarginTopTwo"></div>
+										<Meta
+											title={
+												<ParaText size="extraSmall" color="PrimaryColor">
+													{blog.metaTitle}
+												</ParaText>
+											}
+											description={blog.metaDescription}
+										/>
+										<div className="gapMarginTopTwo"></div>
+										<div style={{ position: 'absolute', top: 20, right: 20 }}>
+											<Button shape="round" type="default">
+												EV Battery
+											</Button>
+										</div>
+										<Space>
+											<Button>EV Battery</Button>
+											<Button>EV Battery</Button>
+										</Space>
+									</SpinLoader>
 								</Card>
 							</Link>
 						</Col>

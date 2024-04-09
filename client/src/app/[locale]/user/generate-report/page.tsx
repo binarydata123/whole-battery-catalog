@@ -7,6 +7,7 @@ import './style.css';
 import RateStar from '@/app/commonUl/RateStar';
 import { CiHeart } from 'react-icons/ci';
 import { fetchDataByVendorId } from '@/lib/vendorApi';
+import SpinLoader from '@/components/Spin-loader';
 import ColumnChart from '@/components/ColumnChart';
 import GaugeProgressChart from '@/components/GaugeProgressChart';
 import LineChart from '@/components/LineChart';
@@ -24,13 +25,15 @@ import VendorAuth from '@/contexts/VendorAuthProvider';
 import Titles from '@/app/commonUl/Titles';
 
 export default function Page() {
+	const [loading, setLoading] = useState<boolean>(false);
+	const [loading2, setLoading2] = useState<boolean>(false);
 	const [allBatteryData, setAllBatteryData] = useState<any[]>([]);
 	const [batteryId, setBatteryId] = useState<string | null>(null);
 	const [selectedPeriscopeTestId, setSelectedPeriscopeTestId] = useState<string | null>(null);
 	const [allPeriscopeTestData, setAllPeriscopeTestData] = useState<any[]>([]);
 	const [batteryData, setBatteryData] = useState<any>([]);
 	const [periscopeTestData, setPeriscopeTestData] = useState<any>([]);
-	const { user, logout } = useContext(VendorAuth);
+	const { user } = useContext(VendorAuth);
 	const [carVoltageDistData, setCarVoltageDistData] = useState({
 		barLabels: {},
 		barHeights: {}
@@ -56,6 +59,7 @@ export default function Page() {
 
 	const fetchAllBatteryData = async (token: any) => {
 		try {
+			setLoading(true);
 			const res = await allBatteryByVendor(token);
 			if (res.status == true) {
 				// console.log(res);
@@ -66,7 +70,26 @@ export default function Page() {
 				}
 			}
 		} catch (error) {
+			setLoading(false);
 			console.error('Error fetching data:', error);
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	const fetchBatteryData = async () => {
+		try {
+			setLoading2(true);
+			const res = await getBatteryDataById(batteryId);
+			if (res.status == true) {
+				// console.log('batteryData', res.data);
+				setBatteryData(res.data);
+			}
+		} catch (error) {
+			setLoading2(false);
+			console.error('Error fetching data:', error);
+		} finally {
+			setLoading2(false);
 		}
 	};
 
@@ -76,18 +99,6 @@ export default function Page() {
 			if (res.status == true) {
 				setAllPeriscopeTestData(res.data);
 				setSelectedPeriscopeTestId(res.data[0].periscope_test_id);
-			}
-		} catch (error) {
-			console.error('Error fetching data:', error);
-		}
-	};
-
-	const fetchBatteryData = async () => {
-		try {
-			const res = await getBatteryDataById(batteryId);
-			if (res.status == true) {
-				// console.log('batteryData', res.data);
-				setBatteryData(res.data);
 			}
 		} catch (error) {
 			console.error('Error fetching data:', error);
@@ -575,70 +586,76 @@ export default function Page() {
 		<>
 			<Row className="page-container">
 				<Col xl={7} className="left-section">
-					<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-						<h2>Battery Packs</h2>
-						<RiDownload2Fill size={40} onClick={handleDownloadPDF} style={{ cursor: 'pointer' }} />
-					</div>
-					<Table
-						dataSource={batteryDataSource}
-						columns={batteryColumns}
-						pagination={false}
-						rowClassName={(record) => {
-							return record.batteryId === batteryId ? 'custom-row selected-row' : 'custom-row';
-						}}
-						onRow={(record: any, rowIndex) => {
-							return {
-								onClick: (event) => {
-									// event.preventDefault();
-									const batteryId = record.batteryId;
-									setBatteryId(batteryId);
-								}
-							};
-						}}
-					/>
+					<SpinLoader loading={loading}>
+						<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+							<h2>Battery Packs</h2>
+							<RiDownload2Fill size={40} onClick={handleDownloadPDF} style={{ cursor: 'pointer' }} />
+						</div>
+						<Table
+							dataSource={batteryDataSource}
+							columns={batteryColumns}
+							pagination={false}
+							rowClassName={(record) => {
+								return record.batteryId === batteryId ? 'custom-row selected-row' : 'custom-row';
+							}}
+							onRow={(record: any, rowIndex) => {
+								return {
+									onClick: (event) => {
+										// event.preventDefault();
+										const batteryId = record.batteryId;
+										setBatteryId(batteryId);
+									}
+								};
+							}}
+						/>
+					</SpinLoader>
 				</Col>
 				<Col span={17} className="right-section" id="pdf-content">
-					<Row gutter={[16, 16]}>
-						<Col span={8} style={{ display: 'flex', alignItems: 'center' }}>
-							<h1 style={{ margin: 0 }}>
-								{batteryData
-									? `${batteryData?.oem?.oem_name ? batteryData?.oem?.oem_name : ''} Model ${batteryData?.batteryModel?.model_name ? batteryData?.batteryModel?.model_name.replace(/-/g, '/') : ''}`
-									: 'Model Name'}
-							</h1>
-						</Col>
-						<Col span={8} style={{ display: 'flex', alignItems: 'center' }}>
-							<p style={{ margin: 0, fontSize: '20px' }}>{`${batteryData?.oem_identifier || 'N/A'}`}</p>
-						</Col>
-						<Col span={8} style={{ display: 'flex', flexDirection: 'column' }}>
-							<div style={{ display: 'flex', alignItems: 'center' }}>
-								<p style={{ textTransform: 'uppercase', margin: 0, marginRight: '8px' }}>
-									Report Selection
-								</p>
-								<Select
-									style={{ width: '50%', marginLeft: '10px' }}
-									value={selectedPeriscopeTestId}
-									onChange={handlePeriscopeTestChange}
-								>
-									<Select.Option value="">Most recent</Select.Option>
-									{allPeriscopeTestData &&
-										allPeriscopeTestData.map((option, index) => (
-											<Select.Option key={index} value={option.periscope_test_id}>
-												{option.created_on
-													? new Date(option.created_on).toLocaleString('en-US', {
-															year: 'numeric',
-															month: 'numeric',
-															day: 'numeric',
-															hour: 'numeric',
-															minute: 'numeric',
-															hour12: true
-														})
-													: 'N/A'}
-											</Select.Option>
-										))}
-								</Select>
-							</div>
-						</Col>
-					</Row>
+					<SpinLoader loading={loading2}>
+						<Row gutter={[16, 16]}>
+							<Col span={8} style={{ display: 'flex', alignItems: 'center' }}>
+								<h1 style={{ margin: 0 }}>
+									{batteryData
+										? `${batteryData?.oem?.oem_name ? batteryData?.oem?.oem_name : ''} Model ${batteryData?.batteryModel?.model_name ? batteryData?.batteryModel?.model_name.replace(/-/g, '/') : ''}`
+										: 'Model Name'}
+								</h1>
+							</Col>
+							<Col span={8} style={{ display: 'flex', alignItems: 'center' }}>
+								<p
+									style={{ margin: 0, fontSize: '20px' }}
+								>{`${batteryData?.oem_identifier || 'N/A'}`}</p>
+							</Col>
+							<Col span={8} style={{ display: 'flex', flexDirection: 'column' }}>
+								<div style={{ display: 'flex', alignItems: 'center' }}>
+									<p style={{ textTransform: 'uppercase', margin: 0, marginRight: '8px' }}>
+										Report Selection
+									</p>
+									<Select
+										style={{ width: '50%', marginLeft: '10px' }}
+										value={selectedPeriscopeTestId}
+										onChange={handlePeriscopeTestChange}
+									>
+										<Select.Option value="">Most recent</Select.Option>
+										{allPeriscopeTestData &&
+											allPeriscopeTestData.map((option, index) => (
+												<Select.Option key={index} value={option.periscope_test_id}>
+													{option.created_on
+														? new Date(option.created_on).toLocaleString('en-US', {
+																year: 'numeric',
+																month: 'numeric',
+																day: 'numeric',
+																hour: 'numeric',
+																minute: 'numeric',
+																hour12: true
+															})
+														: 'N/A'}
+												</Select.Option>
+											))}
+									</Select>
+								</div>
+							</Col>
+						</Row>
+					</SpinLoader>
 					<hr style={{ margin: '20px 0' }} />
 					{allPeriscopeTestData.length > 0 ? (
 						<div style={{ minHeight: '60vh' }}>
@@ -814,7 +831,7 @@ export default function Page() {
 											<p style={{ margin: 0, fontSize: '14px' }}>Pack Voltage</p>
 										</Col>
 										<Col xl={12} style={{ textAlign: 'end' }}>
-											{batteryData?.data?.batteryDatas?.[0]?.Voltage ?? 'N/A'}
+											{batteryData?.batteryDatas?.[0]?.battery_data['Voltage'] || 'N/A'}
 										</Col>
 									</Row>
 									<Row gutter={[16, 16]} style={{ paddingTop: '15px' }}>
@@ -823,7 +840,13 @@ export default function Page() {
 										</Col>
 										<Col xl={12} style={{ textAlign: 'end' }}>
 											<p style={{ margin: 0, fontSize: '14px' }}>
-												{batteryData?.data?.batteryDatas?.[0]?.battery_Data?.SoC ?? 'N/A'}%
+												{batteryData?.batteryDatas &&
+												batteryData?.batteryDatas.length > 0 &&
+												batteryData?.batteryDatas[0].battery_data?.SoC ? (
+													<span>{`${batteryData?.batteryDatas[0].battery_data['SoC']}%`}</span>
+												) : (
+													<span>N/A</span>
+												)}
 											</p>
 										</Col>
 									</Row>
@@ -981,17 +1004,19 @@ export default function Page() {
 							</Row>
 						</div>
 					) : (
-						<div
-							style={{
-								display: 'flex',
-								justifyContent: 'center',
-								alignItems: 'center',
-								height: '100%',
-								minHeight: '60vh'
-							}}
-						>
-							<Titles level={3}>N/A</Titles>
-						</div>
+						<SpinLoader loading={loading2}>
+							<div
+								style={{
+									display: 'flex',
+									justifyContent: 'center',
+									alignItems: 'center',
+									height: '100%',
+									minHeight: '60vh'
+								}}
+							>
+								<Titles level={3}>N/A</Titles>
+							</div>
+						</SpinLoader>
 					)}
 				</Col>
 			</Row>

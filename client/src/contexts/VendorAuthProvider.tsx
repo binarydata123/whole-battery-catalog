@@ -46,6 +46,7 @@ const VendorAuthProvider = ({ children }: AuthContextProp) => {
 		sessionStorage.removeItem('user'); // Clear user data from sessionStorage
 		Cookies.remove('refresh_token');
 		Cookies.remove('session_token');
+		localStorage.clear(); //removes all menu keys saved for menu bar navigation
 		router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/login`);
 	};
 

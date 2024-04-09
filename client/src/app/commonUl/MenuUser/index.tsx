@@ -1,6 +1,6 @@
 'use client';
 import './style.css';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import type { MenuProps } from 'antd';
 import { Menu, Image } from 'antd';
 import Link from 'next/link';
@@ -38,22 +38,20 @@ const items: MenuItem[] = [
 		'Dashboard',
 		'1',
 		<Link href="/en/user/dashboard">
-			{' '}
 			<IoHome />
 		</Link>
 	),
 	getItem(
 		'Generate Report',
 		'2',
-		<Link href="/en/user/generate-report" className="">
+		<Link href="/en/user/generate-report">
 			<FaAppStore className="menuIcon" />
 		</Link>
 	),
 	getItem(
 		'Payment History',
 		'3',
-		<Link href="/en/admin/payment-history">
-			{' '}
+		<Link href="/en/user/payment-history">
 			<MdOutlinePayment />
 		</Link>,
 		[
@@ -61,7 +59,6 @@ const items: MenuItem[] = [
 				'Single Invoice ',
 				'4',
 				<Link href="/en/user/single-invoice ">
-					{' '}
 					<SiBloglovin />
 				</Link>
 			)
@@ -70,8 +67,7 @@ const items: MenuItem[] = [
 	getItem(
 		'Change Password',
 		'5',
-		<Link href="/en/user/change-password">
-			{' '}
+		<Link href="#">
 			<RiLockPasswordFill />
 		</Link>
 	),
@@ -79,48 +75,30 @@ const items: MenuItem[] = [
 		'Logout',
 		'6',
 		<Link href="#" onClick={(e) => e.preventDefault()}>
-			{' '}
 			<RiLockPasswordFill />
 		</Link>
 	)
 ];
 
-export default function MenuAdmin() {
+export default function MenuUser() {
+	const [selectedKey, setSelectedKey] = useState(() => {
+		// return localStorage.getItem('SelectedMenuKey' || '1');
+		return typeof window !== 'undefined' ? localStorage.getItem('SelectedMenuKey') : '1';
+	});
+
 	const { user, logout } = React.useContext(VendorAuth);
 
-	const pathname = usePathname();
-	let defaultSelectedKey;
-	switch (pathname) {
-		case '/admin/dashboard':
-			defaultSelectedKey = '1';
-			break;
-		case '/admin/mechanic-dashboard':
-			defaultSelectedKey = '2';
-			break;
-		case '/admin/car-listing':
-			defaultSelectedKey = '3';
-			break;
-		case '/admin/finished-auction':
-			defaultSelectedKey = '4';
-			break;
-		case '/admin/mechanic-requests':
-			defaultSelectedKey = '5';
-			break;
-		case '/admin/users':
-			defaultSelectedKey = '6';
-			break;
-		case '/admin/customize/car-mechanic-report':
-			defaultSelectedKey = '7';
-			break;
-		case '/admin/blogs':
-			defaultSelectedKey = '8';
-			break;
-		case '/admin/admin-inquiries':
-			defaultSelectedKey = '9';
-			break;
-		default:
-			defaultSelectedKey = '1';
-	}
+	const handleMenuClick = (e: any) => {
+		if (e.key === '6') {
+			localStorage.removeItem('SelectedMenuKey');
+			logout();
+		}
+		setSelectedKey(e.key);
+	};
+
+	useEffect(() => {
+		localStorage.setItem('SelectedMenuKey', selectedKey);
+	}, [selectedKey]);
 
 	return (
 		<>
@@ -134,16 +112,11 @@ export default function MenuAdmin() {
 						</div>
 						<div className="gapMarginFourTeenTop"></div>
 						<Menu
-							defaultSelectedKeys={[defaultSelectedKey]}
-							defaultOpenKeys={['sub1']}
+							selectedKeys={[selectedKey]}
 							mode="inline"
 							theme="dark"
 							items={items}
-							onClick={({ key }) => {
-								if (key === '6') {
-									logout();
-								}
-							}}
+							onClick={handleMenuClick}
 						/>
 					</div>
 				</div>

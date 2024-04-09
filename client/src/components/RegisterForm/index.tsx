@@ -105,7 +105,6 @@ export default function RegisterForm() {
 						name="confirmPassword"
 						dependencies={['password']}
 						rules={[
-							// { required: true, message: 'Please input your password again!' },
 							({ getFieldValue }) => ({
 								validator(_, value) {
 									if (!value || getFieldValue('password') === value) {
