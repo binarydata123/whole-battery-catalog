@@ -813,6 +813,7 @@ export default function Page() {
 										<Col xl={12} style={{ textAlign: 'end' }}>
 											<p style={{ margin: 0, fontSize: '14px' }}>
 												{batteryData?.batteryDatas &&
+												batteryData?.batteryDatas.length > 0 &&
 												batteryData?.batteryDatas[0].battery_data?.SoC ? (
 													<span>{`${batteryData?.batteryDatas[0].battery_data['SoC']}%`}</span>
 												) : (
