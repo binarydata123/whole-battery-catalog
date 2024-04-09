@@ -1,10 +1,11 @@
 'use client';
 import './style.css';
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { MenuProps, Image } from 'antd';
 import { Menu } from 'antd';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+// import { usePathname } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { IoHome } from 'react-icons/io5';
 import { SiAuthy, SiBloglovin } from 'react-icons/si';
 import { FaAppStore } from 'react-icons/fa';
@@ -39,48 +40,51 @@ const items: MenuItem[] = [
 		'Dashboard',
 		'1',
 		<Link href="/en/admin/dashboard">
-			{' '}
 			<IoHome />
 		</Link>
 	),
 	getItem(
 		'Battery Reports ',
-		'3',
+		'2',
 		<Link href="/en/admin/battery-reports">
-			{' '}
 			<SiBloglovin />
 		</Link>
 	),
 
 	getItem(
 		'Payment History',
-		'5',
+		'3',
 		<Link href="#">
-			{' '}
 			<MdOutlinePayment />
 		</Link>,
 		[
 			getItem(
+				'Invoice',
+				'5',
+				<Link href="/en/admin/invoice">
+					<MdContacts />
+				</Link>
+			),
+			getItem(
 				'Single Invoice ',
-				'6',
+				'4',
 				<Link href="# ">
-					{' '}
 					<SiBloglovin />
 				</Link>
 			)
 		]
 	),
 	getItem(
-		'Invoice',
-		'7',
-		<Link href="/en/admin/invoice">
+		'Vendors',
+		'8',
+		<Link href="/en/admin/vendors">
 			{' '}
-			<MdContacts />
+			<RiUser2Fill />
 		</Link>
 	),
 	getItem(
 		'Blogs',
-		'8',
+		'6',
 		<Link href="/en/admin/blogs">
 			{' '}
 			<FcNews />
@@ -88,31 +92,15 @@ const items: MenuItem[] = [
 	),
 	getItem(
 		'Author',
-		'9',
+		'7',
 		<Link href="/en/admin/author">
 			{' '}
 			<RiUser2Fill />
 		</Link>
 	),
 	getItem(
-		'Users',
-		'10',
-		<Link href="/en/admin/users">
-			{' '}
-			<RiUser2Fill />
-		</Link>
-	),
-	getItem(
-		'Contact Form History',
-		'11',
-		<Link href="/en/admin/contact-form-history">
-			{' '}
-			<MdContacts />
-		</Link>
-	),
-	getItem(
 		'General Settings',
-		'12',
+		'9',
 		<Link href="/en/admin/general-settings">
 			{' '}
 			<MdContacts />
@@ -120,7 +108,7 @@ const items: MenuItem[] = [
 	),
 	getItem(
 		'Change Password',
-		'13',
+		'10',
 		<Link href="/en/admin/change-password">
 			{' '}
 			<RiLockPasswordFill />
@@ -128,7 +116,7 @@ const items: MenuItem[] = [
 	),
 	getItem(
 		'Log Out',
-		'14',
+		'11',
 		<Link href="#">
 			{' '}
 			<SiAuthy />
@@ -137,49 +125,35 @@ const items: MenuItem[] = [
 ];
 
 export default function MenuAdmin() {
-	const pathname = usePathname();
+	const [selectedKey, setSelectedKey] = useState(() => {
+		return typeof window !== 'undefined' ? localStorage.getItem('MenuAdminKey') : '1';
+	});
+
+	// if (typeof window !== 'undefined') {
+	// 	setSelectedKey(() => {
+	// 		return localStorage.getItem('MenuAdminKey') || '1';
+	// 	});
+	// }
 
 	const { logout } = useContext(VendorAuth);
 
-	function handleClick(href: any) {
-		if (href.key == 14) {
+	function handleClick(e: any) {
+		if (e.key === '11') {
 			logout();
 		}
+
+		setSelectedKey(e.key);
 	}
 
-	let defaultSelectedKey;
+	// useEffect(() => {
+	// 	setSelectedKey(() => {
+	// 		return localStorage.getItem('MenuAdminKey') || '1';
+	// 	});
+	// }, []);
 
-	switch (pathname) {
-		case '/admin/dashboard':
-			defaultSelectedKey = '1';
-			break;
-		case '/admin/mechanic-dashboard':
-			defaultSelectedKey = '2';
-			break;
-		case '/admin/car-listing':
-			defaultSelectedKey = '3';
-			break;
-		case '/admin/finished-auction':
-			defaultSelectedKey = '4';
-			break;
-		case '/admin/mechanic-requests':
-			defaultSelectedKey = '5';
-			break;
-		case '/admin/users':
-			defaultSelectedKey = '6';
-			break;
-		case '/admin/customize/car-mechanic-report':
-			defaultSelectedKey = '7';
-			break;
-		case '/admin/blogs':
-			defaultSelectedKey = '8';
-			break;
-		case '/admin/admin-inquiries':
-			defaultSelectedKey = '9';
-			break;
-		default:
-			defaultSelectedKey = '1';
-	}
+	useEffect(() => {
+		localStorage.setItem('MenuAdminKey', selectedKey);
+	}, [selectedKey]);
 
 	return (
 		<>
@@ -193,8 +167,7 @@ export default function MenuAdmin() {
 						</div>
 						<div className="gapMarginFourTeenTop"></div>
 						<Menu
-							defaultSelectedKeys={[defaultSelectedKey]}
-							defaultOpenKeys={['sub1']}
+							selectedKeys={[selectedKey]}
 							mode="inline"
 							theme="dark"
 							items={items}

@@ -38,7 +38,7 @@ export default function AdminBlogs() {
 	async function fetchData() {
 		try {
 			const res = await getAllBlogs();
-			console.log('fetch data response', res);
+			// console.log('fetch data response', res);
 			setBlogs(res.data);
 		} catch (error) {
 			ErrorHandler.showNotification(error);

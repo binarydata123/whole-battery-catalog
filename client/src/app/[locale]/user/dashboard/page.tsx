@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react';
 import styles from './dashboard.module.css';
 import { Col, Image, Row, Select } from 'antd';
 import Link from 'next/link';
-const { Option } = Select;
+import SpinLoader from '@/components/Spin-loader';
+// const { Option } = Select;
 import FormTableData from './FormTableData';
 import ParaText from '@/app/commonUl/ParaText';
 import Titles from '@/app/commonUl/Titles';
@@ -12,27 +13,23 @@ import VendorAuth from '@/contexts/VendorAuthProvider';
 import { allBatteryByVendor } from '@/lib/userApi';
 
 export default function Dashboard() {
-	const [loading, setLoading] = useState<boolean>(true);
+	const [loading, setLoading] = useState<boolean>(false);
 	const [allBatteryData, setAllBatteryData] = useState<any[]>([]);
 
 	const { user } = React.useContext(VendorAuth);
 
 	const fetchAllBatteryData = async (token: any) => {
 		try {
+			setLoading(true);
 			const res = await allBatteryByVendor(token);
 			setAllBatteryData(res.data);
 		} catch (error) {
+			setLoading(false);
 			console.error('Error fetching data:', error);
+		} finally {
+			setLoading(false);
 		}
 	};
-
-	useEffect(() => {
-		const timer = setTimeout(() => {
-			setLoading(false);
-		}, 1000);
-
-		return () => clearTimeout(timer);
-	}, []);
 
 	useEffect(() => {
 		if (user && user.access_token) {
@@ -53,30 +50,33 @@ export default function Dashboard() {
 					<Col xs={24} sm={12} md={6} xl={6}>
 						<Link href="/en/user/generate-report">
 							<div>
-								<div
-									id={styles.dashboardCard}
-									style={{
-										backgroundImage: 'linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%)'
-									}}
-								>
-									<ParaText size="large" color="black">
-										Battery Reports
-									</ParaText>
-									<Titles level={4} color="PrimaryColor">
-										{allBatteryData.length}
-									</Titles>
-									<ParaText
-										size="extraSmall"
-										color="black"
-										className="dBlock textEnd"
-										fontWeightBold={900}
+								<SpinLoader loading={loading}>
+									<div
+										id={styles.dashboardCard}
+										style={{
+											backgroundImage:
+												'linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%)'
+										}}
 									>
-										Today
-									</ParaText>
-									<div className={styles.iconPostion}>
-										<HiOutlineDotsHorizontal />
+										<ParaText size="large" color="black">
+											Battery Reports
+										</ParaText>
+										<Titles level={4} color="PrimaryColor">
+											{allBatteryData.length}
+										</Titles>
+										<ParaText
+											size="extraSmall"
+											color="black"
+											className="dBlock textEnd"
+											fontWeightBold={900}
+										>
+											Today
+										</ParaText>
+										<div className={styles.iconPostion}>
+											<HiOutlineDotsHorizontal />
+										</div>
 									</div>
-								</div>
+								</SpinLoader>
 							</div>
 						</Link>
 					</Col>
@@ -167,11 +167,13 @@ export default function Dashboard() {
 						</Link>
 					</Col> */}
 				</Row>
-				<Row gutter={[16, 16]}>
-					<Col lg={24}>
-						<FormTableData allBatteryData={allBatteryData} />
-					</Col>
-					{/* <Col sm={24} xs={24} md={24} lg={8}>
+				<SpinLoader loading={loading}>
+					<Row gutter={[16, 16]}>
+						<Col lg={24}>
+							<FormTableData allBatteryData={allBatteryData} />
+						</Col>
+
+						{/* <Col sm={24} xs={24} md={24} lg={8}>
 						<Row gutter={[16, 16]}>
 							<Col lg={12} md={24} sm={24} xs={24} className="textCenter">
 								<div id={styles.dashboardCard}>
@@ -281,7 +283,8 @@ export default function Dashboard() {
 							</Col>
 						</Row>
 					</Col> */}
-				</Row>
+					</Row>
+				</SpinLoader>
 			</div>
 		</>
 	);

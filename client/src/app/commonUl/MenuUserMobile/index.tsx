@@ -4,15 +4,14 @@ import React, { useEffect, useState } from 'react';
 import type { MenuProps } from 'antd';
 import { Menu, Image } from 'antd';
 import Link from 'next/link';
-// import { usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { IoHome } from 'react-icons/io5';
 import { SiBloglovin } from 'react-icons/si';
 import { FaFilePdf } from 'react-icons/fa';
 import { FaAppStore } from 'react-icons/fa';
 import Titles from '../Titles';
 import { MdContacts, MdOutlinePayment } from 'react-icons/md';
-import { RiLockPasswordFill, RiUser2Fill } from 'react-icons/ri';
-// import VendorAuth from '@/contexts/VendorAuthProvider';
+import { RiLockPasswordFill } from 'react-icons/ri';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -35,76 +34,53 @@ const items: MenuItem[] = [
 	getItem(
 		'Dashboard',
 		'1',
-		<Link href="/en/admin/dashboard">
+		<Link href="/en/user/dashboard">
 			<IoHome />
 		</Link>
 	),
 	getItem(
-		'Battery Reports',
+		'Generate Report',
 		'2',
-		<Link href="/en/admin/battery-reports">
-			<SiBloglovin />
+		<Link href="/en/user/generate-report">
+			<FaAppStore className="menuIcon" />
 		</Link>
 	),
 	getItem(
 		'Payment History',
 		'3',
-		<Link href="#">
+		<Link href="/en/user/payment-history">
 			<MdOutlinePayment />
 		</Link>,
 		[
 			getItem(
-				'Invoice',
-				'4',
-				<Link href="/en/admin/invoice">
-					<MdContacts />
-				</Link>
-			),
-			getItem(
 				'Single Invoice ',
-				'5',
-				<Link href="#">
+				'4',
+				<Link href="/en/user/single-invoice ">
 					<SiBloglovin />
 				</Link>
 			)
 		]
 	),
 	getItem(
-		'Vendors',
-		'6',
-		<Link href="/en/admin/vendors">
-			{' '}
-			<RiUser2Fill />
-		</Link>
-	),
-	,
-	getItem(
 		'Change Password',
-		'7',
-		<Link href="/en/admin/change-password">
+		'5',
+		<Link href="#">
 			<RiLockPasswordFill />
-		</Link>
-	),
-	getItem(
-		'General Settings',
-		'8',
-		<Link href="/en/admin/general-settings">
-			<MdContacts />
 		</Link>
 	)
 ];
 
-export default function MenuAdminMobile() {
+export default function MenuUserMobile() {
 	const [selectedKey, setSelectedKey] = useState(() => {
-		return typeof window !== 'undefined' ? localStorage.getItem('MenuAdminMobileKey') : '1';
+		return typeof window !== 'undefined' ? localStorage.getItem('UserMobileMenuKey') : '1';
 	});
 
-	const handleMenuClick = (e: any) => {
+	const handleMenuKey = (e: any) => {
 		setSelectedKey(e.key);
 	};
 
 	useEffect(() => {
-		localStorage.setItem('MenuAdminMobileKey', selectedKey);
+		localStorage.setItem('UserMobileMenuKey', selectedKey);
 	}, [selectedKey]);
 
 	return (
@@ -123,7 +99,7 @@ export default function MenuAdminMobile() {
 							mode="inline"
 							theme="dark"
 							items={items}
-							onClick={handleMenuClick}
+							onClick={handleMenuKey}
 						/>
 					</div>
 				</div>

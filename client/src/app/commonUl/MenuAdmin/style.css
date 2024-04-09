@@ -1,7 +1,7 @@
 .menuDash {
   background: linear-gradient(90deg, #00227a 0%, #03257e 88.16%, rgba(5, 40, 131, 0.63) 100%);
   padding: 32px 15px;
-  height: 100vh;
+  min-height: 100vh;
   max-width: 100%;
   overflow-y: auto;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
