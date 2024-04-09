@@ -143,7 +143,7 @@ const TableData = ({ author, fetchAuthor }: props) => {
 
 			editable: true,
 			key: 'status',
-			render: (status: string) => status.charAt(0).toUpperCase() + status.slice(1) // Capitalizing first letter of status
+			render: (status: string) => status.charAt(0).toUpperCase() + status.slice(1) // Capitalizin g first letter of status
 		},
 		{
 			title: 'Created Date',

@@ -343,10 +343,25 @@ export const deleteUser = async (data: any): Promise<any> => {
 };
 
 // admin battery access
-export const allBatteryReports = async (access_token: string): Promise<any> => {
+export const allBatteryReports = async (): Promise<any> => {
 	return new Promise((resolve, reject) => {
 		const req = axios.request({
 			url: `${process.env['NEXT_PUBLIC_API_URL']}/admin/battery`,
+			method: 'get',
+			headers: {
+				Accept: 'application/json',
+				Authorization: `Bearer ${token}`
+			}
+		});
+
+		req.then((res) => resolve(res.data)).catch((err) => reject(err));
+	});
+};
+
+export const allVendor = async (): Promise<any> => {
+	return new Promise((resolve, reject) => {
+		const req = axios.request({
+			url: `${process.env['NEXT_PUBLIC_API_URL']}/admin/vendors`,
 			method: 'get',
 			headers: {
 				Accept: 'application/json',
