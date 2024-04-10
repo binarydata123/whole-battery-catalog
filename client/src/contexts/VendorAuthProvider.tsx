@@ -4,6 +4,7 @@ import { useState, createContext, useEffect } from 'react';
 import axios, { AxiosRequestConfig } from 'axios';
 import { User } from '@/lib/types';
 import Cookies from 'js-cookie';
+import { setEncryptedCookie, getDecryptedCookie } from '@/helpers/cookie-encrypt';
 import { message, notification, Spin } from 'antd';
 import { useRouter } from 'next/navigation';
 // import MyLoaderAnimation from '@/components/LoaderAnimation';
@@ -60,9 +61,10 @@ const VendorAuthProvider = ({ children }: AuthContextProp) => {
 	}, []);
 
 	useEffect(() => {
-		const token = Cookies.get('session_token');
+		// const token = Cookies.get('session_token');
+		const token = getDecryptedCookie('session_token');
 		const checkSession = async () => {
-			console.log('checkSession triggered');
+			// console.log('checkSession triggered');
 			if (token) {
 				try {
 					const response = await api.get('/auth/check-session', {
@@ -74,7 +76,9 @@ const VendorAuthProvider = ({ children }: AuthContextProp) => {
 					if (response && response.data && response.data.user) {
 						setInitialized(true);
 						setUser(response.data.user);
-						Cookies.set('session_token', response.data.refreshedToken);
+						// console.log('refreshed token', response.data.refreshedToken);
+						// Cookies.set('session_token', response.data.refreshedToken);
+						getDecryptedCookie('session_token');
 					} else {
 						setInitialized(true);
 						Cookies.remove('session_token');
@@ -141,7 +145,10 @@ const VendorAuthProvider = ({ children }: AuthContextProp) => {
 			const response = await axios(requestConfig);
 			if (response && response.data && response.data.data) {
 				const { vendorRegistrationResponse: loggedInUser } = response.data.data;
-				Cookies.set('refresh_token', loggedInUser.refresh_token);
+				// Cookies.set('refresh_token', loggedInUser.refresh_token);
+				setEncryptedCookie('refresh_token', loggedInUser.refresh_token, 7);
+				setEncryptedCookie('access_token', loggedInUser.access_token, null);
+
 				const userData: any = {
 					access_token: loggedInUser.access_token,
 					email: loggedInUser.vendor_email_id,
@@ -202,8 +209,10 @@ const VendorAuthProvider = ({ children }: AuthContextProp) => {
 					});
 				} else {
 					// axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
-					Cookies.set('refresh_token', loggedInUser.refresh_token);
-					Cookies.set('session_token', access_token);
+					// Cookies.set('refresh_token', loggedInUser.refresh_token);
+					// Cookies.set('session_token', access_token);
+					setEncryptedCookie('refresh_token', loggedInUser.refresh_token, 7);
+					setEncryptedCookie('session_token', access_token, null);
 					const userData: any = {
 						access_token,
 						username: loggedInUser.username,
