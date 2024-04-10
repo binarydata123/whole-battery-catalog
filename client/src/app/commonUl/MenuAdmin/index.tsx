@@ -129,12 +129,6 @@ export default function MenuAdmin() {
 		return typeof window !== 'undefined' ? localStorage.getItem('MenuAdminKey') : '1';
 	});
 
-	// if (typeof window !== 'undefined') {
-	// 	setSelectedKey(() => {
-	// 		return localStorage.getItem('MenuAdminKey') || '1';
-	// 	});
-	// }
-
 	const { logout } = useContext(VendorAuth);
 
 	function handleClick(e: any) {
@@ -144,12 +138,6 @@ export default function MenuAdmin() {
 
 		setSelectedKey(e.key);
 	}
-
-	// useEffect(() => {
-	// 	setSelectedKey(() => {
-	// 		return localStorage.getItem('MenuAdminKey') || '1';
-	// 	});
-	// }, []);
 
 	useEffect(() => {
 		localStorage.setItem('MenuAdminKey', selectedKey);
