@@ -18,10 +18,10 @@ export default function Dashboard() {
 
 	const { user } = React.useContext(VendorAuth);
 
-	const fetchAllBatteryData = async (token: any) => {
+	const fetchAllBatteryData = async () => {
 		try {
 			setLoading(true);
-			const res = await allBatteryByVendor(token);
+			const res = await allBatteryByVendor();
 			setAllBatteryData(res.data);
 		} catch (error) {
 			setLoading(false);
@@ -32,8 +32,8 @@ export default function Dashboard() {
 	};
 
 	useEffect(() => {
-		if (user && user.access_token) {
-			fetchAllBatteryData(user.access_token);
+		if (user) {
+			fetchAllBatteryData();
 		}
 	}, [user]);
 

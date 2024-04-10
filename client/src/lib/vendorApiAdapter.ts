@@ -1,4 +1,7 @@
 import axios from 'axios';
+// import { getDecryptedCookie } from '@/helpers/cookie-encrypt';
+
+// const token = getDecryptedCookie('refresh_token');
 
 export const vendorRegister = async (
 	fullName: string,
@@ -35,6 +38,22 @@ export const vendorLogin = async (username: string, password: string): Promise<a
 			data: {
 				vendor_username: username,
 				password
+			}
+		});
+		req.then((res) => resolve(res.data)).catch((err) => reject(err));
+	});
+};
+
+export const getVendorAccessToken = async (token: string): Promise<any> => {
+	return new Promise((resolve, reject) => {
+		const req = axios.request({
+			url: `${process.env.NEXT_PUBLIC_API_URL}/vendorAuth/generateAccessToken`,
+			method: 'post',
+			headers: {
+				Accept: 'application/json'
+			},
+			data: {
+				refresh_token: token
 			}
 		});
 		req.then((res) => resolve(res.data)).catch((err) => reject(err));

@@ -10,7 +10,7 @@ const batteryController = {
 				path: '/battery/byVendorId/',
 				method: 'GET',
 				headers: {
-					// vendor_unique_token: req.params.id
+					Accept: 'application/json',
 					Authorization: `Bearer ${req.params.id}`
 				}
 			};

@@ -2,21 +2,20 @@
 
 import { useState, createContext, useEffect } from 'react';
 import axios, { AxiosRequestConfig } from 'axios';
-import { User } from '@/lib/types';
 import Cookies from 'js-cookie';
-import { setEncryptedCookie, getDecryptedCookie } from '@/helpers/cookie-encrypt';
+import { setEncryptedCookie, getDecryptedCookie, encryptData } from '@/helpers/cookie-encrypt';
 import { message, notification, Spin } from 'antd';
 import { useRouter } from 'next/navigation';
-// import MyLoaderAnimation from '@/components/LoaderAnimation';
 import ErrorHandler from '@/lib/ErrorHandler';
+import { getVendorAccessToken } from '@/lib/vendorApiAdapter';
 
 const api = axios.create({
 	baseURL: process.env['NEXT_PUBLIC_API_URL'] || ''
 });
 
 interface AuthContextDefaults {
-	user?: User | undefined;
-	setUser: React.Dispatch<React.SetStateAction<User | undefined>>;
+	user?: any;
+	setUser: React.Dispatch<React.SetStateAction<any>>;
 	setInitialized: React.Dispatch<React.SetStateAction<boolean>>;
 	logout: () => Promise<void>;
 	vendorLogin: (username: string, password: string) => Promise<any>;
@@ -39,49 +38,58 @@ const VendorAuth = createContext<AuthContextDefaults>({
 
 const VendorAuthProvider = ({ children }: AuthContextProp) => {
 	const router = useRouter();
-	const [user, setUser] = useState<User | undefined>(undefined); // Change to User type
+	const [user, setUser] = useState(undefined); // Change to User type
 	const [initialized, setInitialized] = useState<boolean>(false);
 
 	const logout = async (): Promise<void> => {
 		setUser(undefined);
-		sessionStorage.removeItem('user'); // Clear user data from sessionStorage
-		Cookies.remove('refresh_token');
-		Cookies.remove('session_token');
+		Cookies.remove('access_token');
+		Cookies.remove('user');
+		Cookies.remove('session');
 		localStorage.clear(); //removes all menu keys saved for menu bar navigation
 		router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/login`);
 	};
 
 	useEffect(() => {
 		// On component mount, check if user data exists in sessionStorage and set it to state
-		const storedUser = sessionStorage.getItem('user');
+		// const storedUser = sessionStorage.getItem('user');
+		const storedUser = getDecryptedCookie('user');
 		if (storedUser) {
-			setUser(JSON.parse(storedUser));
+			setUser(storedUser);
 		}
 		setInitialized(true);
-	}, []);
+	}, [initialized]);
 
 	useEffect(() => {
 		// const token = Cookies.get('session_token');
-		const token = getDecryptedCookie('session_token');
+		const sessionData = getDecryptedCookie('session');
+
 		const checkSession = async () => {
-			// console.log('checkSession triggered');
-			if (token) {
+			if (sessionData?.role === 'admin' && sessionData?.token) {
 				try {
 					const response = await api.get('/auth/check-session', {
 						headers: {
-							Authorization: `${token}`
+							Authorization: `${sessionData?.token}`
 						}
 					});
 
 					if (response && response.data && response.data.user) {
 						setInitialized(true);
+						// console.log(response.data);
 						setUser(response.data.user);
-						// console.log('refreshed token', response.data.refreshedToken);
-						// Cookies.set('session_token', response.data.refreshedToken);
-						getDecryptedCookie('session_token');
+						setEncryptedCookie(
+							'session',
+							{
+								token: response.data.refreshedToken,
+								role: response.data.user.role,
+								username: response.data.user.username,
+								email: response.data.user.email
+							},
+							null
+						);
 					} else {
 						setInitialized(true);
-						Cookies.remove('session_token');
+						Cookies.remove('session');
 						setUser(undefined);
 						router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
 					}
@@ -93,12 +101,38 @@ const VendorAuthProvider = ({ children }: AuthContextProp) => {
 					router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
 				}
 			}
-			// } else {
-			// 	// router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
-			// }
 		};
 
 		checkSession();
+	}, [router]);
+
+	useEffect(() => {
+		const vendorSessionData = getDecryptedCookie('user');
+		const getNewVendorAccess = async () => {
+			if (vendorSessionData?.role === 'user' && vendorSessionData?.refresh_token) {
+				try {
+					const response = await getVendorAccessToken(vendorSessionData?.refresh_token);
+
+					if (response.status === true) {
+						setInitialized(true);
+						setEncryptedCookie('access_token', response.data['access_token'], null);
+					} else {
+						setInitialized(true);
+						Cookies.remove('access_token');
+						Cookies.remove('user');
+						router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
+					}
+				} catch (error) {
+					setInitialized(true);
+					ErrorHandler.showNotification(error);
+					Cookies.remove('access_token');
+					Cookies.remove('user');
+					setUser(undefined);
+					router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
+				}
+			}
+		};
+		getNewVendorAccess();
 	}, [router]);
 
 	useEffect(() => {
@@ -145,24 +179,34 @@ const VendorAuthProvider = ({ children }: AuthContextProp) => {
 			const response = await axios(requestConfig);
 			if (response && response.data && response.data.data) {
 				const { vendorRegistrationResponse: loggedInUser } = response.data.data;
-				// Cookies.set('refresh_token', loggedInUser.refresh_token);
-				setEncryptedCookie('refresh_token', loggedInUser.refresh_token, 7);
+
+				//encypted access token with expire to session
 				setEncryptedCookie('access_token', loggedInUser.access_token, null);
 
-				const userData: any = {
-					access_token: loggedInUser.access_token,
+				//encrypted user data and expiry to 7 days
+				setEncryptedCookie(
+					'user',
+					{
+						refresh_token: loggedInUser.refresh_token,
+						role: 'user',
+						email: loggedInUser.vendor_email_id,
+						username: loggedInUser.vendor_username
+					},
+					7
+				);
+				setUser({
+					refresh_token: loggedInUser.refresh_token,
+					role: 'user',
 					email: loggedInUser.vendor_email_id,
-					username: loggedInUser.vendor_username,
-					role: 'user'
-				};
-				setUser(userData);
-				sessionStorage.setItem('user', JSON.stringify(userData)); // Store user data in sessionStorage
+					username: loggedInUser.vendor_username
+				});
 				message.success(successMessage);
 				if (successRedirectUrl) {
 					router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}${successRedirectUrl}`);
 				}
 			}
 		} catch (error: any) {
+			console.log(error);
 			ErrorHandler.showNotification(error);
 		}
 	};
@@ -208,19 +252,22 @@ const VendorAuthProvider = ({ children }: AuthContextProp) => {
 						duration: 3
 					});
 				} else {
-					// axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
-					// Cookies.set('refresh_token', loggedInUser.refresh_token);
-					// Cookies.set('session_token', access_token);
-					setEncryptedCookie('refresh_token', loggedInUser.refresh_token, 7);
-					setEncryptedCookie('session_token', access_token, null);
-					const userData: any = {
-						access_token,
+					setEncryptedCookie(
+						'session',
+						{
+							token: access_token,
+							role: loggedInUser.role,
+							username: loggedInUser.username,
+							email: loggedInUser.email
+						},
+						7
+					);
+					setUser({
+						token: access_token,
+						role: loggedInUser.role,
 						username: loggedInUser.username,
-						email: loggedInUser.email,
-						role: loggedInUser.role
-					};
-					setUser(userData);
-					sessionStorage.setItem('user', JSON.stringify(userData));
+						email: loggedInUser.email
+					});
 					message.success('Login Successful');
 					router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/admin/dashboard`);
 				}
