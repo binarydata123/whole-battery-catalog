@@ -1,7 +1,9 @@
 import axios from 'axios';
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
+import { getDecryptedCookie } from '@/helpers/cookie-encrypt';
 
-const token: string = Cookies.get('session_token');
+const sessionData = getDecryptedCookie('session');
+const token = sessionData?.token;
 
 export const getAllBlogs = async (searchTerm: string = ''): Promise<any> => {
 	return new Promise((resolve, reject) => {

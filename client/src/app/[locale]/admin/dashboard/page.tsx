@@ -32,15 +32,6 @@ export default function Dashboard() {
 		}
 	};
 
-	// useEffect(() => {
-	// 	setLoading(true);
-	// 	const timer = setTimeout(() => {
-	// 		setLoading(false);
-	// 	}, 1000);
-
-	// 	return () => clearTimeout(timer);
-	// }, []);
-
 	useEffect(() => {
 		if (user && user.role === 'admin') {
 			fetchAllBatteryData();
@@ -177,7 +168,6 @@ export default function Dashboard() {
 						</Link>
 					</Col>
 				</Row>
-				{/* <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} />} spinning={loading} delay={500}> */}
 				<SpinLoader loading={loading}>
 					<Row gutter={[16, 16]}>
 						<Col lg={24}>{<FormTableData allBatteryData={allBatteryData} />}</Col>

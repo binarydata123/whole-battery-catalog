@@ -40,7 +40,7 @@ export default function Page() {
 	});
 
 	useEffect(() => {
-		if (user) fetchAllBatteryData(user?.access_token);
+		if (user) fetchAllBatteryData();
 	}, [user]);
 
 	useEffect(() => {
@@ -57,10 +57,10 @@ export default function Page() {
 		if (selectedPeriscopeTestId) fetchPeriscopeTestData();
 	}, [selectedPeriscopeTestId]);
 
-	const fetchAllBatteryData = async (token: any) => {
+	const fetchAllBatteryData = async () => {
 		try {
 			setLoading(true);
-			const res = await allBatteryByVendor(token);
+			const res = await allBatteryByVendor();
 			if (res.status == true) {
 				// console.log(res);
 				setAllBatteryData(res.data);
