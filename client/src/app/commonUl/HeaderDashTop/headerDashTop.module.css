@@ -20,6 +20,21 @@
   background: linear-gradient(90deg, #00227a 0%, #03257e 88.16%, rgba(5, 40, 131, 0.63) 100%);
   box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
 }
+.userMenuBar li {
+  display: inline-block;
+  padding-right: 50px;
+  align-items: center;
+}
+.userMenuBar li a.active {
+  color: rgba(154, 154, 154, 1);
+}
+.userMenuBar li a {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 50px;
+  text-align: center;
+  color: #fff;
+}
 
 @media (max-width: 991px) {
   .headerDashboard {

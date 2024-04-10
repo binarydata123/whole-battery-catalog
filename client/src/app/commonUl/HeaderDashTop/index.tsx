@@ -1,6 +1,6 @@
 'use client';
 import styles from './headerDashTop.module.css';
-import { Avatar, Col, Input, Row } from 'antd';
+import { Avatar, Col, Image, Input, Row } from 'antd';
 import Titles from '../Titles';
 import { useRouter } from 'next/navigation';
 import { FaBell } from 'react-icons/fa';
@@ -17,6 +17,7 @@ import { IoLanguageSharp } from 'react-icons/io5';
 import HeaderDropDown from '../headerDropDown';
 import { BiMenuAltLeft } from 'react-icons/bi';
 import VendorAuth from '@/contexts/VendorAuthProvider';
+import Link from 'next/link';
 
 const Context = React.createContext({ name: 'Default' });
 export default function HeaderDashTop() {
@@ -56,11 +57,9 @@ export default function HeaderDashTop() {
 					>
 						<span className="navbar-toggler-icon">
 							{isMenuOpen ? (
-								<div className="claseIcon">
-									<TiTimes style={{ fontSize: '20px', color: 'white' }} />
-								</div> // Close icon
+								<TiTimes className="claseIcon" style={{ fontSize: '20px', color: 'white' }} />
 							) : (
-								<TiThMenu style={{ fontSize: '20px', color: 'white' }} /> // Toggle icon
+								<TiThMenu className="classFixed" style={{ fontSize: '20px', color: 'white' }} /> // Toggle icon
 							)}
 						</span>
 					</button>
@@ -69,15 +68,27 @@ export default function HeaderDashTop() {
 					</div>
 				</div>
 				<Row className="" align="middle" gutter={[16, 16]}>
-					<Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4} className="mobileNone">
-						{/* <Input
-							size="large"
-							placeholder="Search.."
-							suffix={<CiSearch />}
-							style={{ background: '#F4F7FE' }}
-						/> */}
+					<Col xs={24} sm={24} md={24} lg={3} xl={3} xxl={3} className="mobileNone">
+						<Link href="/">
+							<Image src="/images/logo-site.png" alt="" preview={false} width={190} />
+						</Link>
 					</Col>
-					<Col xs={24} sm={24} md={24} lg={24} xl={20} xxl={20} className="textEnd">
+					<Col xs={24} sm={24} md={24} lg={17} xl={17} xxl={17} className="mobileNone">
+						<ul className={styles.userMenuBar}>
+							<li>
+								<Link href="/en/user/dashboard" className={styles.active}>
+									DASHBOARD
+								</Link>
+							</li>
+							<li>
+								<Link href="/en/user/generate-report">REPORTS</Link>
+							</li>
+							<li>
+								<Link href="#">PAYMENT HISTORY</Link>
+							</li>
+						</ul>
+					</Col>
+					<Col xs={24} sm={24} md={24} lg={24} xl={4} xxl={4} className="textEnd">
 						<div className={styles.flexTwo}>
 							{/* <IoLanguageSharp /> */}
 							<FaBell onClick={openNotification} />

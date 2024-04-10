@@ -186,8 +186,8 @@
   cursor: pointer;
   outline: none;
   position: absolute;
-  top: 35px;
-  left: 36px;
+  top: 45px;
+  left: 10px;
   display: block;
   z-index: 999999;
 }
