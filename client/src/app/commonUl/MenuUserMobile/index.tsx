@@ -50,22 +50,6 @@ const items: MenuItem[] = [
 		'3',
 		<Link href="/en/user/payment-history">
 			<MdOutlinePayment />
-		</Link>,
-		[
-			getItem(
-				'Single Invoice ',
-				'4',
-				<Link href="/en/user/single-invoice ">
-					<SiBloglovin />
-				</Link>
-			)
-		]
-	),
-	getItem(
-		'Change Password',
-		'5',
-		<Link href="#">
-			<RiLockPasswordFill />
 		</Link>
 	)
 ];

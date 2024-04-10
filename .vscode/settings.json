@@ -14,7 +14,7 @@
 		}
 	},
 	"deepscan.ignoreConfirmWarning": true,
-	"cSpell.words": ["Frofile", "industrys", "jlqa", "jspdf", "Opene", "Rohit", "Sharma", "Smartville"],
+	"cSpell.words": ["clase", "Frofile", "industrys", "jlqa", "jspdf", "Opene", "Rohit", "Sharma", "Smartville"],
 	"[json]": {
 		"editor.defaultFormatter": "esbenp.prettier-vscode"
 	}
