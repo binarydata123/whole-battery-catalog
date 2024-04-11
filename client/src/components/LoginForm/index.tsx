@@ -9,6 +9,7 @@ import VendorAuth from '@/contexts/VendorAuthProvider';
 // import { vendorLogin } from '@/lib/vendorApiAdapter';
 import Cookies from 'js-cookie';
 import ParaText from '@/app/commonUl/ParaText';
+import { getDecryptedCookie, setEncryptedCookie } from '@/helpers/cookie-encrypt';
 // import { FcGoogle } from 'react-icons/fc';
 import Link from 'next/link';
 import Titles from '@/app/commonUl/Titles';
@@ -19,28 +20,32 @@ import { SegmentedValue } from 'antd/es/segmented';
 type FieldType = {
 	username: string;
 	password: string;
-	remember: Boolean;
+	keepMeLoggedIn: Boolean;
 };
 export default function LoginForm() {
-	// const { data: session } = useSession();
 	const [loginOption, setLoginOption] = React.useState<SegmentedValue>('User');
 	const [loading, setLoading] = React.useState<Boolean>(false);
 	const [form] = Form.useForm();
-	const RememberMeCookie = 'rememberMe';
-	const { vendorLogin, setUser, user, adminLogin } = React.useContext(VendorAuth);
+
+	// const RememberMeCookie = 'rememberMe';
+	const { vendorLogin, adminLogin, user, setUser } = React.useContext(VendorAuth);
 	const router = useRouter();
 
 	const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
 		setLoading(true);
 		try {
-			if (values.remember) {
+			if (values.keepMeLoggedIn) {
 				// if remember me is checked
-				Cookies.set(
-					RememberMeCookie,
-					JSON.stringify({ username: values.username, password: values.password, remember: values.remember })
+				setEncryptedCookie(
+					'rememberMe',
+					{
+						keepLoggedIn: values.keepMeLoggedIn,
+						role: loginOption
+					},
+					7
 				);
 			} else {
-				Cookies.remove(RememberMeCookie);
+				Cookies.remove('rememberMe');
 			}
 
 			if (loginOption === 'User') {
@@ -56,58 +61,24 @@ export default function LoginForm() {
 		}
 	};
 
-	React.useEffect(() => {
-		// Check if remember me cookie exists and fill in the form fields
-		const rememberMeData = Cookies.get(RememberMeCookie);
-		if (rememberMeData) {
-			const parsedData = JSON.parse(rememberMeData);
-			if (parsedData && parsedData.username) {
-				form.setFieldsValue({
-					username: parsedData.username,
-					password: parsedData.password || '',
-					remember: true
-				});
-			}
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
-	// const SocialData = (user: any) => {
-	// 	const data = {
-	// 		name: user.name,
-	// 		email: user.email
-	// 	};
-	// 	socialLogin(data)
-	// 		.then((res: any) => {
-	// 			if (res) {
-	// 				Cookies.set('session_token', res.token);
-	// 				// console.log('res.user', res.user);
-	// 				// setUser(res.user);
-
-	// 				// signOut({ redirect: false }).then();
-	// 				router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/${res.user.role}/dashboard`);
-	// 			} else {
-	// 				message.error(res.message);
-	// 			}
-	// 		})
-	// 		.catch((err) => {
-	// 			ErrorHandler.showNotification(err);
-	// 		});
-	// };
-	// const handleGoogleLogin = async () => {
-	// 	try {
-	// 		await signIn('google');
-	// 	} catch (error) {
-	// 		console.error('Google login failed:', error);
-	// 	}
-	// };
-
 	// React.useEffect(() => {
-	// 	if (session) {
-	// 		SocialData(session.user);
+	// 	// Check if remember me cookie exists and fill in the form fields
+
+	// 	const rememberMe = getDecryptedCookie('rememberMe');
+	// 	if (rememberMe?.keepLoggedIn) {
+	// 		if (document.cookie.includes('user')) {
+	// 			router.prefetch(`${process.env['NEXT_PUBLIC_SITE_URL']}/${(rememberMe?.role).toLowerCase()}/dashboard`);
+	// 			setUser(getDecryptedCookie('user'));
+	// 		}
+
+	// 		// if (document.cookie.includes('session')) {
+	// 		// 	router.prefetch(`${process.env['NEXT_PUBLIC_SITE_URL']}/${(rememberMe?.role).toLowerCase()}/dashboard`);
+	// 		// 	setUser(getDecryptedCookie('session'));
+	// 		// }
+
+	// 		router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/${(rememberMe?.role).toLowerCase()}/dashboard`);
 	// 	}
-	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	// }, [session]);
+	// }, [router, setUser]);
 
 	return (
 		<>
@@ -165,8 +136,8 @@ export default function LoginForm() {
 
 					<Row align="middle">
 						<Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
-							<Form.Item<FieldType> name="remember" valuePropName="checked">
-								<Checkbox>Remember me</Checkbox>
+							<Form.Item<FieldType> name="keepMeLoggedIn" valuePropName="checked">
+								<Checkbox>Keep me logged in</Checkbox>
 							</Form.Item>
 						</Col>
 						<Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12} className="textEnd">

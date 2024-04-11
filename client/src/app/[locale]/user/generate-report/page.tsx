@@ -662,457 +662,464 @@ export default function Page() {
 					<hr style={{ margin: '20px 0' }} />
 					{allPeriscopeTestData.length > 0 ? (
 						<div>
-							<Row gutter={[16, 16]} justify="center" align="middle">
-								<Col xs={24} sm={24} md={24} lg={6} xl={6} xxl={6}>
-									<div style={{ display: 'flex', alignItems: 'center' }}>
-										<p style={{ fontSize: '20px', marginRight: '8px' }}>SOH</p>
-										<GaugeFullProgressChart
-											percent={
-												periscopeTestData && periscopeTestData.soh
-													? periscopeTestData.soh / 100
-													: 0
-											}
-										/>
-									</div>
-								</Col>
-								<Col
-									xs={24}
-									sm={24}
-									md={24}
-									lg={6}
-									xl={6}
-									xxl={6}
-									style={{ display: 'flex', alignItems: 'center', borderLeft: '1px solid #ccc' }}
-								>
-									<div style={{ display: 'flex', alignItems: 'center' }}>
-										<p style={{ fontSize: '20px', marginRight: '8px' }}>GRADE</p>
-										<span
-											style={{
-												marginLeft: '8px',
-												paddingLeft: '8px',
-												fontSize: '30px'
-											}}
-										>
-											{periscopeTestData?.periscopeTestResults &&
-											periscopeTestData.periscopeTestResults.length > 0
-												? periscopeTestData.periscopeTestResults[0]?.grade
-												: 'N/A'}
-										</span>
-									</div>
-								</Col>
-								<Col xs={24} sm={24} md={24} lg={6} xl={6} xxl={6}>
-									<div style={{ display: 'flex', alignItems: 'center' }}>
-										<p style={{ fontSize: '20px', marginRight: '8px' }}>VALUE $ </p>
-										<span
-											style={{
-												marginLeft: '8px',
-												fontSize: '40px'
-											}}
-										>
-											{periscopeTestData && periscopeTestData.price_estimate
-												? periscopeTestData.price_estimate
-												: 'N/A'}
-										</span>
-									</div>
-								</Col>
-							</Row>
-							<Row gutter={[24, 24]} style={{ justifyContent: 'center', paddingTop: '20px' }}>
-								<Col xs={24} sm={24} md={24} lg={8} xl={8} xxl={8} style={{ alignItems: 'center' }}>
-									<p style={{ margin: 0, fontSize: '20px' }}>Battery Specs</p>
-									<hr style={{ margin: '5px 0' }} />
-									<Row gutter={[16, 16]}>
-										<Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
-											<p style={{ margin: 0, fontSize: '14px' }}>BOL Capacity</p>
-										</Col>
-										<Col
-											xs={24}
-											sm={24}
-											md={24}
-											lg={24}
-											xl={12}
-											xxl={12}
-											style={{ textAlign: 'end' }}
-										>
-											<p style={{ margin: 0, fontSize: '14px' }}>
-												{periscopeTestData
-													? periscopeTestData.kwh_capacity && periscopeTestData.soh
-														? (
-																periscopeTestData.kwh_capacity /
-																(periscopeTestData.soh / 100)
-															).toFixed(1) + ' kWh'
-														: 'N/A'
-													: 'N/A'}
-											</p>
-										</Col>
-									</Row>
-									<Row gutter={[16, 16]} style={{ paddingTop: '15px' }}>
-										<Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
-											<p style={{ margin: 0, fontSize: '14px' }}>Chemistry</p>
-										</Col>
-										<Col
-											xs={24}
-											sm={24}
-											md={24}
-											lg={24}
-											xl={12}
-											xxl={12}
-											style={{ textAlign: 'end' }}
-										>
-											<p style={{ margin: 0, fontSize: '14px' }}>
-												{batteryData?.chemistry ? batteryData?.chemistry : 'N/A'}
-											</p>
-										</Col>
-									</Row>
-									<Row gutter={[16, 16]} style={{ paddingTop: '15px' }}>
-										<Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
-											<p style={{ margin: 0, fontSize: '14px' }}>Cell Configuration</p>
-										</Col>
-										<Col
-											xs={24}
-											sm={24}
-											md={24}
-											lg={24}
-											xl={12}
-											xxl={12}
-											style={{ textAlign: 'end' }}
-										>
-											<p style={{ margin: 0, fontSize: '14px' }}>
-												{batteryData?.cell_config ? batteryData?.cell_config : 'N/A'}
-											</p>
-										</Col>
-									</Row>
-									<Row gutter={[16, 16]} style={{ paddingTop: '15px' }}>
-										<Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
-											<p style={{ margin: 0, fontSize: '14px' }}>Cell Type</p>
-										</Col>
-										<Col
-											xs={24}
-											sm={24}
-											md={24}
-											lg={24}
-											xl={12}
-											xxl={12}
-											style={{ textAlign: 'end' }}
-										>
-											<p style={{ margin: 0, fontSize: '14px' }}>
-												{batteryData?.cell_type ? batteryData?.cell_type : 'N/A'}
-											</p>
-										</Col>
-									</Row>
-								</Col>
-								<Col xs={24} sm={24} md={24} lg={8} xl={8} xxl={8} style={{ alignItems: 'center' }}>
-									<p style={{ margin: 0, fontSize: '20px' }}>Age</p>
-									<hr style={{ margin: '5px 0' }} />
-
-									<Row gutter={[16, 16]}>
-										<Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
-											<p style={{ margin: 0, fontSize: '14px' }}>Calendar Age</p>
-										</Col>
-										<Col
-											xs={24}
-											sm={24}
-											md={24}
-											lg={24}
-											xl={12}
-											xxl={12}
-											style={{ textAlign: 'end' }}
-										>
-											<p style={{ margin: 0, fontSize: '14px' }}>7 years</p>
-										</Col>
-									</Row>
-									<Row gutter={[16, 16]} style={{ paddingTop: '15px' }}>
-										<Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
-											<p style={{ margin: 0, fontSize: '14px' }}>Cycle Count</p>
-										</Col>
-										<Col
-											xs={24}
-											sm={24}
-											md={24}
-											lg={24}
-											xl={12}
-											xxl={12}
-											style={{ textAlign: 'end' }}
-										>
-											<p style={{ margin: 0, fontSize: '14px' }}>
-												{periscopeTestData && periscopeTestData.cycle_count
-													? periscopeTestData.cycle_count.toFixed(1) + ' cycles'
-													: 'N/A'}
-											</p>
-										</Col>
-									</Row>
-									<Row gutter={[16, 16]} style={{ paddingTop: '15px' }}>
-										<Col xl={12}>
-											<p style={{ margin: 0, fontSize: '14px' }}>Dch Energy</p>
-										</Col>
-										<Col xl={12} style={{ textAlign: 'end' }}>
-											<p style={{ margin: 0, fontSize: '14px' }}>
-												{periscopeTestData && periscopeTestData.total_kwh_dch
-													? periscopeTestData.total_kwh_dch + ' kWh'
-													: 'N/A'}
-											</p>
-										</Col>
-									</Row>
-									<Row gutter={[16, 16]} style={{ paddingTop: '15px' }}>
-										<Col xl={12}>
-											<p style={{ margin: 0, fontSize: '14px' }}>EV Mileage</p>
-										</Col>
-										<Col xl={12} style={{ textAlign: 'end' }}>
-											<p style={{ margin: 0, fontSize: '14px' }}>115200 miles</p>
-										</Col>
-									</Row>
-								</Col>
-								<Col xs={24} sm={24} md={24} lg={8} xl={8} xxl={8} style={{ alignItems: 'center' }}>
-									<p style={{ margin: 0, fontSize: '20px' }}>Battery Readings</p>
-									<hr style={{ margin: '5px 0' }} />
-
-									<Row gutter={[16, 16]}>
-										<Col xl={12}>
-											<p style={{ margin: 0, fontSize: '14px' }}>Pack Voltage</p>
-										</Col>
-										<Col xl={12} style={{ textAlign: 'end' }}>
-											{batteryData?.batteryDatas?.[0]?.battery_data['Voltage'] || 'N/A'}
-										</Col>
-									</Row>
-									<Row gutter={[16, 16]} style={{ paddingTop: '15px' }}>
-										<Col xl={12}>
-											<p style={{ margin: 0, fontSize: '14px' }}>Pack SOC</p>
-										</Col>
-										<Col xl={12} style={{ textAlign: 'end' }}>
-											<p style={{ margin: 0, fontSize: '14px' }}>
-												{batteryData?.batteryDatas &&
-												batteryData?.batteryDatas.length > 0 &&
-												batteryData?.batteryDatas[0].battery_data?.SoC ? (
-													<span>{`${batteryData?.batteryDatas[0].battery_data['SoC']}%`}</span>
-												) : (
-													<span>N/A</span>
-												)}
-											</p>
-										</Col>
-									</Row>
-									<Row gutter={[16, 16]} style={{ paddingTop: '15px' }}>
-										<Col xl={12}>
-											<p style={{ margin: 0, fontSize: '14px' }}>Pack Temp</p>
-										</Col>
-										<Col xl={12} style={{ textAlign: 'end' }}>
-											<p style={{ margin: 0, fontSize: '14px' }}>25° C</p>
-										</Col>
-									</Row>
-								</Col>
-							</Row>
-							<Row gutter={[16, 16]} style={{ paddingTop: '30px' }} align="middle">
-								<Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
-									<p style={{ margin: 0, fontSize: '20px', textAlign: 'center' }}>
-										Car Voltage Distribution{' '}
-									</p>
-
-									{periscopeTestData.periscopeTestResults &&
-									periscopeTestData.periscopeTestResults[0]?.cellvoltage_histogram ? (
-										<ColumnChart
-											barLabels={
-												periscopeTestData.periscopeTestResults[0]?.cellvoltage_histogram
-													.barLabels
-											}
-											barHeights={
-												periscopeTestData.periscopeTestResults[0]?.cellvoltage_histogram
-													.barHeights
-											}
-											xField="customX"
-											yField="customY"
-										/>
-									) : (
-										<div
-											style={{
-												display: 'flex',
-												justifyContent: 'center',
-												alignItems: 'center',
-												height: '50%'
-											}}
-										>
-											<Titles level={3}>N/A</Titles>
+							<SpinLoader loading={loading2}>
+								<Row gutter={[16, 16]} justify="center" align="middle">
+									<Col xs={24} sm={24} md={24} lg={6} xl={6} xxl={6}>
+										<div style={{ display: 'flex', alignItems: 'center' }}>
+											<p style={{ fontSize: '20px', marginRight: '8px' }}>SOH</p>
+											<GaugeFullProgressChart
+												percent={
+													periscopeTestData && periscopeTestData.soh
+														? periscopeTestData.soh / 100
+														: 0
+												}
+											/>
 										</div>
-									)}
-								</Col>
-								<Col xs={24} sm={24} md={24} lg={24} xl={12}>
-									<p style={{ margin: 0, fontSize: '20px', textAlign: 'center' }}></p>
-									<Row gutter={[16, 16]} style={{ justifyContent: 'center', paddingTop: '40px' }}>
-										<Col
-											xs={24}
-											sm={24}
-											md={24}
-											lg={16}
-											xl={16}
-											xxl={16}
-											style={{ alignItems: 'center' }}
-										>
-											<p style={{ margin: 0, fontSize: '20px' }}>Cell Voltage matrices</p>
-											<hr style={{ margin: '5px 0' }} />
-											<Row gutter={[16, 16]}>
-												<Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
-													<p style={{ margin: 0, fontSize: '14px' }}>Mean Cell Voltage</p>
-												</Col>
-												<Col
-													xs={24}
-													sm={24}
-													md={24}
-													lg={24}
-													xl={12}
-													xxl={12}
-													style={{ textAlign: 'end' }}
-												>
-													<p style={{ margin: 0, fontSize: '14px' }}>
-														{periscopeTestData?.periscopeTestResults &&
-														periscopeTestData.periscopeTestResults.length > 0
-															? periscopeTestData.periscopeTestResults[0]
-																	.secondlife_crate !== null
+									</Col>
+									<Col
+										xs={24}
+										sm={24}
+										md={24}
+										lg={6}
+										xl={6}
+										xxl={6}
+										style={{ display: 'flex', alignItems: 'center', borderLeft: '1px solid #ccc' }}
+									>
+										<div style={{ display: 'flex', alignItems: 'center' }}>
+											<p style={{ fontSize: '20px', marginRight: '8px' }}>GRADE</p>
+											<span
+												style={{
+													marginLeft: '8px',
+													paddingLeft: '8px',
+													fontSize: '30px'
+												}}
+											>
+												{periscopeTestData?.periscopeTestResults &&
+												periscopeTestData.periscopeTestResults.length > 0
+													? periscopeTestData.periscopeTestResults[0]?.grade
+													: 'N/A'}
+											</span>
+										</div>
+									</Col>
+									<Col xs={24} sm={24} md={24} lg={6} xl={6} xxl={6}>
+										<div style={{ display: 'flex', alignItems: 'center' }}>
+											<p style={{ fontSize: '20px', marginRight: '8px' }}>VALUE $ </p>
+											<span
+												style={{
+													marginLeft: '8px',
+													fontSize: '40px'
+												}}
+											>
+												{periscopeTestData && periscopeTestData.price_estimate
+													? periscopeTestData.price_estimate
+													: 'N/A'}
+											</span>
+										</div>
+									</Col>
+								</Row>
+								<Row gutter={[24, 24]} style={{ justifyContent: 'center', paddingTop: '20px' }}>
+									<Col xs={24} sm={24} md={24} lg={8} xl={8} xxl={8} style={{ alignItems: 'center' }}>
+										<p style={{ margin: 0, fontSize: '20px' }}>Battery Specs</p>
+										<hr style={{ margin: '5px 0' }} />
+										<Row gutter={[16, 16]}>
+											<Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
+												<p style={{ margin: 0, fontSize: '14px' }}>BOL Capacity</p>
+											</Col>
+											<Col
+												xs={24}
+												sm={24}
+												md={24}
+												lg={24}
+												xl={12}
+												xxl={12}
+												style={{ textAlign: 'end' }}
+											>
+												<p style={{ margin: 0, fontSize: '14px' }}>
+													{periscopeTestData
+														? periscopeTestData.kwh_capacity && periscopeTestData.soh
+															? (
+																	periscopeTestData.kwh_capacity /
+																	(periscopeTestData.soh / 100)
+																).toFixed(1) + ' kWh'
+															: 'N/A'
+														: 'N/A'}
+												</p>
+											</Col>
+										</Row>
+										<Row gutter={[16, 16]} style={{ paddingTop: '15px' }}>
+											<Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
+												<p style={{ margin: 0, fontSize: '14px' }}>Chemistry</p>
+											</Col>
+											<Col
+												xs={24}
+												sm={24}
+												md={24}
+												lg={24}
+												xl={12}
+												xxl={12}
+												style={{ textAlign: 'end' }}
+											>
+												<p style={{ margin: 0, fontSize: '14px' }}>
+													{batteryData?.chemistry ? batteryData?.chemistry : 'N/A'}
+												</p>
+											</Col>
+										</Row>
+										<Row gutter={[16, 16]} style={{ paddingTop: '15px' }}>
+											<Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
+												<p style={{ margin: 0, fontSize: '14px' }}>Cell Configuration</p>
+											</Col>
+											<Col
+												xs={24}
+												sm={24}
+												md={24}
+												lg={24}
+												xl={12}
+												xxl={12}
+												style={{ textAlign: 'end' }}
+											>
+												<p style={{ margin: 0, fontSize: '14px' }}>
+													{batteryData?.cell_config ? batteryData?.cell_config : 'N/A'}
+												</p>
+											</Col>
+										</Row>
+										<Row gutter={[16, 16]} style={{ paddingTop: '15px' }}>
+											<Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
+												<p style={{ margin: 0, fontSize: '14px' }}>Cell Type</p>
+											</Col>
+											<Col
+												xs={24}
+												sm={24}
+												md={24}
+												lg={24}
+												xl={12}
+												xxl={12}
+												style={{ textAlign: 'end' }}
+											>
+												<p style={{ margin: 0, fontSize: '14px' }}>
+													{batteryData?.cell_type ? batteryData?.cell_type : 'N/A'}
+												</p>
+											</Col>
+										</Row>
+									</Col>
+									<Col xs={24} sm={24} md={24} lg={8} xl={8} xxl={8} style={{ alignItems: 'center' }}>
+										<p style={{ margin: 0, fontSize: '20px' }}>Age</p>
+										<hr style={{ margin: '5px 0' }} />
+
+										<Row gutter={[16, 16]}>
+											<Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
+												<p style={{ margin: 0, fontSize: '14px' }}>Calendar Age</p>
+											</Col>
+											<Col
+												xs={24}
+												sm={24}
+												md={24}
+												lg={24}
+												xl={12}
+												xxl={12}
+												style={{ textAlign: 'end' }}
+											>
+												<p style={{ margin: 0, fontSize: '14px' }}>7 years</p>
+											</Col>
+										</Row>
+										<Row gutter={[16, 16]} style={{ paddingTop: '15px' }}>
+											<Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
+												<p style={{ margin: 0, fontSize: '14px' }}>Cycle Count</p>
+											</Col>
+											<Col
+												xs={24}
+												sm={24}
+												md={24}
+												lg={24}
+												xl={12}
+												xxl={12}
+												style={{ textAlign: 'end' }}
+											>
+												<p style={{ margin: 0, fontSize: '14px' }}>
+													{periscopeTestData && periscopeTestData.cycle_count
+														? periscopeTestData.cycle_count.toFixed(1) + ' cycles'
+														: 'N/A'}
+												</p>
+											</Col>
+										</Row>
+										<Row gutter={[16, 16]} style={{ paddingTop: '15px' }}>
+											<Col xl={12}>
+												<p style={{ margin: 0, fontSize: '14px' }}>Dch Energy</p>
+											</Col>
+											<Col xl={12} style={{ textAlign: 'end' }}>
+												<p style={{ margin: 0, fontSize: '14px' }}>
+													{periscopeTestData && periscopeTestData.total_kwh_dch
+														? periscopeTestData.total_kwh_dch + ' kWh'
+														: 'N/A'}
+												</p>
+											</Col>
+										</Row>
+										<Row gutter={[16, 16]} style={{ paddingTop: '15px' }}>
+											<Col xl={12}>
+												<p style={{ margin: 0, fontSize: '14px' }}>EV Mileage</p>
+											</Col>
+											<Col xl={12} style={{ textAlign: 'end' }}>
+												<p style={{ margin: 0, fontSize: '14px' }}>115200 miles</p>
+											</Col>
+										</Row>
+									</Col>
+									<Col xs={24} sm={24} md={24} lg={8} xl={8} xxl={8} style={{ alignItems: 'center' }}>
+										<p style={{ margin: 0, fontSize: '20px' }}>Battery Readings</p>
+										<hr style={{ margin: '5px 0' }} />
+
+										<Row gutter={[16, 16]}>
+											<Col xl={12}>
+												<p style={{ margin: 0, fontSize: '14px' }}>Pack Voltage</p>
+											</Col>
+											<Col xl={12} style={{ textAlign: 'end' }}>
+												{batteryData?.batteryDatas?.[0]?.battery_data['Voltage'] || 'N/A'}
+											</Col>
+										</Row>
+										<Row gutter={[16, 16]} style={{ paddingTop: '15px' }}>
+											<Col xl={12}>
+												<p style={{ margin: 0, fontSize: '14px' }}>Pack SOC</p>
+											</Col>
+											<Col xl={12} style={{ textAlign: 'end' }}>
+												<p style={{ margin: 0, fontSize: '14px' }}>
+													{batteryData?.batteryDatas &&
+													batteryData?.batteryDatas.length > 0 &&
+													batteryData?.batteryDatas[0].battery_data?.SoC ? (
+														<span>{`${batteryData?.batteryDatas[0].battery_data['SoC']}%`}</span>
+													) : (
+														<span>N/A</span>
+													)}
+												</p>
+											</Col>
+										</Row>
+										<Row gutter={[16, 16]} style={{ paddingTop: '15px' }}>
+											<Col xl={12}>
+												<p style={{ margin: 0, fontSize: '14px' }}>Pack Temp</p>
+											</Col>
+											<Col xl={12} style={{ textAlign: 'end' }}>
+												<p style={{ margin: 0, fontSize: '14px' }}>25° C</p>
+											</Col>
+										</Row>
+									</Col>
+								</Row>
+								<Row gutter={[16, 16]} style={{ paddingTop: '30px' }} align="middle">
+									<Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
+										<p style={{ margin: 0, fontSize: '20px', textAlign: 'center' }}>
+											Car Voltage Distribution{' '}
+										</p>
+
+										{periscopeTestData.periscopeTestResults &&
+										periscopeTestData.periscopeTestResults[0]?.cellvoltage_histogram ? (
+											<ColumnChart
+												barLabels={
+													periscopeTestData.periscopeTestResults[0]?.cellvoltage_histogram
+														.barLabels
+												}
+												barHeights={
+													periscopeTestData.periscopeTestResults[0]?.cellvoltage_histogram
+														.barHeights
+												}
+												xField="customX"
+												yField="customY"
+											/>
+										) : (
+											<div
+												style={{
+													display: 'flex',
+													justifyContent: 'center',
+													alignItems: 'center',
+													height: '50%'
+												}}
+											>
+												<Titles level={3}>N/A</Titles>
+											</div>
+										)}
+									</Col>
+									<Col xs={24} sm={24} md={24} lg={24} xl={12}>
+										<p style={{ margin: 0, fontSize: '20px', textAlign: 'center' }}></p>
+										<Row gutter={[16, 16]} style={{ justifyContent: 'center', paddingTop: '40px' }}>
+											<Col
+												xs={24}
+												sm={24}
+												md={24}
+												lg={16}
+												xl={16}
+												xxl={16}
+												style={{ alignItems: 'center' }}
+											>
+												<p style={{ margin: 0, fontSize: '20px' }}>Cell Voltage matrices</p>
+												<hr style={{ margin: '5px 0' }} />
+												<Row gutter={[16, 16]}>
+													<Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
+														<p style={{ margin: 0, fontSize: '14px' }}>Mean Cell Voltage</p>
+													</Col>
+													<Col
+														xs={24}
+														sm={24}
+														md={24}
+														lg={24}
+														xl={12}
+														xxl={12}
+														style={{ textAlign: 'end' }}
+													>
+														<p style={{ margin: 0, fontSize: '14px' }}>
+															{periscopeTestData?.periscopeTestResults &&
+															periscopeTestData.periscopeTestResults.length > 0
 																? periscopeTestData.periscopeTestResults[0]
-																		.secondlife_crate + ' V'
-																: 'N/A'
-															: 'N/A'}
-													</p>
-												</Col>
-											</Row>
-											<Row gutter={[16, 16]} style={{ paddingTop: '40px' }}>
-												<Col
-													xs={24}
-													sm={24}
-													md={24}
-													lg={24}
-													xl={12}
-													xxl={12}
-													style={{ textAlign: 'center' }}
-												>
-													<GaugeProgressChart percent={0.75} />
-													<p style={{ margin: 0, fontSize: '14px' }}>
-														<strong>
-															{periscopeTestData
-																? periscopeTestData?.rul_result
-																	? periscopeTestData?.rul_result?.toFixed(2) + ' mV'
+																		.secondlife_crate !== null
+																	? periscopeTestData.periscopeTestResults[0]
+																			.secondlife_crate + ' V'
 																	: 'N/A'
 																: 'N/A'}
-														</strong>
-													</p>
-													<p style={{ margin: 0, fontSize: '14px' }}>Cell V Std Dev</p>
-												</Col>
-												<Col
-													xs={24}
-													sm={24}
-													md={24}
-													lg={24}
-													xl={12}
-													xxl={12}
-													style={{ textAlign: 'center' }}
-												>
-													<GaugeProgressChart percent={0.5} />
-													<p style={{ margin: 0, fontSize: '14px' }}>
-														<strong>
-															{periscopeTestData
-																? periscopeTestData?.rul_result_yr
-																	? periscopeTestData?.rul_result_yr + ' mV'
-																	: 'N/A'
+														</p>
+													</Col>
+												</Row>
+												<Row gutter={[16, 16]} style={{ paddingTop: '40px' }}>
+													<Col
+														xs={24}
+														sm={24}
+														md={24}
+														lg={24}
+														xl={12}
+														xxl={12}
+														style={{ textAlign: 'center' }}
+													>
+														<GaugeProgressChart percent={0.75} />
+														<p style={{ margin: 0, fontSize: '14px' }}>
+															<strong>
+																{periscopeTestData
+																	? periscopeTestData?.rul_result
+																		? periscopeTestData?.rul_result?.toFixed(2) +
+																			' mV'
+																		: 'N/A'
+																	: 'N/A'}
+															</strong>
+														</p>
+														<p style={{ margin: 0, fontSize: '14px' }}>Cell V Std Dev</p>
+													</Col>
+													<Col
+														xs={24}
+														sm={24}
+														md={24}
+														lg={24}
+														xl={12}
+														xxl={12}
+														style={{ textAlign: 'center' }}
+													>
+														<GaugeProgressChart percent={0.5} />
+														<p style={{ margin: 0, fontSize: '14px' }}>
+															<strong>
+																{periscopeTestData
+																	? periscopeTestData?.rul_result_yr
+																		? periscopeTestData?.rul_result_yr + ' mV'
+																		: 'N/A'
+																	: 'N/A'}
+															</strong>
+														</p>
+														<p style={{ margin: 0, fontSize: '14px' }}>
+															Cell V Max-Min Range
+														</p>
+													</Col>
+												</Row>
+											</Col>
+										</Row>
+									</Col>
+								</Row>
+								<Row gutter={[16, 16]} style={{ paddingTop: '50px' }}>
+									<Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
+										<p style={{ margin: 0, fontSize: '20px', textAlign: 'center' }}></p>
+										<Row gutter={[16, 16]}>
+											<Col
+												xs={24}
+												sm={24}
+												md={24}
+												lg={24}
+												xl={16}
+												xxl={16}
+												style={{ alignItems: 'center' }}
+											>
+												<p style={{ margin: 0, fontSize: '20px' }}>
+													Estimated Remaining Lifespan
+												</p>
+												<hr style={{ margin: '5px 0' }} />
+												<Row gutter={[16, 16]}>
+													<Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
+														<p style={{ margin: 0, fontSize: '14px' }}>Capacity</p>
+													</Col>
+													<Col
+														xs={24}
+														sm={24}
+														md={24}
+														lg={24}
+														xl={12}
+														xxl={12}
+														style={{ textAlign: 'end' }}
+													>
+														<p style={{ margin: 0, fontSize: '14px' }}>
+															{periscopeTestData && periscopeTestData.kwh_capacity
+																? periscopeTestData.kwh_capacity.toFixed(1) + ' kWh'
 																: 'N/A'}
-														</strong>
-													</p>
-													<p style={{ margin: 0, fontSize: '14px' }}>Cell V Max-Min Range</p>
-												</Col>
-											</Row>
-										</Col>
-									</Row>
-								</Col>
-							</Row>
-							<Row gutter={[16, 16]} style={{ paddingTop: '50px' }}>
-								<Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
-									<p style={{ margin: 0, fontSize: '20px', textAlign: 'center' }}></p>
-									<Row gutter={[16, 16]}>
-										<Col
-											xs={24}
-											sm={24}
-											md={24}
-											lg={24}
-											xl={16}
-											xxl={16}
-											style={{ alignItems: 'center' }}
-										>
-											<p style={{ margin: 0, fontSize: '20px' }}>Estimated Remaining Lifespan</p>
-											<hr style={{ margin: '5px 0' }} />
-											<Row gutter={[16, 16]}>
-												<Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
-													<p style={{ margin: 0, fontSize: '14px' }}>Capacity</p>
-												</Col>
-												<Col
-													xs={24}
-													sm={24}
-													md={24}
-													lg={24}
-													xl={12}
-													xxl={12}
-													style={{ textAlign: 'end' }}
-												>
-													<p style={{ margin: 0, fontSize: '14px' }}>
-														{periscopeTestData && periscopeTestData.kwh_capacity
-															? periscopeTestData.kwh_capacity.toFixed(1) + ' kWh'
-															: 'N/A'}
-													</p>
-												</Col>
-											</Row>
-											<Row gutter={[16, 16]} style={{ paddingTop: '15px' }}>
-												<Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
-													<p style={{ margin: 0, fontSize: '14px' }}>C Rate</p>
-												</Col>
-												<Col
-													xs={24}
-													sm={24}
-													md={24}
-													lg={24}
-													xl={12}
-													xxl={12}
-													style={{ textAlign: 'end' }}
-												>
-													<p style={{ margin: 0, fontSize: '14px' }}>1⁄4C</p>
-												</Col>
-											</Row>
-											<Row gutter={[16, 16]} style={{ paddingTop: '15px' }}>
-												<Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
-													<p style={{ margin: 0, fontSize: '14px' }}>Remaining Cycles</p>
-												</Col>
-												<Col
-													xs={24}
-													sm={24}
-													md={24}
-													lg={24}
-													xl={12}
-													xxl={12}
-													style={{ textAlign: 'end' }}
-												>
-													<p style={{ margin: 0, fontSize: '14px' }}>2780</p>
-												</Col>
-											</Row>
-											<Row gutter={[16, 16]} style={{ paddingTop: '15px' }}>
-												<Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
-													<p style={{ margin: 0, fontSize: '14px' }}>Remaining Years</p>
-												</Col>
-												<Col
-													xs={24}
-													sm={24}
-													md={24}
-													lg={24}
-													xl={12}
-													xxl={12}
-													style={{ textAlign: 'end' }}
-												>
-													<p style={{ margin: 0, fontSize: '14px' }}>9.3</p>
-												</Col>
-											</Row>
-										</Col>
-									</Row>
-								</Col>
-								<Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
-									<p style={{ margin: 0, fontSize: '20px', textAlign: 'center' }}>
-										Predicted Repurposed Lifespan{' '}
-									</p>
-									<LineChart data={lineChartData} />
-									<p style={{ margin: 0, fontSize: '20px', textAlign: 'center' }}>Years </p>
-								</Col>
-							</Row>
+														</p>
+													</Col>
+												</Row>
+												<Row gutter={[16, 16]} style={{ paddingTop: '15px' }}>
+													<Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
+														<p style={{ margin: 0, fontSize: '14px' }}>C Rate</p>
+													</Col>
+													<Col
+														xs={24}
+														sm={24}
+														md={24}
+														lg={24}
+														xl={12}
+														xxl={12}
+														style={{ textAlign: 'end' }}
+													>
+														<p style={{ margin: 0, fontSize: '14px' }}>1⁄4C</p>
+													</Col>
+												</Row>
+												<Row gutter={[16, 16]} style={{ paddingTop: '15px' }}>
+													<Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
+														<p style={{ margin: 0, fontSize: '14px' }}>Remaining Cycles</p>
+													</Col>
+													<Col
+														xs={24}
+														sm={24}
+														md={24}
+														lg={24}
+														xl={12}
+														xxl={12}
+														style={{ textAlign: 'end' }}
+													>
+														<p style={{ margin: 0, fontSize: '14px' }}>2780</p>
+													</Col>
+												</Row>
+												<Row gutter={[16, 16]} style={{ paddingTop: '15px' }}>
+													<Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
+														<p style={{ margin: 0, fontSize: '14px' }}>Remaining Years</p>
+													</Col>
+													<Col
+														xs={24}
+														sm={24}
+														md={24}
+														lg={24}
+														xl={12}
+														xxl={12}
+														style={{ textAlign: 'end' }}
+													>
+														<p style={{ margin: 0, fontSize: '14px' }}>9.3</p>
+													</Col>
+												</Row>
+											</Col>
+										</Row>
+									</Col>
+									<Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
+										<p style={{ margin: 0, fontSize: '20px', textAlign: 'center' }}>
+											Predicted Repurposed Lifespan{' '}
+										</p>
+										<LineChart data={lineChartData} />
+										<p style={{ margin: 0, fontSize: '20px', textAlign: 'center' }}>Years </p>
+									</Col>
+								</Row>
+							</SpinLoader>
 						</div>
 					) : (
 						<SpinLoader loading={loading2}>
