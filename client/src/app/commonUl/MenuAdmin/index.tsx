@@ -4,8 +4,8 @@ import React, { useContext, useState, useEffect } from 'react';
 import { MenuProps, Image } from 'antd';
 import { Menu } from 'antd';
 import Link from 'next/link';
-// import { usePathname } from 'next/navigation';
-import { useParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
+// import { useParams } from 'next/navigation';
 import { IoHome } from 'react-icons/io5';
 import { SiAuthy, SiBloglovin } from 'react-icons/si';
 import { FaAppStore } from 'react-icons/fa';
@@ -38,14 +38,14 @@ function getItem(
 const items: MenuItem[] = [
 	getItem(
 		'Dashboard',
-		'1',
+		'/en/admin/dashboard',
 		<Link href="/en/admin/dashboard">
 			<IoHome />
 		</Link>
 	),
 	getItem(
 		'Battery Reports ',
-		'2',
+		'/en/admin/battery-reports',
 		<Link href="/en/admin/battery-reports">
 			<SiBloglovin />
 		</Link>
@@ -53,21 +53,21 @@ const items: MenuItem[] = [
 
 	getItem(
 		'Payment History',
-		'3',
+		'1',
 		<Link href="#">
 			<MdOutlinePayment />
 		</Link>,
 		[
 			getItem(
 				'Invoice',
-				'5',
+				'/en/admin/invoice',
 				<Link href="/en/admin/invoice">
 					<MdContacts />
 				</Link>
 			),
 			getItem(
 				'Single Invoice ',
-				'4',
+				'2',
 				<Link href="# ">
 					<SiBloglovin />
 				</Link>
@@ -76,7 +76,7 @@ const items: MenuItem[] = [
 	),
 	getItem(
 		'Vendors',
-		'8',
+		'/en/admin/vendors',
 		<Link href="/en/admin/vendors">
 			{' '}
 			<RiUser2Fill />
@@ -84,7 +84,7 @@ const items: MenuItem[] = [
 	),
 	getItem(
 		'Blogs',
-		'6',
+		'/en/admin/blogs',
 		<Link href="/en/admin/blogs">
 			{' '}
 			<FcNews />
@@ -92,7 +92,7 @@ const items: MenuItem[] = [
 	),
 	getItem(
 		'Author',
-		'7',
+		'/en/admin/author',
 		<Link href="/en/admin/author">
 			{' '}
 			<RiUser2Fill />
@@ -100,7 +100,7 @@ const items: MenuItem[] = [
 	),
 	getItem(
 		'General Settings',
-		'9',
+		'/en/admin/general-settings',
 		<Link href="/en/admin/general-settings">
 			{' '}
 			<MdContacts />
@@ -108,7 +108,7 @@ const items: MenuItem[] = [
 	),
 	getItem(
 		'Change Password',
-		'10',
+		'/en/admin/change-password',
 		<Link href="/en/admin/change-password">
 			{' '}
 			<RiLockPasswordFill />
@@ -125,23 +125,23 @@ const items: MenuItem[] = [
 ];
 
 export default function MenuAdmin() {
-	const [selectedKey, setSelectedKey] = useState(() => {
-		return typeof window !== 'undefined' ? localStorage.getItem('MenuAdminKey') : '1';
-	});
+	const pathName = usePathname();
+	const [selectedKey, setSelectedKey] = useState(pathName || '/en/admin/dashboard');
 
 	const { logout } = useContext(VendorAuth);
 
 	function handleClick(e: any) {
 		if (e.key === '11') {
 			logout();
+		} else if (e.key !== '1' && e.key !== '2') {
+			console.log(e);
+			setSelectedKey(e.key);
 		}
-
-		setSelectedKey(e.key);
 	}
 
 	useEffect(() => {
-		localStorage.setItem('MenuAdminKey', selectedKey);
-	}, [selectedKey]);
+		setSelectedKey(pathName);
+	}, [pathName]);
 
 	return (
 		<>
