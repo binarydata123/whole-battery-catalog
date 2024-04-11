@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import type { MenuProps } from 'antd';
 import { Menu, Image } from 'antd';
 import Link from 'next/link';
-// import { usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { IoHome } from 'react-icons/io5';
 import { SiBloglovin } from 'react-icons/si';
 import { MdContacts, MdOutlinePayment } from 'react-icons/md';
@@ -31,14 +31,14 @@ function getItem(
 const items: MenuItem[] = [
 	getItem(
 		'Dashboard',
-		'1',
+		'/en/admin/dashboard',
 		<Link href="/en/admin/dashboard">
 			<IoHome />
 		</Link>
 	),
 	getItem(
 		'Battery Reports',
-		'2',
+		'/en/admin/battery-reports',
 		<Link href="/en/admin/battery-reports">
 			<SiBloglovin />
 		</Link>
@@ -52,7 +52,7 @@ const items: MenuItem[] = [
 		[
 			getItem(
 				'Invoice',
-				'4',
+				'/en/admin/invoice',
 				<Link href="/en/admin/invoice">
 					<MdContacts />
 				</Link>
@@ -68,7 +68,7 @@ const items: MenuItem[] = [
 	),
 	getItem(
 		'Vendors',
-		'6',
+		'/en/admin/vendors',
 		<Link href="/en/admin/vendors">
 			{' '}
 			<RiUser2Fill />
@@ -77,14 +77,14 @@ const items: MenuItem[] = [
 	,
 	getItem(
 		'Change Password',
-		'7',
+		'/en/admin/change-password',
 		<Link href="/en/admin/change-password">
 			<RiLockPasswordFill />
 		</Link>
 	),
 	getItem(
 		'General Settings',
-		'8',
+		'/en/admin/general-settings',
 		<Link href="/en/admin/general-settings">
 			<MdContacts />
 		</Link>
@@ -92,17 +92,16 @@ const items: MenuItem[] = [
 ];
 
 export default function MenuAdminMobile() {
-	const [selectedKey, setSelectedKey] = useState(() => {
-		return typeof window !== 'undefined' ? localStorage.getItem('MenuAdminMobileKey') : '1';
-	});
+	const pathName = usePathname();
+	const [selectedKey, setSelectedKey] = useState(pathName || '/en/admin/dashboard');
 
 	const handleMenuClick = (e: any) => {
 		setSelectedKey(e.key);
 	};
 
 	useEffect(() => {
-		localStorage.setItem('MenuAdminMobileKey', selectedKey);
-	}, [selectedKey]);
+		setSelectedKey(pathName);
+	}, [pathName]);
 
 	return (
 		<>

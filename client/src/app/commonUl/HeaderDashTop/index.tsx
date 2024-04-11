@@ -2,10 +2,11 @@
 import styles from './headerDashTop.module.css';
 import { Avatar, Col, Image, Input, Row } from 'antd';
 import Titles from '../Titles';
-import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { FaBell } from 'react-icons/fa';
 import { FaUserAlt } from 'react-icons/fa';
 import React, { useMemo, useState, useContext } from 'react';
+
 import { Button, notification } from 'antd';
 import { TiThMenu, TiTimes } from 'react-icons/ti';
 import MenuAdmin from '../MenuAdmin';
@@ -21,6 +22,7 @@ import Link from 'next/link';
 
 const Context = React.createContext({ name: 'Default' });
 export default function HeaderDashTop() {
+	const pathName = usePathname();
 	const { user } = React.useContext(VendorAuth);
 
 	const [showNotification, setShowNotification] = useState(false);
@@ -76,12 +78,20 @@ export default function HeaderDashTop() {
 					<Col xs={24} sm={24} md={24} lg={17} xl={17} xxl={17} className="mobileNone">
 						<ul className={styles.userMenuBar}>
 							<li>
-								<Link href="/en/user/dashboard" className={styles.active}>
+								<Link
+									href="/en/user/dashboard"
+									className={pathName === '/en/user/dashboard' ? styles.active : null}
+								>
 									DASHBOARD
 								</Link>
 							</li>
 							<li>
-								<Link href="/en/user/generate-report">REPORTS</Link>
+								<Link
+									href="/en/user/generate-report"
+									className={pathName === '/en/user/generate-report' ? styles.active : null}
+								>
+									REPORTS
+								</Link>
 							</li>
 							<li>
 								<Link href="#">PAYMENT HISTORY</Link>

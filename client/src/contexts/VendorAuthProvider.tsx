@@ -5,7 +5,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import Cookies from 'js-cookie';
 import { setEncryptedCookie, getDecryptedCookie, encryptData } from '@/helpers/cookie-encrypt';
 import { message, notification, Spin } from 'antd';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import ErrorHandler from '@/lib/ErrorHandler';
 import { getVendorAccessToken } from '@/lib/vendorApiAdapter';
 
@@ -38,6 +38,7 @@ const VendorAuth = createContext<AuthContextDefaults>({
 
 const VendorAuthProvider = ({ children }: AuthContextProp) => {
 	const router = useRouter();
+	const pathname = usePathname();
 	const [user, setUser] = useState(undefined); // Change to User type
 	const [initialized, setInitialized] = useState<boolean>(false);
 
@@ -45,24 +46,33 @@ const VendorAuthProvider = ({ children }: AuthContextProp) => {
 		setUser(undefined);
 		Cookies.remove('access_token');
 		Cookies.remove('user');
-		Cookies.remove('session');
-		localStorage.clear(); //removes all menu keys saved for menu bar navigation
+		Cookies.remove('admin');
+		Cookies.remove('rememberMe');
 		router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/login`);
 	};
 
 	useEffect(() => {
 		// On component mount, check if user data exists in sessionStorage and set it to state
-		// const storedUser = sessionStorage.getItem('user');
-		const storedUser = getDecryptedCookie('user');
+		// const rememberMeData = getDecryptedCookie('rememberMe');
+
+		const storedUser = document.cookie.includes('user') ? getDecryptedCookie('user') : getDecryptedCookie('admin');
+
 		if (storedUser) {
+			pathname === '/en/login'
+				? router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/${storedUser?.role}/dashboard`)
+				: null;
 			setUser(storedUser);
+		} else {
+			pathname.includes('user') || pathname.includes('admin')
+				? router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/login`)
+				: null;
 		}
 		setInitialized(true);
-	}, [initialized]);
+	}, [initialized, router, pathname]);
 
 	useEffect(() => {
 		// const token = Cookies.get('session_token');
-		const sessionData = getDecryptedCookie('session');
+		const sessionData = getDecryptedCookie('admin');
 
 		const checkSession = async () => {
 			if (sessionData?.role === 'admin' && sessionData?.token) {
@@ -75,28 +85,29 @@ const VendorAuthProvider = ({ children }: AuthContextProp) => {
 
 					if (response && response.data && response.data.user) {
 						setInitialized(true);
+						console.log('got response from check session');
 						// console.log(response.data);
 						setUser(response.data.user);
 						setEncryptedCookie(
-							'session',
+							'admin',
 							{
 								token: response.data.refreshedToken,
 								role: response.data.user.role,
 								username: response.data.user.username,
 								email: response.data.user.email
 							},
-							null
+							7
 						);
 					} else {
 						setInitialized(true);
-						Cookies.remove('session');
+						Cookies.remove('admin');
 						setUser(undefined);
 						router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
 					}
 				} catch (error) {
 					setInitialized(true);
 					ErrorHandler.showNotification(error);
-					Cookies.remove('session_token');
+					Cookies.remove('admin');
 					setUser(undefined);
 					router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}`);
 				}
@@ -114,6 +125,7 @@ const VendorAuthProvider = ({ children }: AuthContextProp) => {
 					const response = await getVendorAccessToken(vendorSessionData?.refresh_token);
 
 					if (response.status === true) {
+						console.log('got response from generateAccessToken');
 						setInitialized(true);
 						setEncryptedCookie('access_token', response.data['access_token'], null);
 					} else {
@@ -253,7 +265,7 @@ const VendorAuthProvider = ({ children }: AuthContextProp) => {
 					});
 				} else {
 					setEncryptedCookie(
-						'session',
+						'admin',
 						{
 							token: access_token,
 							role: loggedInUser.role,
