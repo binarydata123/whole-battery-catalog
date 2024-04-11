@@ -70,11 +70,13 @@ export default function HeaderDashTop() {
 					</div>
 				</div>
 				<Row className="" align="middle" gutter={[16, 16]}>
-					<Col xs={24} sm={24} md={24} lg={3} xl={3} xxl={3} className="mobileNone">
-						<Link href="/">
-							<Image src="/images/logo-site.png" alt="" preview={false} width={190} />
-						</Link>
-					</Col>
+					{pathName.includes('user') ? (
+						<Col xs={24} sm={24} md={24} lg={3} xl={3} xxl={3} className="mobileNone">
+							<Link href="/">
+								<Image src="/images/logo-site.png" alt="" preview={false} width={190} />
+							</Link>
+						</Col>
+					) : null}
 					<Col xs={24} sm={24} md={24} lg={17} xl={17} xxl={17} className="mobileNone">
 						<ul className={styles.userMenuBar}>
 							<li>
