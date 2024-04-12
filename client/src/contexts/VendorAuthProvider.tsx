@@ -70,7 +70,6 @@ const VendorAuthProvider = ({ children }: AuthContextProp) => {
 	}, [initialized, router, pathname]);
 
 	useEffect(() => {
-		// const token = Cookies.get('session_token');
 		const sessionData = getDecryptedCookie('admin');
 
 		const checkSession = async () => {
@@ -84,8 +83,6 @@ const VendorAuthProvider = ({ children }: AuthContextProp) => {
 
 					if (response && response.data && response.data.user) {
 						setInitialized(true);
-						console.log('got response from check session');
-						// console.log(response.data);
 						setUser(response.data.user);
 						setEncryptedCookie(
 							'admin',
@@ -178,6 +175,10 @@ const VendorAuthProvider = ({ children }: AuthContextProp) => {
 		successRedirectUrl?: string,
 		successMessage?: string
 	) => {
+		//route prefetching
+		router.prefetch(`${process.env['NEXT_PUBLIC_SITE_URL']}${successRedirectUrl}`);
+
+		//axios api request
 		const requestConfig: AxiosRequestConfig = {
 			url: process.env['NEXT_PUBLIC_API_URL'] + url,
 			method: 'post',
@@ -189,8 +190,6 @@ const VendorAuthProvider = ({ children }: AuthContextProp) => {
 		try {
 			const response = await axios(requestConfig);
 			if (response && response.data && response.data.data) {
-				router.prefetch(`${process.env['NEXT_PUBLIC_SITE_URL']}${successRedirectUrl}`);
-
 				const { vendorRegistrationResponse: loggedInUser } = response.data.data;
 
 				const rememberMeData = getDecryptedCookie('rememberMe');

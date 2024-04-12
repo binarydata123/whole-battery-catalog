@@ -90,7 +90,7 @@ export default function Page() {
 		}
 	};
 
-	const batteryDataSource = allBatteryData.map((data: any, index: number) => {
+	const batteryDataSource = allBatteryData?.map((data: any, index: number) => {
 		let model = (data.batteryModel?.model_name || 'N/A').replace(/-/g, '/');
 		if (model) {
 			model = 'Model ' + model;

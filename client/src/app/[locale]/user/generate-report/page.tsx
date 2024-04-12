@@ -116,7 +116,7 @@ export default function Page() {
 		}
 	};
 
-	const batteryDataSource = allBatteryData.map((data: any, index: number) => {
+	const batteryDataSource = allBatteryData?.map((data: any, index: number) => {
 		let model = (data.batteryModel?.model_name || 'N/A').replace(/-/g, '/');
 		if (model) {
 			model = 'Model ' + model;
@@ -531,26 +531,7 @@ export default function Page() {
 
 	const handlePeriscopeTestChange = (value: any) => {
 		setSelectedPeriscopeTestId(value);
-		// console.log(selectedPeriscopeTestId);
 	};
-
-	const generateRandomData = () => {
-		const barLabels: Record<string, number> = {}; // Explicitly define as Record<string, number>
-		const barHeights: Record<string, number> = {}; // Explicitly define as Record<string, number>
-		for (let i = 0; i < 10; i++) {
-			const voltage = (Math.random() * (3.6163 - 3.6111) + 3.6111).toFixed(4);
-			barLabels[i.toString()] = parseFloat(voltage);
-			barHeights[i.toString()] = Math.floor(Math.random() * 20); // Random heights for demonstration
-		}
-		return { barLabels, barHeights };
-	};
-
-	useEffect(() => {
-		if (selectedPeriscopeTestId !== null) {
-			const randomData = generateRandomData();
-			setCarVoltageDistData(randomData);
-		}
-	}, [selectedPeriscopeTestId]);
 
 	const handleDownloadPDF = () => {
 		const input = document.getElementById('pdf-content');

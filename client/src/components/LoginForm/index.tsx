@@ -61,25 +61,6 @@ export default function LoginForm() {
 		}
 	};
 
-	// React.useEffect(() => {
-	// 	// Check if remember me cookie exists and fill in the form fields
-
-	// 	const rememberMe = getDecryptedCookie('rememberMe');
-	// 	if (rememberMe?.keepLoggedIn) {
-	// 		if (document.cookie.includes('user')) {
-	// 			router.prefetch(`${process.env['NEXT_PUBLIC_SITE_URL']}/${(rememberMe?.role).toLowerCase()}/dashboard`);
-	// 			setUser(getDecryptedCookie('user'));
-	// 		}
-
-	// 		// if (document.cookie.includes('session')) {
-	// 		// 	router.prefetch(`${process.env['NEXT_PUBLIC_SITE_URL']}/${(rememberMe?.role).toLowerCase()}/dashboard`);
-	// 		// 	setUser(getDecryptedCookie('session'));
-	// 		// }
-
-	// 		router.push(`${process.env['NEXT_PUBLIC_SITE_URL']}/${(rememberMe?.role).toLowerCase()}/dashboard`);
-	// 	}
-	// }, [router, setUser]);
-
 	return (
 		<>
 			<div className="" id="loginForm">
