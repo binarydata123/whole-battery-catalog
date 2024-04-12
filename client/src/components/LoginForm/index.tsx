@@ -40,7 +40,7 @@ export default function LoginForm() {
 					'rememberMe',
 					{
 						keepLoggedIn: values.keepMeLoggedIn,
-						role: loginOption
+						username: values.username
 					},
 					7
 				);

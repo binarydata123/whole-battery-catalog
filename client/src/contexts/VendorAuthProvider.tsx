@@ -53,7 +53,6 @@ const VendorAuthProvider = ({ children }: AuthContextProp) => {
 
 	useEffect(() => {
 		// On component mount, check if user data exists in sessionStorage and set it to state
-		// const rememberMeData = getDecryptedCookie('rememberMe');
 
 		const storedUser = document.cookie.includes('user') ? getDecryptedCookie('user') : getDecryptedCookie('admin');
 
@@ -125,7 +124,7 @@ const VendorAuthProvider = ({ children }: AuthContextProp) => {
 					const response = await getVendorAccessToken(vendorSessionData?.refresh_token);
 
 					if (response.status === true) {
-						console.log('got response from generateAccessToken');
+						// console.log('got response from generateAccessToken');
 						setInitialized(true);
 						setEncryptedCookie('access_token', response.data['access_token'], null);
 					} else {
@@ -190,7 +189,11 @@ const VendorAuthProvider = ({ children }: AuthContextProp) => {
 		try {
 			const response = await axios(requestConfig);
 			if (response && response.data && response.data.data) {
+				router.prefetch(`${process.env['NEXT_PUBLIC_SITE_URL']}${successRedirectUrl}`);
+
 				const { vendorRegistrationResponse: loggedInUser } = response.data.data;
+
+				const rememberMeData = getDecryptedCookie('rememberMe');
 
 				//encypted access token with expire to session
 				setEncryptedCookie('access_token', loggedInUser.access_token, null);
@@ -204,7 +207,7 @@ const VendorAuthProvider = ({ children }: AuthContextProp) => {
 						email: loggedInUser.vendor_email_id,
 						username: loggedInUser.vendor_username
 					},
-					7
+					rememberMeData && rememberMeData?.keepLoggedIn == true ? 30 : 7
 				);
 				setUser({
 					refresh_token: loggedInUser.refresh_token,
