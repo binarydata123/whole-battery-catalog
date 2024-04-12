@@ -6,7 +6,7 @@
 /* Import the font file */
 @font-face {
   font-family: 'Inter Tight';
-  src: url('https://example.com/fonts/inter_tight.woff2') format('woff2'); /* Update the URL */
+  src: url('/fonts/inter_tight.woff2') format('woff2'); /* Update the URL */
   font-weight: normal;
   font-style: normal;
 }
