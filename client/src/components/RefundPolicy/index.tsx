@@ -5,6 +5,7 @@ import React from 'react';
 export default function RefundPolicy() {
 	return (
 		<div>
+			<div className="gapMarginFourTeenTop"></div>
 			<section className="customContainer">
 				<Titles level={4} color="PrimaryColor">
 					Refund Policy
