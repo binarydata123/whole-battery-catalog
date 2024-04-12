@@ -82,7 +82,7 @@ export default function ForgotPassword() {
 										display: 'flex',
 										alignItems: 'center',
 										gap: 6,
-										justifyContent: 'flex-end'
+										justifyContent: 'center'
 									}}
 								>
 									<FaArrowLeft /> Back to login{' '}

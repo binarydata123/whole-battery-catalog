@@ -116,6 +116,8 @@
 
 @media (max-width: 991px) {
   .pricing-plans {
+    display: block;
+    width: 100%;
     padding: 25px;
   }
 }
