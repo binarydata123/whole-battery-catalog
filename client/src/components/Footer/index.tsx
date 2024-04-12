@@ -1,16 +1,13 @@
 'use client';
 import React from 'react';
 import styles from './footer.module.css';
-import { Col, Form, Row, message } from 'antd';
+import { Col, Form, Row, Image } from 'antd';
 import Link from 'next/link';
-import { FaFacebook, FaGooglePlus } from 'react-icons/fa6';
 import { AiFillInstagram } from 'react-icons/ai';
-import ErrorHandler from '@/lib/ErrorHandler';
 import { FaCircleArrowRight } from 'react-icons/fa6';
 import { FaLinkedin } from 'react-icons/fa';
 import { PiTiktokLogoFill } from 'react-icons/pi';
 import { FaTwitter } from 'react-icons/fa';
-import Titles from '@/app/commonUl/Titles';
 import ParaText from '@/app/commonUl/ParaText';
 import FormInput from '@/app/commonUl/FormInput';
 export default function Footer() {
@@ -23,19 +20,17 @@ export default function Footer() {
 					<div className={styles['followUs']}>
 						<Row gutter={40}>
 							<Col lg={6} md={12} xs={24}>
-								<Titles level={5} color="white" className="textUppercase">
-									Whole Battery Catalog
-								</Titles>
+								<div className={styles.logoFooter}>
+									<Image src="/images/logo-site.png" alt=" logo Footer" width={200} preview={false} />
+								</div>
 								<div className="gapMarginTop"></div>
 								<div className="flexContainer align">
-									<ParaText size="textGraf" color="white">
-										Solo, Indonesia
+									<ParaText size="extraSmall" color="white">
+										<strong>Address :</strong> Solo, Indonesia
 									</ParaText>
-									<div className="gapMarginTopTwo"></div>
-									<ParaText size="textGraf" color="white" className="dBlock">
-										Call us : 123-456-7890
+									<ParaText size="extraSmall" color="white" className="dBlock">
+										<strong>Call us :</strong> 123-456-7890
 									</ParaText>
-									<div className="gapMarginTop"></div>
 									<ul className={styles['footerSocialMediaLiks']}>
 										<li>
 											<Link href="#">
@@ -61,42 +56,42 @@ export default function Footer() {
 								</div>
 							</Col>
 							<Col lg={6} md={12} xs={24} className="mobilelargeTopMargin">
-								<ParaText size="extraSmall" color="white">
+								<ParaText size="medium" color="white">
 									<b>Services</b>
 								</ParaText>
 								<div className="LargerTopMargin tabmediumTopMargin"></div>
 								<ul className={styles['footerLinks']}>
 									<li>
 										<Link href={`${process.env['NEXT_PUBLIC_SITE_URL']}/service`}>
-											<ParaText size="textGraf" color="white">
+											<ParaText size="extraSmall" color="white">
 												EV Battery Health
 											</ParaText>
 										</Link>
 									</li>
 									<li>
 										<Link href={`${process.env['NEXT_PUBLIC_SITE_URL']}/service`}>
-											<ParaText size="textGraf" color="white">
+											<ParaText size="extraSmall" color="white">
 												Charging Stations
 											</ParaText>
 										</Link>
 									</li>
 									<li>
 										<Link href={`${process.env['NEXT_PUBLIC_SITE_URL']}/service`}>
-											<ParaText size="textGraf" color="white">
+											<ParaText size="extraSmall" color="white">
 												Battery Maintenance
 											</ParaText>
 										</Link>
 									</li>
 									<li>
 										<Link href={`${process.env['NEXT_PUBLIC_SITE_URL']}/service`}>
-											<ParaText size="textGraf" color="white">
+											<ParaText size="extraSmall" color="white">
 												EV Repair
 											</ParaText>
 										</Link>
 									</li>
 									<li>
 										<Link href={`${process.env['NEXT_PUBLIC_SITE_URL']}/service`}>
-											<ParaText size="textGraf" color="white">
+											<ParaText size="extraSmall" color="white">
 												Fast Charging
 											</ParaText>
 										</Link>
@@ -104,28 +99,28 @@ export default function Footer() {
 								</ul>
 							</Col>
 							<Col lg={6} md={12} xs={24} className="tablargeTopMargin">
-								<ParaText size="extraSmall" color="white">
+								<ParaText size="medium" color="white">
 									<b>Quick Links</b>
 								</ParaText>
 								<div className="LargerTopMargin tabmediumTopMargin"></div>
 								<ul className={styles['footerLinks']}>
 									<li>
 										<Link href="/en/about-us">
-											<ParaText size="textGraf" color="white">
+											<ParaText size="extraSmall" color="white">
 												About us
 											</ParaText>
 										</Link>
 									</li>
 									<li>
 										<Link href="/en/privacy-policy">
-											<ParaText size="textGraf" color="white">
+											<ParaText size="extraSmall" color="white">
 												Privacy
 											</ParaText>
 										</Link>
 									</li>
 									<li>
 										<Link href="/en/terms-conditions">
-											<ParaText size="textGraf" color="white">
+											<ParaText size="extraSmall" color="white">
 												Terms & Condition
 											</ParaText>
 										</Link>
@@ -133,11 +128,11 @@ export default function Footer() {
 								</ul>
 							</Col>
 							<Col lg={6} md={12} xs={24} className="tablargeTopMargin">
-								<ParaText size="extraSmall" color="white">
+								<ParaText size="medium" color="white">
 									<b>Subscribe</b>
 								</ParaText>
 								<div className="gapMarginTopTwo"></div>
-								<ParaText size="textGraf" color="white" className="dBlock">
+								<ParaText size="extraSmall" color="white" className="dBlock">
 									Subscribe to get the latest news from us
 								</ParaText>
 								<div className="gapMarginTopTwo"></div>
@@ -167,7 +162,7 @@ export default function Footer() {
 					<div className={styles['ftPart']}>
 						<Row align="middle" gutter={16} className="largeTopMargin mobilelargeTopMargin textCenter">
 							<Col lg={24} md={24} sm={24} xs={24} className="mobileCenter">
-								<ParaText size="textGraf" color="white">
+								<ParaText size="extraSmall" color="white">
 									Copyright © 2024. WHOLE BATTERY CATALOG
 								</ParaText>
 								<br />

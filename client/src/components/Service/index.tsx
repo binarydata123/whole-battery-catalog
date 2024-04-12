@@ -12,7 +12,9 @@ export default function Service() {
 	return (
 		<div>
 			<section className="customContainer container">
-				<h2>Our EV Car Services</h2>
+				<Titles level={3} color="PrimaryColor" className="textCenter">
+					👋 Our EV Car Services
+				</Titles>
 				<Row align="middle" gutter={[16, 16]} className="row">
 					<Col xs={24} sm={24} md={24} lg={8} xl={8} xxl={8}>
 						<div className="service">

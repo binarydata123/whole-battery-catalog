@@ -6,6 +6,7 @@ import React from 'react';
 export default function page() {
 	return (
 		<>
+			<div className="gapMarginFourTeenTop"></div>
 			<section className="customContainer">
 				<Titles level={4} color="PrimaryColor">
 					EV Battery Terms & Conditions

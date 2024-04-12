@@ -1,46 +1,54 @@
-/* .loginFullWidth {
-  background-color: white;
-  height: 100vh;
-} */
-.heightCover {
-  background-color: #ffffff;
+.imageFull {
+  position: relative;
+}
+.imageFull::after {
+  content: '';
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-.formData {
-  width: 490px;
-  margin: 0 auto;
-}
-.fullImageLogin {
-  background-image: url(/images/jpg.jpeg);
+  background-image: url(/images/Blog-Hero-Nexus-PMG-1-1024x683.png);
   height: 100vh;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: top;
-}
-.bottomSection {
-  max-width: 500px;
-  position: absolute;
-  bottom: 20px;
-  left: 70px;
-  background: #fff;
-  background: rgba(255, 255, 255, 0.3);
-  padding: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  top: 0;
+  right: 0;
+  width: 100%;
+  z-index: 999;
 }
 
-@media (max-width: 991px) {
-  .heightCover {
-    background-color: #ffffff;
-    position: unset;
-    top: 0%;
-    left: 0%;
-    transform: translate(0%, 0%);
-    padding: 30px;
+.loginForm {
+  padding: 6% 20% 15%;
+}
+
+.heightVh {
+  height: 100vh;
+}
+
+@media (max-width: 1440px) {
+  .loginForm {
+    padding: 10% 10% 0%;
   }
-  .bottomSection {
+}
+@media (max-width: 991px) {
+  .loginForm {
+    padding: 6%;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: 8px;
+    background-color: #fff;
+    margin: 30px 20px;
+  }
+  .dNone {
+    display: none !important;
+  }
+  .imageFull {
     display: none;
+  }
+  .heightVh {
+    height: auto;
+  }
+  .imgShowMobile {
+    background-image: url(/images/Blog-Hero-Nexus-PMG-1-1024x683.png);
+    background-repeat: no-repeat;
+    padding: 60px 0px;
+    background-size: cover;
   }
 }

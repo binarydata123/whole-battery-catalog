@@ -49,6 +49,7 @@ ul.footerSocialMediaLiks li a {
   display: flex;
   align-items: center;
   gap: 5px;
+  margin-top: 50px;
 }
 
 .footerSocialMediaLiks svg {
@@ -71,6 +72,9 @@ ul.footerSocialMediaLiks li a {
   font-size: 18px;
   color: #2ea3f2;
 }
+.logoFooter {
+  padding-bottom: 20px;
+}
 
 @media (max-width: 991px) {
   .columGap {
@@ -79,6 +83,13 @@ ul.footerSocialMediaLiks li a {
 
   .footerPart {
     display: block;
+  }
+  .footerLinks {
+    padding: 0;
+    margin: 0px 0 0 0;
+  }
+  .footerSocialMediaLiks {
+    margin-bottom: 20px;
   }
 }
 
